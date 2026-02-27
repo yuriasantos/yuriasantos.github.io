@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yuri Alexandre dos Santos | Tecnologia &amp; Direito</title>
+    <meta name="description" content="Empreendedor, advogado e pesquisador na intersecção entre Ciência da Computação, Inteligência Artificial e Direito. Mestre pela UFMG.">
+    <meta name="author" content="Yuri Alexandre dos Santos">
+    <link rel="canonical" href="https://yuridossantos.com.br/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Yuri Alexandre dos Santos | Tecnologia &amp; Direito">
+    <meta property="og:description" content="Empreendedor, advogado e pesquisador na intersecção entre Ciência da Computação, Inteligência Artificial e Direito.">
+    <meta property="og:url" content="https://yuridossantos.com.br/">
+    <meta property="og:image" content="https://yuridossantos.com.br/assets/img/og-image.png">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta property="og:site_name" content="Yuri Alexandre dos Santos">
+
+    <!-- Favicon -->
+    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ProfilePage",
+        "mainEntity": {
+            "@type": "Person",
+            "name": "Yuri Alexandre dos Santos",
+            "jobTitle": "Empreendedor, Advogado e Pesquisador",
+            "url": "https://yuridossantos.com.br",
+            "sameAs": [
+                "https://linkedin.com/in/yuridossantos",
+                "https://github.com/yuridossantos",
+                "http://lattes.cnpq.br/9119153825908744"
+            ],
+            "alumniOf": {
+                "@type": "CollegeOrUniversity",
+                "name": "Universidade Federal de Minas Gerais (UFMG)"
+            },
+            "knowsAbout": ["Direito Digital", "Inteligência Artificial", "Ciência da Computação", "Legal Ops"],
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Belo Horizonte",
+                "addressRegion": "MG",
+                "addressCountry": "BR"
+            }
+        }
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Instrument+Serif:ital@0;1&family=Literata:opsz,wght@7..72,400;7..72,500&display=swap">
+    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-content">
+            <a href="#" class="logo">Yuri Alexandre dos Santos<span class="logo-dot">.</span></a>
+
+            <button class="menu-toggle" id="menu-toggle" aria-label="Menu">
+                <span class="menu-bar"></span>
+                <span class="menu-bar"></span>
+            </button>
+
+            <div class="nav-links" id="nav-links">
+                <a href="#about" data-i18n="nav-about">Sobre</a>
+                <a href="#expertise" data-i18n="nav-expertise">Atuação</a>
+                <a href="#publications" data-i18n="nav-publications">Publicações</a>
+                <a href="#contact" data-i18n="nav-contact">Contato</a>
+                <div class="nav-controls">
+                    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                        <i class="ph ph-sun" id="theme-icon-light"></i>
+                        <i class="ph ph-moon" id="theme-icon-dark"></i>
+                    </button>
+                    <div class="lang-selector">
+                        <button id="btn-pt" class="active">PT</button>
+                        <span class="lang-divider">/</span>
+                        <button id="btn-en">EN</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="hero">
+        <div class="container hero-inner">
+            <div class="hero-photo">
+                <div class="photo-frame">
+                    <!-- Replace src with your photo -->
+                    <img src="assets/img/photo.png" alt="Yuri Alexandre dos Santos" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="photo-placeholder">
+                        <i class="ph ph-user"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-text">
+                <p class="hero-eyebrow" data-i18n="hero-eyebrow">Empreendedor &middot; Advogado &middot; Pesquisador</p>
+                <h1 data-i18n="hero-title">Tecnologia e Direito.</h1>
+                <p class="hero-desc" data-i18n="hero-desc">Atuando na intersec&ccedil;&atilde;o entre a ci&ecirc;ncia da computa&ccedil;&atilde;o, a inova&ccedil;&atilde;o em Intelig&ecirc;ncia Artificial e o rigor jur&iacute;dico.</p>
+                <div class="hero-actions">
+                    <a href="#expertise" class="btn btn-primary" data-i18n="hero-cta">Conhe&ccedil;a meu trabalho</a>
+                    <a href="#contact" class="btn btn-ghost" data-i18n="hero-contact">Fale comigo</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- About -->
+        <section id="about" class="section section--about">
+            <div class="container">
+                <h2 class="section-label">
+                    <span class="section-number">01</span>
+                    <span data-i18n="nav-about">Sobre</span>
+                </h2>
+                <div class="about-content">
+                    <p class="about-text" data-i18n="bio-text">
+                        Bacharel em Direito e mestre em Ci&ecirc;ncia da Computa&ccedil;&atilde;o pela UFMG. Minha trajet&oacute;ria &eacute; definida pela busca de solu&ccedil;&otilde;es onde o c&oacute;digo e a lei se encontram, seja na academia, no empreendimento ou no tribunal.
+                    </p>
+                    <div class="about-stats">
+                        <div class="stat">
+                            <span class="stat-icon"><i class="ph ph-scales"></i></span>
+                            <span class="stat-label" data-i18n="stat-law">Direito</span>
+                            <span class="stat-detail" data-i18n="stat-law-detail">Bacharel pela UFMG</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-icon"><i class="ph ph-cpu"></i></span>
+                            <span class="stat-label" data-i18n="stat-cs">Computa&ccedil;&atilde;o</span>
+                            <span class="stat-detail" data-i18n="stat-cs-detail">Mestre pela UFMG</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-icon"><i class="ph ph-flask"></i></span>
+                            <span class="stat-label" data-i18n="stat-research">Pesquisa</span>
+                            <span class="stat-detail" data-i18n="stat-research-detail">DTIBR &middot; IA &amp; Direito</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Expertise / Areas of Activity -->
+        <section id="expertise" class="section section--expertise">
+            <div class="container">
+                <h2 class="section-label">
+                    <span class="section-number">02</span>
+                    <span data-i18n="nav-expertise">Atuação</span>
+                </h2>
+
+                <div class="expertise-grid">
+
+                    <!-- Item 1: Skysales -->
+                    <div class="expertise-card" data-card="skysales">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="ph ph-robot"></i></div>
+                            <div class="card-category" data-i18n="cat-tech">Tecnologia &amp; IA</div>
+                        </div>
+                        <h3 class="card-title">Skysales</h3>
+                        <p class="card-summary" data-i18n="skysales-desc">Startup focada em agentes inteligentes para vendas consultivas. Transformando leads em convers&atilde;o atrav&eacute;s de IA.</p>
+                        <button class="card-expand" aria-expanded="false" data-i18n-aria="expand-label">
+                            <span data-i18n="card-more">Saiba mais</span>
+                            <i class="ph ph-caret-down"></i>
+                        </button>
+                        <div class="card-details">
+                            <div class="card-details-inner">
+                                <p data-i18n="skysales-detail">A Skysales desenvolve agentes conversacionais especializados em automa&ccedil;&atilde;o de vendas consultivas e qualifica&ccedil;&atilde;o de leads. Utilizando modelos de linguagem avan&ccedil;ados e engenharia de prompts, criamos solu&ccedil;&otilde;es que compreendem o contexto do cliente, conduzem conversas estrat&eacute;gicas e aumentam significativamente as taxas de convers&atilde;o. A plataforma se integra a CRMs e ferramentas de vendas existentes, permitindo uma ado&ccedil;&atilde;o gradual e sem fric&ccedil;&atilde;o.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 2: Einthoven.ai -->
+                    <div class="expertise-card" data-card="einthoven">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="ph ph-heartbeat"></i></div>
+                            <div class="card-category" data-i18n="cat-deeptech">Deep Tech &amp; Sa&uacute;de</div>
+                        </div>
+                        <h3 class="card-title">Einthoven.ai</h3>
+                        <p class="card-summary" data-i18n="einthoven-desc">IA aplicada &agrave; medicina cardiovascular e descoberta de novos f&aacute;rmacos.</p>
+                        <button class="card-expand" aria-expanded="false">
+                            <span data-i18n="card-more">Saiba mais</span>
+                            <i class="ph ph-caret-down"></i>
+                        </button>
+                        <div class="card-details">
+                            <div class="card-details-inner">
+                                <p data-i18n="einthoven-detail">A Einthoven.ai utiliza Intelig&ecirc;ncia Artificial e biologia de sistemas para acelerar o diagn&oacute;stico e o tratamento de doen&ccedil;as cardiovasculares. Combinando aprendizado de m&aacute;quina com dados cl&iacute;nicos e gen&ocirc;micos, a empresa desenvolve modelos preditivos que auxiliam m&eacute;dicos na tomada de decis&atilde;o e pesquisadores na identifica&ccedil;&atilde;o de novos alvos terap&ecirc;uticos.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 3: DTIBR -->
+                    <div class="expertise-card" data-card="dtibr">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="ph ph-books"></i></div>
+                            <div class="card-category" data-i18n="cat-research">Pesquisa Acad&ecirc;mica</div>
+                        </div>
+                        <h3 class="card-title">DTIBR</h3>
+                        <p class="card-summary" data-i18n="dtibr-desc">Diretor-Presidente do Centro de Pesquisa em Direito, Tecnologia e Inova&ccedil;&atilde;o.</p>
+                        <button class="card-expand" aria-expanded="false">
+                            <span data-i18n="card-more">Saiba mais</span>
+                            <i class="ph ph-caret-down"></i>
+                        </button>
+                        <div class="card-details">
+                            <div class="card-details-inner">
+                                <p data-i18n="dtibr-detail">O DTIBR &eacute; um centro de pesquisa dedicado &agrave; investiga&ccedil;&atilde;o avan&ccedil;ada em governan&ccedil;a de IA, jurimetria e os impactos &eacute;ticos da tecnologia no sistema jur&iacute;dico brasileiro. Como Diretor-Presidente, coordeno projetos de pesquisa, organizo eventos acad&ecirc;micos e articulo parcerias interinstitucionais que conectam a academia ao setor produtivo.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 4: Digital Law -->
+                    <div class="expertise-card" data-card="law">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="ph ph-shield-check"></i></div>
+                            <div class="card-category" data-i18n="cat-law">Direito Digital</div>
+                        </div>
+                        <h3 class="card-title" data-i18n="law-title">Direito Digital &amp; Fraudes</h3>
+                        <p class="card-summary" data-i18n="law-desc">Atua&ccedil;&atilde;o especializada em crimes cibern&eacute;ticos, prote&ccedil;&atilde;o de dados (LGPD) e assist&ecirc;ncia t&eacute;cnica em per&iacute;cias de alta complexidade t&eacute;cnica.</p>
+                        <button class="card-expand" aria-expanded="false">
+                            <span data-i18n="card-more">Saiba mais</span>
+                            <i class="ph ph-caret-down"></i>
+                        </button>
+                        <div class="card-details">
+                            <div class="card-details-inner">
+                                <p data-i18n="law-detail">Atuo na defesa de v&iacute;timas de fraudes cibern&eacute;ticas e na consultoria preventiva em prote&ccedil;&atilde;o de dados. Minha forma&ccedil;&atilde;o h&iacute;brida em Direito e Ci&ecirc;ncia da Computa&ccedil;&atilde;o me permite atuar como assistente t&eacute;cnico em per&iacute;cias digitais, traduzindo evid&ecirc;ncias t&eacute;cnicas para a linguagem jur&iacute;dica com precis&atilde;o. Tamb&eacute;m assessoro empresas na adequa&ccedil;&atilde;o &agrave; LGPD e no desenvolvimento de pol&iacute;ticas de seguran&ccedil;a da informa&ccedil;&atilde;o.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 5: Legal Ops -->
+                    <div class="expertise-card" data-card="legalops">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="ph ph-gear-six"></i></div>
+                            <div class="card-category" data-i18n="cat-consulting">Consultoria</div>
+                        </div>
+                        <h3 class="card-title" data-i18n="modern-title">Legal Ops</h3>
+                        <p class="card-summary" data-i18n="modern-desc">Reengenharia de fluxos para escrit&oacute;rios de advocacia. Implementa&ccedil;&atilde;o de automa&ccedil;&atilde;o e l&oacute;gica de dados para elevar a efici&ecirc;ncia operacional.</p>
+                        <button class="card-expand" aria-expanded="false">
+                            <span data-i18n="card-more">Saiba mais</span>
+                            <i class="ph ph-caret-down"></i>
+                        </button>
+                        <div class="card-details">
+                            <div class="card-details-inner">
+                                <p data-i18n="modern-detail">Moderniza&ccedil;&atilde;o de escrit&oacute;rios de advocacia atrav&eacute;s da reengenharia de processos e implementa&ccedil;&atilde;o de ferramentas tecnol&oacute;gicas. O trabalho inclui mapeamento de fluxos de trabalho, identifica&ccedil;&atilde;o de gargalos, automa&ccedil;&atilde;o de tarefas repetitivas e integra&ccedil;&atilde;o de sistemas. O objetivo &eacute; elevar a efici&ecirc;ncia operacional sem comprometer o rigor artesanal da advocacia, combinando a expertise jur&iacute;dica com as melhores pr&aacute;ticas de engenharia de software.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Publications -->
+        <section id="publications" class="section section--publications">
+            <div class="container">
+                <h2 class="section-label">
+                    <span class="section-number">03</span>
+                    <span data-i18n="nav-publications">Publicações</span>
+                </h2>
+
+                <div class="publications-list">
+
+                    <article class="pub-item">
+                        <div class="pub-meta">
+                            <!-- <span class="pub-year">2025</span> -->
+                            <span class="pub-type" data-i18n="pub-type-article">Cap&iacute;tulo</span>
+                        </div>
+                        <div class="pub-content">
+                            <h3 class="pub-title">The Role Of Error In Machine Learning And The Law: Challenges And Perspectives</h3>
+                            <p class="pub-venue">Law, Technology and Innovation V. II: Insights on Artificial Intelligence and the Law</p>
+                            <p class="pub-authors" data-i18n="pub1-authors">Santos, Y. A.; Araújo, L. R. G.</p>
+                        </div>
+                        <a href="https://www.dtibr.com/livros-e-artigos" class="pub-link" target="_blank" rel="noopener" aria-label="Ver publicacao">
+                            <i class="ph ph-arrow-up-right"></i>
+                        </a>
+                    </article>
+
+                    <article class="pub-item">
+                        <div class="pub-meta">
+                            <!-- <span class="pub-year">2024</span> -->
+                            <span class="pub-type" data-i18n="pub-type-chapter">Artigo</span>
+                        </div>
+                        <div class="pub-content">
+                            <h3 class="pub-title">Characterizing and Detecting Hateful Users on Twitter</h3>
+                            <p class="pub-venue">ICWSM 2018</p>
+                            <p class="pub-authors" data-i18n="pub2-authors">Ribeiro, M. H.; Almeida, V.; Santos, Y. A.; Calais, P. H.</p>
+                        </div>
+                        <a href="https://www.researchgate.net/publication/324064045_Characterizing_and_Detecting_Hateful_Users_on_Twitter" class="pub-link" target="_blank" rel="noopener" aria-label="Ver publicacao">
+                            <i class="ph ph-arrow-up-right"></i>
+                        </a>
+                    </article>
+
+                    <article class="pub-item">
+                        <div class="pub-meta">
+                            <!-- <span class="pub-year">2024</span> -->
+                            <span class="pub-type" data-i18n="pub-type-article">Artigo</span>
+                        </div>
+                        <div class="pub-content">
+                            <h3 class="pub-title">"Like Sheep Among Wolves": Characterizing Hateful Users on Twitter</h3>
+                            <p class="pub-venue">MIS2 Workshop at WSDM'18</p>
+                            <p class="pub-authors" data-i18n="pub3-authors">Ribeiro, M. H.; Almeida, V.; Santos, Y. A.; Calais, P. H.; Meira Jr, W.</p>
+                        </div>
+                        <a href="https://snap.stanford.edu/mis2/files/MIS2_paper_14.pdf" class="pub-link" target="_blank" rel="noopener" aria-label="Ver publicacao">
+                            <i class="ph ph-arrow-up-right"></i>
+                        </a>
+                    </article>
+
+                </div>
+
+                <div class="pub-footer">
+                    <a href="http://lattes.cnpq.br/9119153825908744" target="_blank" rel="noopener" class="pub-lattes">
+                        <span data-i18n="pub-lattes">Ver curr&iacute;culo completo no Lattes</span>
+                        <i class="ph ph-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact" class="section section--contact">
+            <div class="container">
+                <h2 class="section-label">
+                    <span class="section-number">04</span>
+                    <span data-i18n="nav-contact">Contato</span>
+                </h2>
+
+                <div class="contact-content">
+                    <h2 data-i18n="contact-title">Vamos conversar?</h2>
+                    <p class="contact-desc" data-i18n="contact-desc">Estou dispon&iacute;vel para consultorias, parcerias de pesquisa e novos projetos.</p>
+
+                    <div class="contact-grid">
+                        <a href="#" class="contact-card" id="email-card" data-u="contato" data-d="yuridossantos.com.br">
+                            <i class="ph ph-envelope-simple"></i>
+                            <span class="contact-card-label">Email</span>
+                            <span class="contact-card-value" id="email-display"></span>
+                        </a>
+                        <a href="https://www.linkedin.com/in/yuridossantos/" target="_blank" rel="noopener" class="contact-card">
+                            <i class="ph ph-linkedin-logo"></i>
+                            <span class="contact-card-label">LinkedIn</span>
+                            <span class="contact-card-value">/in/yuridossantos</span>
+                        </a>
+                        <a href="https://github.com/yuriasantos" target="_blank" rel="noopener" class="contact-card">
+                            <i class="ph ph-github-logo"></i>
+                            <span class="contact-card-label">GitHub</span>
+                            <span class="contact-card-value">@yuriasantos</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-content">
+            <p>&copy; 2026 Yuri Alexandre dos Santos</p>
+            <p class="footer-location" data-i18n="footer-location">Belo Horizonte, Brasil</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
