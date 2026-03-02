@@ -12,8 +12,8 @@ assets/
   css/styles.css    # Estilos (design tokens, responsivo, temas)
   js/script.js      # Traducoes, tema, menu mobile, cards expandiveis
   img/
-    photo.png       # Foto de perfil
-    og-image.png    # Imagem para preview em redes sociais (1200x630)
+    photo.jpg       # Foto de perfil
+    og-image.jpg    # Imagem para preview em redes sociais (1200x630)
     favicon.svg     # Favicon vetorial
 ```
 
@@ -46,8 +46,8 @@ git push -u origin main
 
 ### Imagens
 
-- **Foto**: substitua `assets/img/photo.png` (proporcao vertical, recomendado 440x560px)
-- **OG Image**: substitua `assets/img/og-image.png` (1200x630px)
+- **Foto**: substitua `assets/img/photo.jpg` (proporcao vertical, recomendado 440x560px)
+- **OG Image**: substitua `assets/img/og-image.jpg` (1200x630px)
 - **Favicon**: edite `assets/img/favicon.svg`
 
 ### SEO
