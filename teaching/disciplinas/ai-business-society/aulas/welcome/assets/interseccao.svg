@@ -1,0 +1,21 @@
+<!-- O curso é a intersecção, não qualquer um dos dois círculos.
+     Cores pelas classes dg-* (tema/base.css). A lente usa fill-opacity como
+     ATRIBUTO: nenhuma classe define fill-opacity, então não é sobrescrita. -->
+<svg viewBox="0 0 820 340" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- lente da intersecção, desenhada antes dos contornos -->
+  <path class="dg-ponto-2" fill-opacity="0.16"
+        d="M 410 58.2 A 150 150 0 0 1 410 281.8 A 150 150 0 0 1 410 58.2 Z"/>
+
+  <circle class="dg-forma" cx="310" cy="170" r="150" stroke-width="1.8"/>
+  <circle class="dg-forma" cx="510" cy="170" r="150" stroke-width="1.8"/>
+
+  <text class="dg-rotulo" x="255" y="162" font-size="20" text-anchor="middle">How AI</text>
+  <text class="dg-rotulo" x="255" y="188" font-size="20" text-anchor="middle">works</text>
+
+  <text class="dg-rotulo" x="565" y="162" font-size="20" text-anchor="middle">Business and</text>
+  <text class="dg-rotulo" x="565" y="188" font-size="20" text-anchor="middle">society</text>
+
+  <text class="dg-ponto-2" x="410" y="163" font-size="19" font-weight="700" text-anchor="middle">this</text>
+  <text class="dg-ponto-2" x="410" y="187" font-size="19" font-weight="700" text-anchor="middle">course</text>
+</svg>

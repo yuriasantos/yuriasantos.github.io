@@ -1,0 +1,31 @@
+/* tema-default.css — claro, clean, acento azul.
+   Cores de série = paleta categórica validada (dataviz skill). */
+:root {
+  /* Slide */
+  --bg:      #fcfcfb;   /* superfície do slide (off-white morno) */
+  --ink:     #0b0b0b;   /* texto principal */
+  --ink-2:   #52514e;   /* texto secundário */
+  --muted:   #898781;   /* legendas, rodapé, eixos */
+  --accent:  #2a78d6;   /* azul — filetes, kicker, números */
+  --accent-2:#eb6834;   /* laranja — realces pontuais */
+  --rule:    #e1e0d9;   /* hairlines */
+  --code-bg: #f0efec;
+
+  /* Gráficos — chrome */
+  --chart-surface: #fcfcfb;
+  --chart-grid:    #e1e0d9;
+  --chart-axis:    #c3c2b7;
+  --chart-ink:     #0b0b0b;
+  --chart-ink-2:   #52514e;
+  --chart-muted:   #898781;
+
+  /* Gráficos — 8 séries categóricas (ordem fixa, nunca cicle) */
+  --series-1: #2a78d6; /* blue   */
+  --series-2: #eb6834; /* orange */
+  --series-3: #1baf7a; /* aqua   */
+  --series-4: #eda100; /* yellow */
+  --series-5: #e87ba4; /* magenta*/
+  --series-6: #008300; /* green  */
+  --series-7: #4a3aa7; /* violet */
+  --series-8: #e34948; /* red    */
+}

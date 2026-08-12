@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>AI Applied to Business and Society</title>
+
+  <link rel="stylesheet" href="../../../../vendor/reveal/dist/reset.css">
+  <link rel="stylesheet" href="../../../../vendor/reveal/dist/reveal.css">
+  <link rel="stylesheet" href="../../../../tema/base.css">
+  <!-- tema claro (base) + tema escuro embutido, ativado por [data-theme="dark"] -->
+  <link rel="stylesheet" href="../../../../tema/tema-default.css">
+  <style>/* tema-dark.css — escuro, para salas com projeção em ambiente escuro.
+   Séries = mesma paleta stepada para superfície escura (dataviz skill). */
+:root[data-theme="dark"] {
+  --bg:      #1a1a19;
+  --ink:     #ffffff;
+  --ink-2:   #c3c2b7;
+  --muted:   #898781;
+  --accent:  #3987e5;
+  --accent-2:#d95926;
+  --rule:    #2c2c2a;
+  --code-bg: #2c2c2a;
+
+  --chart-surface: #1a1a19;
+  --chart-grid:    #2c2c2a;
+  --chart-axis:    #383835;
+  --chart-ink:     #ffffff;
+  --chart-ink-2:   #c3c2b7;
+  --chart-muted:   #898781;
+
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+  --series-5: #d55181;
+  --series-6: #008300;
+  --series-7: #9085e9;
+  --series-8: #e66767;
+}
+</style>
+  <link rel="stylesheet" href="../../../../tema/controles.css">
+  <link rel="stylesheet" href="../../../../vendor/reveal/plugin/highlight/monokai.css">
+  <script>
+    // Define o modo (claro/escuro) o quanto antes, evitando "flash".
+    (function () {
+      var salvo = null;
+      try { salvo = localStorage.getItem('gs-tema'); } catch (e) {}
+      document.documentElement.setAttribute('data-theme', salvo || 'light');
+    })();
+  </script>
+</head>
+<body>
+  <a class="btn-topo btn-voltar" href="../../../../index.html"
+     title="Back" aria-label="Back"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></a>
+  <button class="btn-topo tema-toggle" aria-label="Toggle light/dark theme"><svg class="ico ico-lua" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="ico ico-sol" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+  <div class="reveal">
+    <div class="slides">
+      
+      
+<section>
+  <div class="slide l-titulo">
+    <div class="kicker">Session 1 · Course launch</div>
+    <h1>AI Applied to <strong>Business and Society</strong></h1>
+    <div class="rule"></div>
+    <p class="subtitulo">Global BBA · August–December 2026</p>
+    <p class="rodape">Prof. Yuri</p>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Two trainings</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Computer science<span class="nota">MSc, UFMG — I build these systems</span>
+        
+      </li>
+      
+      <li>
+        Law<span class="nota">LLB, UFMG — I deal with what they are permitted to do</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">AI Applied to Business and Society · 2/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Three places I work on it</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Building<span class="nota">Munin, co-founder and CEO · Skysales, LLM agents in production · einthoven.ai, cardiology</span>
+        
+      </li>
+      
+      <li>
+        Governing<span class="nota">AGGF, Head of Digital Law — LGPD/GDPR, AI governance, platform liability</span>
+        
+      </li>
+      
+      <li>
+        Researching<span class="nota">machine learning · AI governance · jurimetrics</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">AI Applied to Business and Society · 3/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>Why both halves</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="Two overlapping circles. The left is labelled &#34;How AI works&#34;, the right &#34;Business and society&#34;. Their intersection is shaded and labelled &#34;this course&#34;.">
+      <!-- O curso é a intersecção, não qualquer um dos dois círculos.
+     Cores pelas classes dg-* (tema/base.css). A lente usa fill-opacity como
+     ATRIBUTO: nenhuma classe define fill-opacity, então não é sobrescrita. -->
+<svg viewBox="0 0 820 340" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- lente da intersecção, desenhada antes dos contornos -->
+  <path class="dg-ponto-2" fill-opacity="0.16"
+        d="M 410 58.2 A 150 150 0 0 1 410 281.8 A 150 150 0 0 1 410 58.2 Z"/>
+
+  <circle class="dg-forma" cx="310" cy="170" r="150" stroke-width="1.8"/>
+  <circle class="dg-forma" cx="510" cy="170" r="150" stroke-width="1.8"/>
+
+  <text class="dg-rotulo" x="255" y="162" font-size="20" text-anchor="middle">How AI</text>
+  <text class="dg-rotulo" x="255" y="188" font-size="20" text-anchor="middle">works</text>
+
+  <text class="dg-rotulo" x="565" y="162" font-size="20" text-anchor="middle">Business and</text>
+  <text class="dg-rotulo" x="565" y="188" font-size="20" text-anchor="middle">society</text>
+
+  <text class="dg-ponto-2" x="410" y="163" font-size="19" font-weight="700" text-anchor="middle">this</text>
+  <text class="dg-ponto-2" x="410" y="187" font-size="19" font-weight="700" text-anchor="middle">course</text>
+</svg>
+    </figure>
+    <figcaption class="dg-legenda">The course is the overlap. Neither circle on its own gets you there.</figcaption>
+    
+    <div class="deck-footer">AI Applied to Business and Society · 4/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">01</div>
+    <h1>The learning contract</h1>
+    <p class="sub">How the course works, and what each of us owes the other.</p>
+    <div class="deck-footer">AI Applied to Business and Society · 5/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Where everything lives</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Course calendar and materials<span class="nota">readings, seminar assignments, capstone brief, all dates</span>
+        
+      </li>
+      
+      <li>
+        Dates are per class<span class="nota">the two cohorts sit on different calendars — yours is the one that binds</span>
+        
+      </li>
+      
+      <li>
+        Open it now and bookmark it
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">AI Applied to Business and Society · 6/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>What you will be able to do by December</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Explain how modern AI works, conceptually<span class="nota">no code, ever — but you will know why a language model hallucinates</span>
+        
+      </li>
+      
+      <li>
+        Locate where AI creates and destroys value<span class="nota">function by function — operations, marketing, finance, HR, strategy</span>
+        
+      </li>
+      
+      <li>
+        Build a case that survives a CFO<span class="nota">costed, not asserted</span>
+        
+      </li>
+      
+      <li>
+        Govern a deployment<span class="nota">the rules, the accountability, the limits, the people affected</span>
+        
+      </li>
+      
+      <li>
+        Read past a headline<span class="nota">including two credible ones that disagree</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">AI Applied to Business and Society · 7/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>You are the protagonist</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        You lead, I facilitate<span class="nota">the agency is yours; I guide the route</span>
+        
+      </li>
+      
+      <li>
+        Learning here is social<span class="nota">discussion, pairs, teams — everyone speaks</span>
+        
+      </li>
+      
+      <li>
+        Error is an instrument<span class="nota">being wrong in this room is safe, and we mine it</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">AI Applied to Business and Society · 8/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>How each concept gets taught</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="Four boxes in sequence — Predict, Discuss, Decide, Explain. The first three are marked &#34;you&#34; and highlighted; the fourth is marked &#34;me&#34;. An arrow loops from the last box back to the first, labelled &#34;every new concept&#34;.">
+      <!-- O ciclo de cada conceito: você compromete uma resposta antes de eu explicar.
+     Cores pelas classes dg-* (tema/base.css). id do marker único no deck. -->
+<svg viewBox="0 45 820 195" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="seta-ciclo" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path class="dg-seta-cabeca" d="M 0 0 L 10 5 L 0 10 z"/>
+    </marker>
+  </defs>
+
+  <!-- as três etapas da turma, em cor de acento -->
+  <rect class="dg-linha" x="40"  y="60" width="150" height="52" rx="8" stroke-width="2.2"/>
+  <text class="dg-rotulo" x="115" y="92" font-size="19" text-anchor="middle">Predict</text>
+  <text class="dg-menor"  x="115" y="136" font-size="15" text-anchor="middle">you</text>
+
+  <rect class="dg-linha" x="235" y="60" width="150" height="52" rx="8" stroke-width="2.2"/>
+  <text class="dg-rotulo" x="310" y="92" font-size="19" text-anchor="middle">Discuss</text>
+  <text class="dg-menor"  x="310" y="136" font-size="15" text-anchor="middle">you</text>
+
+  <rect class="dg-linha" x="430" y="60" width="150" height="52" rx="8" stroke-width="2.2"/>
+  <text class="dg-rotulo" x="505" y="92" font-size="19" text-anchor="middle">Decide</text>
+  <text class="dg-menor"  x="505" y="136" font-size="15" text-anchor="middle">you</text>
+
+  <!-- e só então a exposição -->
+  <rect class="dg-forma" x="625" y="60" width="150" height="52" rx="8" stroke-width="1.8"/>
+  <text class="dg-rotulo" x="700" y="92" font-size="19" text-anchor="middle">Explain</text>
+  <text class="dg-menor"  x="700" y="136" font-size="15" text-anchor="middle">me</text>
+
+  <path class="dg-seta" d="M 190 86 L 227 86" stroke-width="1.8" marker-end="url(#seta-ciclo)"/>
+  <path class="dg-seta" d="M 385 86 L 422 86" stroke-width="1.8" marker-end="url(#seta-ciclo)"/>
+  <path class="dg-seta" d="M 580 86 L 617 86" stroke-width="1.8" marker-end="url(#seta-ciclo)"/>
+
+  <!-- Retorno: o ciclo se repete a cada conceito novo. Entra pela LATERAL
+       esquerda do primeiro box — subindo por baixo, a ponta cairia em cima do
+       rótulo "you". -->
+  <path class="dg-seta" stroke-width="1.8" marker-end="url(#seta-ciclo)"
+        d="M 775 86 L 795 86 Q 805 86 805 96 L 805 195 Q 805 205 795 205 L 30 205 Q 20 205 20 195 L 20 96 Q 20 86 30 86 L 36 86"/>
+  <text class="dg-menor" x="450" y="230" font-size="15" text-anchor="middle">every new concept</text>
+</svg>
+    </figure>
+    <figcaption class="dg-legenda">You commit to an answer before I give you one.</figcaption>
+    
+    <div class="deck-footer">AI Applied to Business and Society · 9/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>A typical session</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="A session shown as four blocks in order — a group presents the day&#39;s reading, we run a case, you write for ten minutes (highlighted), and project time with your group.">
+      <!-- A forma de uma sessão típica. As larguras são INDICATIVAS, não uma grade
+     horária: só o bloco de escrita (10 min) está fixado. O bloco de escrita sai
+     em acento-2 porque é o artefato de participation.
+     Cores pelas classes dg-* (tema/base.css). -->
+<svg viewBox="0 45 820 112" xmlns="http://www.w3.org/2000/svg">
+
+  <rect class="dg-forma" x="40"  y="60" width="195" height="58" rx="6" stroke-width="1.8"/>
+  <rect class="dg-forma" x="239" y="60" width="240" height="58" rx="6" stroke-width="1.8"/>
+  <rect class="dg-linha-2" x="483" y="60" width="112" height="58" rx="6" stroke-width="2.4"/>
+  <rect class="dg-forma" x="599" y="60" width="181" height="58" rx="6" stroke-width="1.8"/>
+
+  <text class="dg-rotulo" x="137" y="96" font-size="18" text-anchor="middle">A group presents</text>
+  <text class="dg-rotulo" x="359" y="96" font-size="18" text-anchor="middle">We run a case</text>
+  <text class="dg-rotulo" x="539" y="96" font-size="17" text-anchor="middle">You write</text>
+  <text class="dg-rotulo" x="690" y="96" font-size="18" text-anchor="middle">Project time</text>
+
+  <text class="dg-menor" x="137" y="144" font-size="15" text-anchor="middle">the day's reading</text>
+  <text class="dg-menor" x="359" y="144" font-size="15" text-anchor="middle">a real or simulated decision</text>
+  <text class="dg-ponto-2" x="539" y="144" font-size="15" font-weight="700" text-anchor="middle">10 min</text>
+  <text class="dg-menor" x="690" y="144" font-size="15" text-anchor="middle">with your group</text>
+</svg>
+    </figure>
+    <figcaption class="dg-legenda">Four blocks, every week. You leave having written something.</figcaption>
+    
+    <div class="deck-footer">AI Applied to Business and Society · 10/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Three kinds of case</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Case studies<span class="nota">real organisations, real decisions, real constraints</span>
+        
+      </li>
+      
+      <li>
+        Simulated cases<span class="nota">you take the role — manager, consultant, regulator — and make the call</span>
+        
+      </li>
+      
+      <li>
+        The term project<span class="nota">one applied piece of work, carried across the whole semester</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">AI Applied to Business and Society · 11/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>The capstone</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Map how work actually flows<span class="nota">through one organisation, as it is — not as its org chart claims</span>
+        
+      </li>
+      
+      <li>
+        Find where AI helps<span class="nota">and where it is an expensive distraction</span>
+        
+      </li>
+      
+      <li>
+        Cost it<span class="nota">the opportunity has to survive contact with a number</span>
+        
+      </li>
+      
+      <li>
+        Govern it<span class="nota">the rules, the accountability, the limits</span>
+        
+      </li>
+      
+      <li>
+        Defend it<span class="nota">report and presentation, in front of me and your peers, in December</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">AI Applied to Business and Society · 12/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Three milestones, not one deadline</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        M1 — process map<span class="nota">how work actually flows through the organisation</span>
+        
+      </li>
+      
+      <li>
+        M2 — opportunities and ROI<span class="nota">where AI helps, where it is an expensive distraction, what it costs</span>
+        
+      </li>
+      
+      <li>
+        M3 — governance and ethics<span class="nota">the rules, the accountability, the limits</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">AI Applied to Business and Society · 13/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-grafico">
+    <h2>Four things are assessed</h2>
+    <div class="rule"></div>
+    <div class="chart-wrap">
+      
+        <canvas data-chart='{"labels": ["Capstone \u00b7 40", "Exams \u00b7 35", "Seminars \u00b7 15", "Participation \u00b7 10"], "series": [{"dados": [40, 35, 15, 10], "nome": "Points"}], "tipo": "rosca"}'></canvas>
+      
+    </div>
+    <div class="fonte">100 points · no final exam</div>
+    <div class="deck-footer">AI Applied to Business and Society · 14/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>The exams</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Two of them, both before the last block<span class="nota">Exam 1 · 20 points — Exam 2 · 15 points</span>
+        
+      </li>
+      
+      <li>
+        Open questions and multiple choice<span class="nota">both formats, in both exams</span>
+        
+      </li>
+      
+      <li>
+        Closed device, no AI<span class="nota">the one place in the course where the tools are set aside</span>
+        
+      </li>
+      
+      <li>
+        There is no final exam<span class="nota">the course ends on your project instead</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">AI Applied to Business and Society · 15/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>The seminars</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Your group presents three times<span class="nota">5 points each · you lead the room on that day's reading</span>
+        
+      </li>
+      
+      <li>
+        Everyone writes feedback, every week<span class="nota">including in the weeks your group is not presenting</span>
+        
+      </li>
+      
+      <li>
+        Some days, two groups and two texts<span class="nota">opposing readings on the same question — the disagreement is the point</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">AI Applied to Business and Society · 16/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Participation</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        A paragraph at the end of every class — 8<span class="nota">what you learned that day, in your own words</span>
+        
+      </li>
+      
+      <li>
+        Not on the day your group presents<span class="nota">presenting is that day's contribution</span>
+        
+      </li>
+      
+      <li>
+        Peer evaluation inside your group — 2<span class="nota">the average of the marks your groupmates give you</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">AI Applied to Business and Society · 17/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-linha-tempo">
+    <h2>Three assessment windows</h2>
+    <div class="rule"></div>
+    <ol class="tl">
+      
+      <li class="tl-marco">
+        <div class="tl-marca"></div>
+        <div class="tl-corpo">
+          <div class="tl-data">by 26/09</div>
+          <div class="tl-texto">Window 1 · 30 pts</div>
+          <div class="tl-nota">Exam 1 · M1 · Seminar 1</div>
+        </div>
+      </li>
+      
+      <li class="tl-marco">
+        <div class="tl-marca"></div>
+        <div class="tl-corpo">
+          <div class="tl-data">by 30/10</div>
+          <div class="tl-texto">Window 2 · 30 pts</div>
+          <div class="tl-nota">Exam 2 · M2 · Seminar 2 · Participation</div>
+        </div>
+      </li>
+      
+      <li class="tl-marco">
+        <div class="tl-marca"></div>
+        <div class="tl-corpo">
+          <div class="tl-data">by 18/12</div>
+          <div class="tl-texto">Window 3 · 40 pts</div>
+          <div class="tl-nota">Final report · M3 · Seminar 3 · Participation</div>
+        </div>
+      </li>
+      
+    </ol>
+    <div class="fonte">100 points in total · no final exam</div>
+    <div class="deck-footer">AI Applied to Business and Society · 18/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Readings</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Open access<span class="nota">linked in the calendar — click and read</span>
+        
+      </li>
+      
+      <li>
+        SKEMA Learning library<span class="nota">log in, search, read</span>
+        
+      </li>
+      
+      <li>
+        You will not buy a single book
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">AI Applied to Business and Society · 19/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>What I ask of you</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Be here, on time<span class="nota">the register closes after the first five minutes</span>
+        
+      </li>
+      
+      <li>
+        Read before you arrive<span class="nota">come unread and you spend 100 minutes as a spectator</span>
+        
+      </li>
+      
+      <li>
+        Talk<span class="nota">a wrong answer offered beats a right one withheld</span>
+        
+      </li>
+      
+      <li>
+        Carry your group<span class="nota">you present three times · there is a peer-evaluation channel if it breaks</span>
+        
+      </li>
+      
+      <li>
+        Bring the outside world in<span class="nota">the news, an internship, your family's business</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">AI Applied to Business and Society · 20/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>What you can hold me to</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Class starts and ends on time
+        
+      </li>
+      
+      <li>
+        Every reading is free<span class="nota">open access or SKEMA Learning — you will buy nothing</span>
+        
+      </li>
+      
+      <li>
+        Grades and feedback within two weeks<span class="nota">always, from submission</span>
+        
+      </li>
+      
+      <li>
+        I will say when something is contested<span class="nota">and much of this field is · if I do not know, I will say so and find out</span>
+        
+      </li>
+      
+      <li>
+        No gatekeeping<span class="nota">the technical content is taught to be understood, not to reward prior exposure</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">AI Applied to Business and Society · 21/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Using AI in this course</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li class="fragment">
+        Use it<span class="nota">refusing would be professional malpractice</span>
+        
+      </li>
+      
+      <li class="fragment">
+        Disclose it<span class="nota">which tool, what for — two lines · disclosure never costs marks</span>
+        
+      </li>
+      
+      <li class="fragment">
+        You own the output<span class="nota">if the model invents a source, that is your error — you signed it</span>
+        
+      </li>
+      
+      <li class="fragment">
+        It must not replace your thinking<span class="nota">use it to attack your argument, not to have it</span>
+        
+      </li>
+      
+      <li class="fragment">
+        Exams are AI-free<span class="nota">both of them, closed device</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">AI Applied to Business and Society · 22/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-destaque">
+    <div class="frase">By the time I graduate, AI will have made the job I want <span class="accent">easier</span> to get.</div>
+    
+    <div class="deck-footer">AI Applied to Business and Society · 23/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">02</div>
+    <h1>What is already happening</h1>
+    <p class="sub">Three things, none of them a forecast.</p>
+    <div class="deck-footer">AI Applied to Business and Society · 24/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-imagem-texto">
+    <div class="col-img"><img src="assets/canaries-jovens-vs-experientes.png" alt="Two line charts of headcount over time, normalised to 1 in October 2022, one for software developers and one for customer service. In both, the 22–25 line falls away after late 2022 while every older age band keeps rising."></div>
+    <div class="col-txt">
+      <h2>One study — the entry level thinned</h2>
+      <div class="rule"></div>
+      <div class="texto"><p>ADP payroll records — millions of workers, monthly, through September 2025.
+Not a survey. In both occupations the <strong>22–25</strong> line falls after late 2022
+while every older band rises.</p></div>
+      <div class="fonte">Brynjolfsson, Chandar &amp; Chen, Canaries in the Coal Mine?, Stanford Digital Economy Lab, 13 Nov 2025, Fig. 1</div>
+    </div>
+    <div class="deck-footer">AI Applied to Business and Society · 25/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-grafico">
+    <h2>Another study — employers expect the opposite</h2>
+    <div class="rule"></div>
+    <div class="chart-wrap">
+      
+        <img src="assets/strada-expectativa-contratacao.png" alt="Stacked bar chart. For 2025, 3% report a significant decrease and 10% a moderate decrease against 36% moderate and 11% significant increase. For 2026, 2% and 15% decrease against 35% and 11% increase.">
+      
+    </div>
+    <div class="fonte">Strada Institute, Entry-Level Hiring in the AI Era, May 2026, Fig. 1</div>
+    <div class="deck-footer">AI Applied to Business and Society · 26/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-imagem-texto invertido">
+    <div class="col-img"><img src="assets/canaries-automacao-vs-aumento.png" alt="Two stacked line charts of headcount for 22–25 year olds. In the top panel, by automation quintile, the darkest (most exposed) lines fall below 1.0 after late 2022. In the bottom panel, by augmentation quintile, the lines are not ordered by exposure and the most exposed is among the highest."></div>
+    <div class="col-txt">
+      <h2>The decline tracks automation, not AI use</h2>
+      <div class="rule"></div>
+      <div class="texto"><p>Same payroll data, split by how people actually use Claude. Where use is
+<strong>automative</strong>, the most-exposed lines fall. Where it is <strong>augmentative</strong>,
+they do not — the top quintile is among the fastest-growing.</p></div>
+      <div class="fonte">Brynjolfsson, Chandar &amp; Chen, Canaries in the Coal Mine?, Stanford Digital Economy Lab, 13 Nov 2025, Fig. 3, panels B and C · usage classes from the Anthropic Economic Index (Handa et al., 2025)</div>
+    </div>
+    <div class="deck-footer">AI Applied to Business and Society · 27/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-grafico">
+    <h2>The same split, reported by the employers themselves</h2>
+    <div class="rule"></div>
+    <div class="chart-wrap">
+      
+        <img src="assets/strada-quem-corta-quem-cresce.png" alt="A two-column table. Employers decreasing entry-level hiring due to AI are more likely to have partially integrated AI and to say it reduced routine or administrative tasks. Employers increasing hiring are more likely to have strategically integrated AI and to say it increased analytical or judgment-based responsibilities.">
+      
+    </div>
+    <div class="fonte">Strada Institute, Entry-Level Hiring in the AI Era, May 2026, Fig. 4 · decreasing n = 230, increasing n = 660</div>
+    <div class="deck-footer">AI Applied to Business and Society · 28/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-imagem-texto">
+    <div class="col-img"><img src="assets/strada-mix-de-tarefas.png" alt="Table of how AI changed entry-level tasks. Across all industries, 42% of employers say analytical and judgment-based responsibilities increased, 41% say routine or administrative tasks were reduced, 33% say foundational or skill-building tasks were reduced, and 20% report no meaningful change. Tech reports the largest changes at 60, 54 and 38."></div>
+    <div class="col-txt">
+      <h2>What moved was the mix of tasks</h2>
+      <div class="rule"></div>
+      <div class="texto"><p>Analytical work up for <strong>42%</strong>, routine work down for <strong>41%</strong> — and
+<strong>33%</strong> report foundational, skill-building tasks reduced. That third
+column is the one to worry about: it is how a junior learns the job.</p></div>
+      <div class="fonte">Strada Institute, Entry-Level Hiring in the AI Era, May 2026, Fig. 8</div>
+    </div>
+    <div class="deck-footer">AI Applied to Business and Society · 29/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-grafico">
+    <h2>Two-thirds discuss AI for tasks · 11% for positions</h2>
+    <div class="rule"></div>
+    <div class="chart-wrap">
+      
+        <img src="assets/nace-tarefas-vs-posicoes.png" alt="Bar chart of how employers discuss AI in workforce planning. AI discussed in relation to tasks or functions within jobs 66.4%, in general terms 47.0%, in relation to redesigning roles 18.1%, in relation to whether some positions may no longer be needed 10.7%, has not come up 6.7%.">
+      
+    </div>
+    <div class="fonte">NACE, Job Outlook 2026 Spring Update, spring 2026</div>
+    <div class="deck-footer">AI Applied to Business and Society · 30/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-imagem-texto invertido">
+    <div class="col-img"><img src="assets/strada-competencias.png" alt="Dot plot of employer ratings for eight skills. Critical thinking and communication are rated 4.3 in importance, collaboration 4.2, down to AI literacy at 3.5 — the lowest. AI literacy is the only skill whose performance rating, 3.6, sits above its importance rating."></div>
+    <div class="col-txt">
+      <h2>AI literacy is rated last of eight</h2>
+      <div class="rule"></div>
+      <div class="texto"><p>Importance <strong>3.5</strong>, below critical thinking and communication at 4.3. It is
+also the only skill where employers rate graduates' performance <em>above</em> its
+importance.</p></div>
+      <div class="fonte">Strada Institute, Entry-Level Hiring in the AI Era, May 2026, Fig. 9</div>
+    </div>
+    <div class="deck-footer">AI Applied to Business and Society · 31/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-imagem-texto">
+    <div class="col-img"><img src="assets/nace-preparo-para-ia.png" alt="Bar chart of employer perceptions of graduates&#39; preparedness to use AI at work: somewhat prepared 69.1%, very prepared 18.1%, somewhat unprepared 12.1%, very unprepared 0.7%."></div>
+    <div class="col-txt">
+      <h2>And employers do not report unprepared graduates</h2>
+      <div class="rule"></div>
+      <div class="texto"><p><strong>87%</strong> say graduates are prepared to use AI at work. “Very unprepared” is
+<strong>0.7%</strong>.</p>
+<p>The widely quoted “69% of employers say graduates are unprepared for AI” is
+this chart read backwards.</p></div>
+      <div class="fonte">NACE, Job Outlook 2026 Spring Update, spring 2026</div>
+    </div>
+    <div class="deck-footer">AI Applied to Business and Society · 32/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>What is still unsettled</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Past records against future expectations<span class="nota">Canaries measures payrolls through Sept 2025 · Strada asks employers what they expect for 2026</span>
+        
+      </li>
+      
+      <li>
+        Magnitude and cause remain contested<span class="nota">the authors warn the first two facts could reflect other changes in the US economy · Feb 2026 follow-up tests interest rates and timing</span>
+        
+      </li>
+      
+      <li>
+        35% of entry-level jobs ask for AI skills<span class="nota">nearly triple the share six months earlier — though only 16.5% of job descriptions actually mention them</span>
+        
+      </li>
+      
+      <li>
+        Three sample sizes, three orders of magnitude<span class="nota">185 respondents · 1,498 respondents · millions of payroll records</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">AI Applied to Business and Society · 33/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-grafico">
+    <h2>What the compute costs</h2>
+    <div class="rule"></div>
+    <div class="chart-wrap">
+      
+        <canvas data-chart='{"labels": ["Data centres 2025", "Data centres 2030 (projected)"], "series": [{"dados": [448, 945], "nome": "TWh of electricity per year"}], "tipo": "barra"}'></canvas>
+      
+    </div>
+    <div class="fonte">UNU-INWEH, Environmental Cost of AI's Energy Use, 3 June 2026</div>
+    <div class="deck-footer">AI Applied to Business and Society · 34/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>Where it is landing</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="A simplified outline map of Brazil with three marked sites in the same colour: São Paulo, Rio Grande do Sul, and Ceará on the northern coast. Ceará&#39;s marker is circled by a ring and labelled Porto do Pecém — ByteDance.">
+      <!-- Onde o boom de data centers está aterrissando no Brasil. Os três marcadores
+     usam a MESMA cor de acento (dg-ponto/dg-linha); o Ceará se destaca só pelo
+     anel em volta, não por cor — a contestação é falada, não rotulada.
+
+     Contorno simplificado: esboço equirretangular, NÃO um mapa cartográfico.
+     x = (lon + 74) * 11 + 10 · y = (6 - lat) * 11, sobre ~35 âncoras de costa e
+     fronteira (Caburaí, Oiapoque, São Luís, Fortaleza, Recife, Rio, Chuí, Foz,
+     Corumbá, Guajará-Mirim, Serra do Divisor, Tabatinga, Neblina...).
+     Cores pelas classes dg-* (tema/base.css); nada fixo aqui. -->
+<svg viewBox="0 0 820 450" xmlns="http://www.w3.org/2000/svg">
+
+  <path class="dg-forma" stroke-width="1.8" stroke-linejoin="round"
+        d="M 164 8
+           L 203 50 L 232 44 L 254 18
+           L 274 66 L 291 81 L 337 94
+           L 401 107 L 437 130 L 440 155 L 431 173
+           L 401 209 L 395 229 L 381 289
+           L 349 318 L 316 329 L 291 347 L 291 370 L 277 388 L 237 437
+           L 196 396 L 223 347 L 211 314
+           L 190 275 L 189 243 L 164 231 L 118 202 L 106 185
+           L 58 187 L 23 164 L 11 149
+           L 55 112 L 60 54 L 87 53 L 120 57 Z"/>
+
+  <!-- Ceará — o contestado (o anel marca, a fala explica) -->
+  <circle class="dg-linha" cx="397" cy="105" r="16" stroke-width="1.8"/>
+  <circle class="dg-ponto" cx="397" cy="105" r="7"/>
+  <line class="dg-eixo" x1="413" y1="105" x2="462" y2="105" stroke-width="1"/>
+  <text class="dg-rotulo" x="472" y="100" font-size="21">Ceará · Porto do Pecém</text>
+  <text class="dg-menor"  x="472" y="127" font-size="17">ByteDance</text>
+
+  <!-- São Paulo -->
+  <circle class="dg-ponto" cx="311" cy="325" r="6.5"/>
+  <line class="dg-eixo" x1="318" y1="325" x2="462" y2="325" stroke-width="1"/>
+  <text class="dg-rotulo" x="472" y="331" font-size="21">São Paulo</text>
+
+  <!-- Rio Grande do Sul -->
+  <circle class="dg-ponto" cx="261" cy="396" r="6.5"/>
+  <line class="dg-eixo" x1="268" y1="396" x2="462" y2="396" stroke-width="1"/>
+  <text class="dg-rotulo" x="472" y="402" font-size="21">Rio Grande do Sul</text>
+</svg>
+    </figure>
+    <figcaption class="dg-legenda">Brazil is now Latin America's data centre hub.</figcaption>
+    <div class="fonte">Dialogue Earth, March 2026</div>
+    <div class="deck-footer">AI Applied to Business and Society · 35/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>AI for whom?</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Brazil is Latin America's data centre hub<span class="nota">Ceará, Rio Grande do Sul, São Paulo — competing for the investment</span>
+        
+      </li>
+      
+      <li>
+        A federal tax regime to attract it<span class="nota">REDATA, Sept 2025 — tax relief tied to renewable sourcing and R&amp;D</span>
+        
+      </li>
+      
+      <li>
+        In Ceará, Anacé leaders are trying to block one<span class="nota">ByteDance's facility at Porto do Pecém, near a river they depend on</span>
+        
+      </li>
+      
+      <li>
+        Authorities say no consultation was required<span class="nota">because the Anacé hold no formal land title — the community disputes it</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">AI Applied to Business and Society · 36/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>The shape of the semester</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Foundations<span class="nota">what AI is and how these systems work — conceptually, never mathematically</span>
+        
+      </li>
+      
+      <li>
+        AI in Business<span class="nota">operations, marketing, finance, HR, strategy — what works, what is oversold</span>
+        
+      </li>
+      
+      <li>
+        AI and Society<span class="nota">work, bias, sustainability, health, the Global South — Ceará at full length</span>
+        
+      </li>
+      
+      <li>
+        Governance<span class="nota">regulation, ethics, risk, accountability — the AI Act, the LGPD, and what a company does about them</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">AI Applied to Business and Society · 37/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-destaque">
+    <div class="frase">The hard part is not the technology. It is deciding what your organisation does about it.</div>
+    
+    <div class="deck-footer">AI Applied to Business and Society · 38/39</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Before the next session</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Read Jordan &amp; Mitchell (2015)<span class="nota">Machine learning — trends, perspectives, and prospects · Science 349(6245)</span>
+        
+      </li>
+      
+      <li>
+        Come with one question<span class="nota">on the reading, written down</span>
+        
+      </li>
+      
+      <li>
+        Bookmark the course calendar
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">AI Applied to Business and Society · 39/39</div>
+  </div>
+</section>
+      
+    </div>
+  </div>
+
+  <script src="../../../../vendor/reveal/dist/reveal.js"></script>
+  <script src="../../../../vendor/reveal/plugin/highlight/highlight.js"></script>
+  <script src="../../../../vendor/reveal/plugin/zoom/zoom.js"></script>
+  <script src="../../../../vendor/chartjs/chart.umd.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: false,   // a página aparece no rodapé do slide (ver .deck-footer)
+      transition: 'slide',
+      transitionSpeed: 'default',
+      controls: true,
+      progress: true,
+      center: false,
+      pdfSeparateFragments: false,
+      width: 1280, height: 720,
+      margin: 0.0,
+      plugins: [ RevealHighlight, RevealZoom ]
+    });
+
+    // ---- Renderização dos gráficos Chart.js ----
+    // getComputedStyle é "vivo": ler as cores DENTRO do montarGrafico faz o
+    // gráfico seguir o tema atual (importa ao alternar claro/escuro).
+    const V = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+    const TIPOS = { barra: 'bar', linha: 'line', rosca: 'doughnut', pizza: 'pie', area: 'line' };
+    function montarGrafico(canvas) {
+      const SERIES = [1,2,3,4,5,6,7,8].map(i => V('--series-'+i));
+      Chart.defaults.font.family = V('--font-sans') || 'system-ui, sans-serif';
+      Chart.defaults.color = V('--chart-ink-2');
+      Chart.defaults.borderColor = V('--chart-grid');
+
+      const cfg = JSON.parse(canvas.dataset.chart);
+      const tipo = TIPOS[cfg.tipo] || cfg.tipo;   // aceita nomes PT ou os do Chart.js
+      const circular = ['doughnut','pie','polarArea'].includes(tipo);
+      const ehArea = cfg.tipo === 'area';
+      const datasets = (cfg.series || []).map((s, i) => ({
+        label: s.nome,
+        data: s.dados,
+        backgroundColor: circular ? (cfg.series[0].dados.map((_, k) => SERIES[k % 8]))
+                                   : (ehArea ? SERIES[i % 8] + '33' : SERIES[i % 8]),
+        borderColor: SERIES[i % 8],
+        borderWidth: tipo === 'line' ? 2.4 : 0,
+        borderRadius: tipo === 'bar' ? 4 : 0,
+        pointRadius: tipo === 'line' ? 3 : 0,
+        tension: 0.25, fill: ehArea
+      }));
+      // Série única não tem legenda (seria uma caixinha só) — então o nome da
+      // série, que é onde mora a unidade, vira o rótulo do eixo Y. Sem isso o
+      // gráfico mostra números sem unidade.
+      const legenda = (cfg.series && cfg.series.length > 1) || circular;
+      const rotuloY = (!legenda && !circular && datasets.length === 1) ? datasets[0].label : '';
+      new Chart(canvas, {
+        type: tipo,
+        data: { labels: cfg.labels, datasets },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          animation: false,
+          plugins: {
+            legend: {
+              display: legenda,
+              position: 'bottom',
+              labels: { boxWidth: 12, boxHeight: 12, usePointStyle: true, padding: 16,
+                        color: V('--chart-ink-2'), font: { size: 15 } }
+            },
+            tooltip: { enabled: true }
+          },
+          scales: circular ? {} : {
+            x: { grid: { display: false }, border: { color: V('--chart-axis') },
+                 ticks: { color: V('--chart-muted'), font: { size: 14 } } },
+            y: { grid: { color: V('--chart-grid') }, border: { display: false },
+                 ticks: { color: V('--chart-muted'), font: { size: 14 } },
+                 title: { display: !!rotuloY, text: rotuloY,
+                          color: V('--chart-ink-2'), font: { size: 15 } },
+                 beginAtZero: true }
+          }
+        }
+      });
+    }
+    // Renderiza os gráficos do slide atual (evita medir canvas escondido = 0px)
+    function renderVisiveis() {
+      document.querySelectorAll('section.present canvas[data-chart]').forEach(c => {
+        if (!c.dataset.pronto) { c.dataset.pronto = '1'; montarGrafico(c); }
+      });
+    }
+    function renderTodos() {
+      document.querySelectorAll('canvas[data-chart]').forEach(c => {
+        if (!c.dataset.pronto) { c.dataset.pronto = '1'; montarGrafico(c); }
+      });
+    }
+    const modoPDF = window.location.search.includes('print-pdf');
+    if (modoPDF) {
+      // No modo PDF todos os slides ficam visíveis: renderiza tudo.
+      Reveal.on('ready', () => setTimeout(renderTodos, 200));
+    } else {
+      Reveal.on('ready', renderVisiveis);
+      Reveal.on('slidechanged', renderVisiveis);
+    }
+    window.__renderTodos = renderTodos;
+    // Redesenha os gráficos com as cores do tema atual (ao alternar claro/escuro).
+    window.__reRenderGraficos = function () {
+      document.querySelectorAll('canvas[data-chart]').forEach(c => {
+        const ex = Chart.getChart(c); if (ex) ex.destroy(); delete c.dataset.pronto;
+      });
+      (modoPDF ? renderTodos : renderVisiveis)();
+    };
+  </script>
+
+  <script>
+    // ---- Toggle de tema (o ícone sol/lua é trocado por CSS via [data-theme]) ----
+    (function () {
+      const root = document.documentElement;
+      const btn = document.querySelector('.tema-toggle');
+      function aplicar(modo) {
+        root.setAttribute('data-theme', modo);
+        try { localStorage.setItem('gs-tema', modo); } catch (e) {}
+        if (window.__reRenderGraficos) window.__reRenderGraficos();
+      }
+      btn.addEventListener('click', () =>
+        aplicar(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+    })();
+  </script>
+  
+  <script>
+  (function () {
+    var root = document.documentElement;
+    // revela os botões do topo quando o mouse está na faixa de cima
+    window.addEventListener('mousemove', function (e) {
+      root.classList.toggle('mostrar-topo', e.clientY < 80);
+    });
+    var link = document.querySelector('.btn-voltar');
+    if (!link) return;
+    // origem explícita passada pelo plano (?de=): só caminho relativo seguro
+    try {
+      var de = new URLSearchParams(location.search).get('de');
+      if (de && !/^[a-z][a-z0-9+.-]*:/i.test(de) && de[0] !== '/') link.setAttribute('href', de);
+    } catch (e) {}
+    // se você veio de outra página do site, volta pra ELA via histórico
+    link.addEventListener('click', function (ev) {
+      try {
+        if (document.referrer &&
+            new URL(document.referrer).origin === location.origin &&
+            history.length > 1) {
+          ev.preventDefault();
+          history.back();
+        }
+      } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>

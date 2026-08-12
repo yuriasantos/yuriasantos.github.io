@@ -1,0 +1,28 @@
+/* tema-quente.css — claro com acento laranja/terroso. Mesmo layout, outra
+   "personalidade". Séries mantêm a paleta validada; muda só o chrome do slide. */
+:root {
+  --bg:      #fbf9f5;
+  --ink:     #1a140e;
+  --ink-2:   #5a4f43;
+  --muted:   #9a8f7e;
+  --accent:  #eb6834;   /* laranja como cor principal */
+  --accent-2:#2a78d6;   /* azul como realce secundário */
+  --rule:    #ece4d7;
+  --code-bg: #f1ece2;
+
+  --chart-surface: #fbf9f5;
+  --chart-grid:    #ece4d7;
+  --chart-axis:    #d8ccb8;
+  --chart-ink:     #1a140e;
+  --chart-ink-2:   #5a4f43;
+  --chart-muted:   #9a8f7e;
+
+  --series-1: #2a78d6;
+  --series-2: #eb6834;
+  --series-3: #1baf7a;
+  --series-4: #eda100;
+  --series-5: #e87ba4;
+  --series-6: #008300;
+  --series-7: #4a3aa7;
+  --series-8: #e34948;
+}

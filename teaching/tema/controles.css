@@ -1,0 +1,35 @@
+/* =========================================================================
+   controles.css — botões flutuantes do topo (voltar + tema).
+   FONTE ÚNICA da verdade: carregado tanto pelos slides quanto pelo plano,
+   então os botões têm exatamente o mesmo tamanho nos dois (DRY).
+   Aparecem ao aproximar o mouse do topo (classe .mostrar-topo, ligada por JS).
+   Cores vêm dos tokens do tema (--bg/--ink/--rule), então adaptam sozinhos.
+   ========================================================================= */
+.btn-topo {
+  box-sizing: border-box;   /* independe do box-sizing da página (DRY) */
+  position: fixed; top: 0.9rem; z-index: 60;
+  width: 2.5rem; height: 2.5rem; border-radius: 50%;
+  display: grid; place-items: center;
+  border: 1px solid var(--rule); background: var(--bg); color: var(--ink);
+  font-size: 1.3rem; line-height: 1; cursor: pointer; text-decoration: none;
+  opacity: 0; transition: opacity 0.2s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+}
+.btn-voltar  { left: 0.9rem; }
+.tema-toggle { right: 0.9rem; }
+
+/* ícones SVG (icones.j2): traço na cor do texto, centralizados no botão */
+.btn-topo .ico {
+  width: 1.25rem; height: 1.25rem; display: block;
+  fill: none; stroke: currentColor; stroke-width: 2;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+/* sol/lua alternam conforme o tema (claro mostra lua; escuro mostra sol) */
+.tema-toggle .ico-sol { display: none; }
+:root[data-theme="dark"] .tema-toggle .ico-lua { display: none; }
+:root[data-theme="dark"] .tema-toggle .ico-sol { display: block; }
+
+html.mostrar-topo .btn-topo { opacity: 0.92; }
+.btn-topo:hover { opacity: 1; }
+html:not(.mostrar-topo) .btn-topo { pointer-events: none; }
+@media print { .btn-topo { display: none !important; } }

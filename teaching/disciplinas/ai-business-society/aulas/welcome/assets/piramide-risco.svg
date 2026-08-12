@@ -1,0 +1,30 @@
+<svg viewBox="0 0 900 420" xmlns="http://www.w3.org/2000/svg" role="img">
+  <!-- Pirâmide de risco do AI Act: quatro níveis, do proibido ao mínimo.
+       Quanto mais alto o nível, mais pesada a obrigação e menor o número de
+       sistemas que caem nele. Sem cor no arquivo — só as classes dg-*. -->
+
+  <polygon class="dg-forma" points="240,30 285,117 195,117"/>
+  <polygon class="dg-forma" points="195,117 285,117 330,205 150,205"/>
+  <polygon class="dg-forma" points="150,205 330,205 375,292 105,292"/>
+  <polygon class="dg-forma" points="105,292 375,292 420,380 60,380"/>
+
+  <!-- inaceitável -->
+  <line class="dg-eixo" x1="290" y1="84" x2="525" y2="84" stroke-width="1"/>
+  <text class="dg-rotulo" x="540" y="80"  font-size="26">Unacceptable</text>
+  <text class="dg-menor"  x="540" y="108" font-size="19">banned outright</text>
+
+  <!-- alto risco -->
+  <line class="dg-eixo" x1="335" y1="161" x2="525" y2="161" stroke-width="1"/>
+  <text class="dg-rotulo" x="540" y="157" font-size="26">High risk</text>
+  <text class="dg-menor"  x="540" y="185" font-size="19">assessed, documented, supervised</text>
+
+  <!-- risco limitado -->
+  <line class="dg-eixo" x1="380" y1="248" x2="525" y2="248" stroke-width="1"/>
+  <text class="dg-rotulo" x="540" y="244" font-size="26">Limited risk</text>
+  <text class="dg-menor"  x="540" y="272" font-size="19">tell people it is AI</text>
+
+  <!-- risco mínimo -->
+  <line class="dg-eixo" x1="425" y1="336" x2="525" y2="336" stroke-width="1"/>
+  <text class="dg-rotulo" x="540" y="332" font-size="26">Minimal risk</text>
+  <text class="dg-menor"  x="540" y="360" font-size="19">nothing required</text>
+</svg>

@@ -1,0 +1,39 @@
+<!-- O ciclo de cada conceito: você compromete uma resposta antes de eu explicar.
+     Cores pelas classes dg-* (tema/base.css). id do marker único no deck. -->
+<svg viewBox="0 45 820 195" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="seta-ciclo" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path class="dg-seta-cabeca" d="M 0 0 L 10 5 L 0 10 z"/>
+    </marker>
+  </defs>
+
+  <!-- as três etapas da turma, em cor de acento -->
+  <rect class="dg-linha" x="40"  y="60" width="150" height="52" rx="8" stroke-width="2.2"/>
+  <text class="dg-rotulo" x="115" y="92" font-size="19" text-anchor="middle">Predict</text>
+  <text class="dg-menor"  x="115" y="136" font-size="15" text-anchor="middle">you</text>
+
+  <rect class="dg-linha" x="235" y="60" width="150" height="52" rx="8" stroke-width="2.2"/>
+  <text class="dg-rotulo" x="310" y="92" font-size="19" text-anchor="middle">Discuss</text>
+  <text class="dg-menor"  x="310" y="136" font-size="15" text-anchor="middle">you</text>
+
+  <rect class="dg-linha" x="430" y="60" width="150" height="52" rx="8" stroke-width="2.2"/>
+  <text class="dg-rotulo" x="505" y="92" font-size="19" text-anchor="middle">Decide</text>
+  <text class="dg-menor"  x="505" y="136" font-size="15" text-anchor="middle">you</text>
+
+  <!-- e só então a exposição -->
+  <rect class="dg-forma" x="625" y="60" width="150" height="52" rx="8" stroke-width="1.8"/>
+  <text class="dg-rotulo" x="700" y="92" font-size="19" text-anchor="middle">Explain</text>
+  <text class="dg-menor"  x="700" y="136" font-size="15" text-anchor="middle">me</text>
+
+  <path class="dg-seta" d="M 190 86 L 227 86" stroke-width="1.8" marker-end="url(#seta-ciclo)"/>
+  <path class="dg-seta" d="M 385 86 L 422 86" stroke-width="1.8" marker-end="url(#seta-ciclo)"/>
+  <path class="dg-seta" d="M 580 86 L 617 86" stroke-width="1.8" marker-end="url(#seta-ciclo)"/>
+
+  <!-- Retorno: o ciclo se repete a cada conceito novo. Entra pela LATERAL
+       esquerda do primeiro box — subindo por baixo, a ponta cairia em cima do
+       rótulo "you". -->
+  <path class="dg-seta" stroke-width="1.8" marker-end="url(#seta-ciclo)"
+        d="M 775 86 L 795 86 Q 805 86 805 96 L 805 195 Q 805 205 795 205 L 30 205 Q 20 205 20 195 L 20 96 Q 20 86 30 86 L 36 86"/>
+  <text class="dg-menor" x="450" y="230" font-size="15" text-anchor="middle">every new concept</text>
+</svg>

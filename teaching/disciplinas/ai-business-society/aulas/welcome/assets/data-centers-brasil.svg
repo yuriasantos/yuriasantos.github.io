@@ -1,0 +1,40 @@
+<!-- Onde o boom de data centers está aterrissando no Brasil. Os três marcadores
+     usam a MESMA cor de acento (dg-ponto/dg-linha); o Ceará se destaca só pelo
+     anel em volta, não por cor — a contestação é falada, não rotulada.
+
+     Contorno simplificado: esboço equirretangular, NÃO um mapa cartográfico.
+     x = (lon + 74) * 11 + 10 · y = (6 - lat) * 11, sobre ~35 âncoras de costa e
+     fronteira (Caburaí, Oiapoque, São Luís, Fortaleza, Recife, Rio, Chuí, Foz,
+     Corumbá, Guajará-Mirim, Serra do Divisor, Tabatinga, Neblina...).
+     Cores pelas classes dg-* (tema/base.css); nada fixo aqui. -->
+<svg viewBox="0 0 820 450" xmlns="http://www.w3.org/2000/svg">
+
+  <path class="dg-forma" stroke-width="1.8" stroke-linejoin="round"
+        d="M 164 8
+           L 203 50 L 232 44 L 254 18
+           L 274 66 L 291 81 L 337 94
+           L 401 107 L 437 130 L 440 155 L 431 173
+           L 401 209 L 395 229 L 381 289
+           L 349 318 L 316 329 L 291 347 L 291 370 L 277 388 L 237 437
+           L 196 396 L 223 347 L 211 314
+           L 190 275 L 189 243 L 164 231 L 118 202 L 106 185
+           L 58 187 L 23 164 L 11 149
+           L 55 112 L 60 54 L 87 53 L 120 57 Z"/>
+
+  <!-- Ceará — o contestado (o anel marca, a fala explica) -->
+  <circle class="dg-linha" cx="397" cy="105" r="16" stroke-width="1.8"/>
+  <circle class="dg-ponto" cx="397" cy="105" r="7"/>
+  <line class="dg-eixo" x1="413" y1="105" x2="462" y2="105" stroke-width="1"/>
+  <text class="dg-rotulo" x="472" y="100" font-size="21">Ceará · Porto do Pecém</text>
+  <text class="dg-menor"  x="472" y="127" font-size="17">ByteDance</text>
+
+  <!-- São Paulo -->
+  <circle class="dg-ponto" cx="311" cy="325" r="6.5"/>
+  <line class="dg-eixo" x1="318" y1="325" x2="462" y2="325" stroke-width="1"/>
+  <text class="dg-rotulo" x="472" y="331" font-size="21">São Paulo</text>
+
+  <!-- Rio Grande do Sul -->
+  <circle class="dg-ponto" cx="261" cy="396" r="6.5"/>
+  <line class="dg-eixo" x1="268" y1="396" x2="462" y2="396" stroke-width="1"/>
+  <text class="dg-rotulo" x="472" y="402" font-size="21">Rio Grande do Sul</text>
+</svg>

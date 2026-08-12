@@ -1,0 +1,17 @@
+<svg viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" role="img">
+  <!-- Duas manchetes contraditórias sobre a mesma lei, lado a lado. Sem veículo
+       nomeado de propósito: é o formato da cobertura, não a citação de um jornal. -->
+
+  <!-- junho -->
+  <text class="dg-menor"  x="30"  y="60"  font-size="20">June 2026</text>
+  <text class="dg-titulo" x="30"  y="120" font-size="40">“EU delays</text>
+  <text class="dg-titulo" x="30"  y="170" font-size="40">AI Act”</text>
+
+  <!-- divisória -->
+  <line class="dg-eixo" x1="450" y1="30" x2="450" y2="270" stroke-width="1"/>
+
+  <!-- agosto -->
+  <text class="dg-menor"  x="500" y="60"  font-size="20">August 2026</text>
+  <text class="dg-titulo" x="500" y="120" font-size="40">“EU AI Act</text>
+  <text class="dg-titulo" x="500" y="170" font-size="40">now in force”</text>
+</svg>

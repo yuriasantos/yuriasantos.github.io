@@ -1,0 +1,146 @@
+/* =========================================================================
+   plano.css — páginas-documento (plano de atividades + hub de navegação).
+   Reaproveita os tokens de COR de tema-*.css (--bg, --ink, --accent, ...).
+   Ao contrário dos slides (canvas fixo), aqui são páginas normais: uso
+   unidades responsivas de verdade (rem, %, clamp).
+   ========================================================================= */
+:root {
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  font-size: clamp(15px, 1.05vw + 11px, 19px);
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+code { font-family: var(--font-mono); font-size: 0.9em; background: var(--code-bg); padding: 0.05em 0.35em; border-radius: 0.35em; }
+
+/* A folha ocupa 2/3 da tela — sem teto fixo, para aproveitar monitores largos.
+   Abaixo de 900px vira largura cheia (2/3 de um celular não sobra nada). */
+.folha { width: 66.67%; margin: 0 auto; padding: clamp(1.5rem, 4vw, 3.5rem); }
+@media (max-width: 900px) { .folha { width: 100%; } }
+/* Os botões do topo (voltar) ficam em tema/controles.css — fonte única
+   compartilhada com os slides (carregada no plano.html.j2 e index.html.j2). */
+
+/* ---------- cabeçalho ---------- */
+.cab .kicker { font-size: 0.82rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+.cab h1 { font-size: clamp(1.8rem, 4vw, 2.9rem); font-weight: 700; letter-spacing: -0.02em; margin: 0.35rem 0 0; line-height: 1.1; }
+.cab .rule { width: 3.5rem; height: 4px; background: var(--accent); border-radius: 4px; margin: 1rem 0 0; }
+
+.meta { display: flex; flex-wrap: wrap; gap: 0.4rem 2.2rem; margin: 1.4rem 0 0; }
+.meta div { display: flex; flex-direction: column; }
+.meta dt { font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.meta dd { margin: 0; font-weight: 600; color: var(--ink); }
+
+/* ---------- cronograma (tabela) ---------- */
+/* A tabela é larga (6 colunas): rola dentro do próprio container em telas
+   estreitas, para a página nunca rolar na horizontal. */
+.rolagem { overflow-x: auto; }
+.cronograma { width: 100%; min-width: 46rem; border-collapse: collapse; margin: 2rem 0 0; }
+.cronograma th, .cronograma td { text-align: left; padding: 0.85rem 0.9rem; vertical-align: top; }
+.cronograma thead th {
+  font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--muted); font-weight: 600; border-bottom: 2px solid var(--accent);
+}
+.cronograma tbody tr { border-bottom: 1px solid var(--rule); }
+.cronograma tbody tr:hover { background: color-mix(in srgb, var(--accent) 6%, transparent); }
+
+.c-n     { width: 2.5rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.c-data  { width: 6rem; font-variant-numeric: tabular-nums; }
+.c-data .dia  { font-weight: 650; display: block; }
+.c-data .dsem { font-size: 0.78rem; color: var(--muted); }
+.c-tema  { font-weight: 500; }
+.c-grupo { width: 4rem; color: var(--ink-2); font-weight: 600; font-size: 0.9em; }
+/* Leitura é a coluna que mais precisa de largura (autor + revista + link);
+   Atividades costuma ser curta ou vazia, então cede espaço. */
+.c-leitura { width: 30%; color: var(--ink-2); font-size: 0.9em; }
+.c-leitura div + div { margin-top: 0.3rem; }
+.c-ativ  { width: 15%; color: var(--ink-2); font-size: 0.95em; }
+.c-ativ .entrega { color: var(--accent-2); font-weight: 600; margin-top: 0.2rem; }
+.c-slides { width: 5rem; white-space: nowrap; }
+.vazio   { color: var(--muted); }
+
+/* linhas especiais (prova, projeto, ...) */
+.cronograma tr.tipo-prova    { background: color-mix(in srgb, var(--accent-2) 8%, transparent); }
+.cronograma tr.tipo-prova:hover { background: color-mix(in srgb, var(--accent-2) 13%, transparent); }
+.tag {
+  display: inline-block; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.05em;
+  text-transform: uppercase; padding: 0.12em 0.5em; border-radius: 0.5em; margin-right: 0.4rem;
+  vertical-align: 0.08em; color: #fff; background: var(--accent);
+}
+.tag-prova     { background: var(--accent-2); }
+.tag-projeto   { background: var(--series-6); }
+.tag-seminario { background: var(--series-7); }
+.tag-revisao   { background: var(--series-3); }
+.tag-ausente   { background: var(--series-4); }
+.tag-sem-aula  { background: var(--muted); }
+
+/* dia sem aula (feriado): linha discreta */
+.cronograma tr.tipo-sem-aula { color: var(--muted); }
+.cronograma tr.tipo-sem-aula:hover { background: none; }
+
+/* ---------- seções livres do plano (avaliação, regras, ...) ---------- */
+/* Vêm de `secoes:` no planos/*.yaml — markdown livre, depois da tabela. */
+.secoes { margin: 3rem 0 0; }
+.secoes .bloco { margin: 2.2rem 0 0; padding: 1.6rem 0 0; border-top: 1px solid var(--rule); }
+.secoes .bloco:first-child { margin-top: 0; }
+.secoes .bloco h2 { font-size: clamp(1.1rem, 2.2vw, 1.5rem); font-weight: 700; letter-spacing: -0.01em; margin: 0 0 0.9rem; }
+.secoes .bloco h3 { font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin: 1.5rem 0 0.6rem; }
+.secoes .bloco p { margin: 0.7rem 0 0; color: var(--ink-2); line-height: 1.55; }
+.secoes .bloco ul, .secoes .bloco ol { margin: 0.7rem 0 0; padding-left: 1.2rem; color: var(--ink-2); line-height: 1.55; }
+.secoes .bloco li { margin: 0.35rem 0; }
+.secoes .bloco li strong, .secoes .bloco p strong { color: var(--ink); }
+.secoes .bloco table { width: 100%; border-collapse: collapse; margin: 1rem 0 0; font-size: 0.92em; }
+.secoes .bloco th, .secoes .bloco td { text-align: left; padding: 0.6rem 0.8rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.secoes .bloco thead th { font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.secoes .bloco tbody td:first-child { font-weight: 600; color: var(--ink); }
+.secoes .bloco td:not(:first-child) { font-variant-numeric: tabular-nums; color: var(--ink-2); }
+
+.pe { margin: 2.5rem 0 0; font-size: 0.82rem; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 1rem; }
+
+/* ---------- hub (index) ---------- */
+/* O hub é agrupado por PERÍODO letivo (o semestre atual primeiro); dentro de
+   cada período, uma seção por disciplina. */
+.hub .periodo { margin: 3rem 0 0; }
+.hub .periodo > .per-titulo {
+  font-size: 0.82rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent); font-weight: 600; margin: 0;
+  padding-top: 1rem; border-top: 2px solid var(--accent);
+}
+.hub .disc { margin: 1.8rem 0 0; padding: 1.6rem 0 0; border-top: 1px solid var(--rule); }
+/* O primeiro bloco de cada período encosta no rótulo — o traço do período já divide. */
+.hub .periodo .disc:first-of-type { border-top: none; padding-top: 0.8rem; }
+.hub .disc .uni { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+/* `> h3` de propósito: os h3 das colunas (.grade h3) são netos, não filhos. */
+.hub .disc > h3 { font-size: clamp(1.3rem, 2.5vw, 1.8rem); margin: 0.1rem 0 1rem; font-weight: 700; letter-spacing: -0.01em; }
+.hub .disc > h3 .cod { font-size: 0.7em; font-weight: 500; color: var(--muted); }
+.grade { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 3rem; }
+.grade h3 { font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0 0 0.7rem; font-weight: 600; }
+.grade h3 .ct { color: var(--accent); }
+.lista { list-style: none; margin: 0; padding: 0; }
+.lista li { padding: 0.45rem 0; border-bottom: 1px solid var(--rule); display: flex; align-items: baseline; gap: 0.6rem; }
+.lista li a { font-weight: 600; }
+.lista li .sub { font-size: 0.8rem; color: var(--muted); }
+@media (max-width: 560px) { .grade { grid-template-columns: 1fr; } }
+
+/* ---------- impressão / PDF ---------- */
+@media print {
+  @page { size: A4; margin: 1.4cm; }
+  body { background: #fff; font-size: 10pt; }
+  .folha { width: 100%; padding: 0; }
+  /* 6 colunas em A4: aperta o respiro e deixa a tabela fluir na largura útil */
+  .rolagem { overflow-x: visible; }
+  .cronograma { min-width: 0; }
+  .cronograma th, .cronograma td { padding: 0.5rem 0.45rem; }
+  .c-leitura { max-width: none; }
+  .cronograma tbody tr:hover { background: none; }
+  .cronograma tbody tr { break-inside: avoid; }
+}

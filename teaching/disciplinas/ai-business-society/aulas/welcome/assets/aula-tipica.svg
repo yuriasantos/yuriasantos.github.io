@@ -1,0 +1,21 @@
+<!-- A forma de uma sessão típica. As larguras são INDICATIVAS, não uma grade
+     horária: só o bloco de escrita (10 min) está fixado. O bloco de escrita sai
+     em acento-2 porque é o artefato de participation.
+     Cores pelas classes dg-* (tema/base.css). -->
+<svg viewBox="0 45 820 112" xmlns="http://www.w3.org/2000/svg">
+
+  <rect class="dg-forma" x="40"  y="60" width="195" height="58" rx="6" stroke-width="1.8"/>
+  <rect class="dg-forma" x="239" y="60" width="240" height="58" rx="6" stroke-width="1.8"/>
+  <rect class="dg-linha-2" x="483" y="60" width="112" height="58" rx="6" stroke-width="2.4"/>
+  <rect class="dg-forma" x="599" y="60" width="181" height="58" rx="6" stroke-width="1.8"/>
+
+  <text class="dg-rotulo" x="137" y="96" font-size="18" text-anchor="middle">A group presents</text>
+  <text class="dg-rotulo" x="359" y="96" font-size="18" text-anchor="middle">We run a case</text>
+  <text class="dg-rotulo" x="539" y="96" font-size="17" text-anchor="middle">You write</text>
+  <text class="dg-rotulo" x="690" y="96" font-size="18" text-anchor="middle">Project time</text>
+
+  <text class="dg-menor" x="137" y="144" font-size="15" text-anchor="middle">the day's reading</text>
+  <text class="dg-menor" x="359" y="144" font-size="15" text-anchor="middle">a real or simulated decision</text>
+  <text class="dg-ponto-2" x="539" y="144" font-size="15" font-weight="700" text-anchor="middle">10 min</text>
+  <text class="dg-menor" x="690" y="144" font-size="15" text-anchor="middle">with your group</text>
+</svg>
