@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>What AI Is, and How It Got Here</title>
+
+  <link rel="stylesheet" href="../../../../vendor/reveal/dist/reset.css">
+  <link rel="stylesheet" href="../../../../vendor/reveal/dist/reveal.css">
+  <link rel="stylesheet" href="../../../../tema/base.css">
+  <!-- tema claro (base) + tema escuro embutido, ativado por [data-theme="dark"] -->
+  <link rel="stylesheet" href="../../../../tema/tema-default.css">
+  <style>/* tema-dark.css — escuro, para salas com projeção em ambiente escuro.
+   Séries = mesma paleta stepada para superfície escura (dataviz skill). */
+:root[data-theme="dark"] {
+  --bg:      #1a1a19;
+  --ink:     #ffffff;
+  --ink-2:   #c3c2b7;
+  --muted:   #898781;
+  --accent:  #3987e5;
+  --accent-2:#d95926;
+  --rule:    #2c2c2a;
+  --code-bg: #2c2c2a;
+
+  --chart-surface: #1a1a19;
+  --chart-grid:    #2c2c2a;
+  --chart-axis:    #383835;
+  --chart-ink:     #ffffff;
+  --chart-ink-2:   #c3c2b7;
+  --chart-muted:   #898781;
+
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+  --series-5: #d55181;
+  --series-6: #008300;
+  --series-7: #9085e9;
+  --series-8: #e66767;
+}
+</style>
+  <link rel="stylesheet" href="../../../../tema/controles.css">
+  <link rel="stylesheet" href="../../../../vendor/reveal/plugin/highlight/monokai.css">
+  <script>
+    // Define o modo (claro/escuro) o quanto antes, evitando "flash".
+    (function () {
+      var salvo = null;
+      try { salvo = localStorage.getItem('gs-tema'); } catch (e) {}
+      document.documentElement.setAttribute('data-theme', salvo || 'light');
+    })();
+  </script>
+</head>
+<body>
+  <a class="btn-topo btn-voltar" href="../../../../index.html"
+     title="Back" aria-label="Back"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></a>
+  <button class="btn-topo tema-toggle" aria-label="Toggle light/dark theme"><svg class="ico ico-lua" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="ico ico-sol" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+  <div class="reveal">
+    <div class="slides">
+      
+      
+<section>
+  <div class="slide l-titulo">
+    <div class="kicker">Session 2</div>
+    <h1>What AI Is, and <strong>How It Got Here</strong></h1>
+    <div class="rule"></div>
+    <p class="subtitulo">One label · three machines</p>
+    
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-destaque">
+    <div class="frase">What makes something <span class="accent">artificial intelligence</span> rather than just software?</div>
+    
+    <div class="deck-footer">What AI Is, and How It Got Here · 2/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Is this AI?</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li class="fragment">
+        A pocket calculator
+        
+      </li>
+      
+      <li class="fragment">
+        A thermostat, heating on below 18°C
+        
+      </li>
+      
+      <li class="fragment">
+        Your email spam filter
+        
+      </li>
+      
+      <li class="fragment">
+        The autocorrect on your phone
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">What AI Is, and How It Got Here · 3/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Is this AI?</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li class="fragment">
+        An app choosing your route home
+        
+      </li>
+      
+      <li class="fragment">
+        The Instagram feed
+        
+      </li>
+      
+      <li class="fragment">
+        Payroll computing INSS and IRRF
+        
+      </li>
+      
+      <li class="fragment">
+        A tool ranking 400 applicants, shortlisting 20
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">What AI Is, and How It Got Here · 4/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-destaque">
+    <div class="frase">Agree on one <span class="accent">test</span> that would settle it. Not a definition — a test.</div>
+    
+    <div class="deck-footer">What AI Is, and How It Got Here · 5/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-citacao">
+    <div class="kicker">Answer 1 — the managerial definition</div>
+    <blockquote class="cit-texto">a system's ability to interpret external data correctly, to learn from such data, and to use those learnings to achieve specific goals and tasks through flexible adaptation</blockquote>
+    <div class="cit-autor">Haenlein &amp; Kaplan</div>
+    <div class="cit-fonte">(2019), California Management Review 61(4), p. 5</div>
+    <div class="deck-footer">What AI Is, and How It Got Here · 6/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Answer 2 — the colloquial definition</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li class="fragment">
+        AI is whatever we have not got used to yet<span class="nota">nobody wrote this one down, and it is the one in use everywhere</span>
+        
+      </li>
+      
+      <li class="fragment">
+        The AI effect — when it works, we stop calling it AI<span class="nota">onlookers discount the behaviour — “that is not real intelligence”</span>
+        
+      </li>
+      
+      <li class="fragment">
+        The word marks what is new, not what the system does
+        
+      </li>
+      
+      <li class="fragment">
+        So “we use AI” says nothing about a product<span class="nota">the label tracks novelty, not capability</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">What AI Is, and How It Got Here · 7/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-citacao">
+    <div class="kicker">Chess, 1997 and today</div>
+    <blockquote class="cit-texto">Playing chess against a machine — and losing with near certainty — has become a thing not even worth mentioning. Presumably, Garry Kasparov had an entirely different view on this matter in 1997.</blockquote>
+    <div class="cit-autor">Haenlein &amp; Kaplan</div>
+    <div class="cit-fonte">(2019), California Management Review 61(4), p. 13</div>
+    <div class="deck-footer">What AI Is, and How It Got Here · 8/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Answer 3 — the definition that can fine you</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        A machine-based system
+        
+      </li>
+      
+      <li>
+        With varying levels of autonomy
+        
+      </li>
+      
+      <li>
+        That may adapt after deployment
+        
+      </li>
+      
+      <li>
+        That <strong>infers</strong> how to generate outputs<span class="nota">predictions · content · recommendations · decisions</span>
+        
+      </li>
+      
+      <li>
+        Influencing physical or virtual environments
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">What AI Is, and How It Got Here · 9/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Two of the eight, under the legal definition</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Payroll — executes written rules, does not infer<span class="nota">arguably outside the regulation</span>
+        
+      </li>
+      
+      <li>
+        Ranking 400 applicants — infers, affects a life<span class="nota">inside, and in the most heavily regulated category</span>
+        
+      </li>
+      
+      <li>
+        Those obligations now arrive in December 2027<span class="nota">deferred six days before they were due to apply</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">What AI Is, and How It Got Here · 10/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>Both of these are called AI</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="Two panels. Left: a scatter of observations with a single straight line fitted through them, labelled regression. Right: a network of nine nodes in three layers, every node connected to every node in the next layer, labelled neural network.">
+      <!-- "AI" as an umbrella term: a fitted line and a neural network are both called AI.
+     Cores vêm das classes dg-* (tema/base.css) → seguem o toggle claro/escuro.
+     Tamanhos de fonte em unidades do viewBox, para escalar com o desenho. -->
+<svg viewBox="0 0 820 360" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- ============ painel esquerdo: regressão ============ -->
+  <text class="dg-titulo" x="215" y="30" font-size="21" text-anchor="middle">Regression</text>
+
+  <!-- eixos -->
+  <path class="dg-eixo" d="M 85 95 L 85 300 L 355 300" stroke-width="1.5"/>
+
+  <!-- reta ajustada -->
+  <line class="dg-linha" x1="98" y1="278" x2="345" y2="146" stroke-width="3"/>
+
+  <!-- observações -->
+  <g class="dg-ponto">
+    <circle cx="108" cy="272" r="6"/>
+    <circle cx="134" cy="243" r="6"/>
+    <circle cx="158" cy="251" r="6"/>
+    <circle cx="184" cy="216" r="6"/>
+    <circle cx="209" cy="221" r="6"/>
+    <circle cx="236" cy="190" r="6"/>
+    <circle cx="262" cy="196" r="6"/>
+    <circle cx="288" cy="161" r="6"/>
+    <circle cx="313" cy="168" r="6"/>
+    <circle cx="338" cy="140" r="6"/>
+  </g>
+
+  <text class="dg-menor" x="215" y="332" font-size="16" text-anchor="middle">one line through the data</text>
+
+  <!-- ============ divisória ============ -->
+  <line class="dg-traco" x1="410" y1="20" x2="410" y2="340" stroke-width="1"/>
+
+  <!-- ============ painel direito: rede neural ============ -->
+  <text class="dg-titulo" x="615" y="30" font-size="21" text-anchor="middle">Neural network</text>
+
+  <!-- conexões: entrada → oculta. dg-eixo (--muted) e não dg-traco (--rule):
+       com 20 arestas, a hairline some e a rede vira pontos soltos. -->
+  <g class="dg-eixo" stroke-width="0.7">
+    <line x1="500" y1="130" x2="615" y2="105"/>
+    <line x1="500" y1="130" x2="615" y2="170"/>
+    <line x1="500" y1="130" x2="615" y2="235"/>
+    <line x1="500" y1="130" x2="615" y2="300"/>
+    <line x1="500" y1="195" x2="615" y2="105"/>
+    <line x1="500" y1="195" x2="615" y2="170"/>
+    <line x1="500" y1="195" x2="615" y2="235"/>
+    <line x1="500" y1="195" x2="615" y2="300"/>
+    <line x1="500" y1="260" x2="615" y2="105"/>
+    <line x1="500" y1="260" x2="615" y2="170"/>
+    <line x1="500" y1="260" x2="615" y2="235"/>
+    <line x1="500" y1="260" x2="615" y2="300"/>
+    <!-- oculta → saída -->
+    <line x1="615" y1="105" x2="730" y2="163"/>
+    <line x1="615" y1="105" x2="730" y2="228"/>
+    <line x1="615" y1="170" x2="730" y2="163"/>
+    <line x1="615" y1="170" x2="730" y2="228"/>
+    <line x1="615" y1="235" x2="730" y2="163"/>
+    <line x1="615" y1="235" x2="730" y2="228"/>
+    <line x1="615" y1="300" x2="730" y2="163"/>
+    <line x1="615" y1="300" x2="730" y2="228"/>
+  </g>
+
+  <!-- nós -->
+  <g class="dg-ponto">
+    <circle cx="500" cy="130" r="9.5"/>
+    <circle cx="500" cy="195" r="9.5"/>
+    <circle cx="500" cy="260" r="9.5"/>
+    <circle cx="615" cy="105" r="9.5"/>
+    <circle cx="615" cy="170" r="9.5"/>
+    <circle cx="615" cy="235" r="9.5"/>
+    <circle cx="615" cy="300" r="9.5"/>
+    <circle cx="730" cy="163" r="9.5"/>
+    <circle cx="730" cy="228" r="9.5"/>
+  </g>
+
+  <text class="dg-menor" x="615" y="332" font-size="16" text-anchor="middle">millions of adjusted weights</text>
+</svg>
+    </figure>
+    <figcaption class="dg-legenda">A nineteenth-century statistical procedure and a network of millions of weights, under one word.</figcaption>
+    
+    <div class="deck-footer">What AI Is, and How It Got Here · 11/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">01</div>
+    <h1>Symbolic AI</h1>
+    <p class="sub">A human states the knowledge. The machine applies it.</p>
+    <div class="deck-footer">What AI Is, and How It Got Here · 12/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Symbolic AI, defined</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li class="fragment">
+        A human states the knowledge, explicitly<span class="nota">as facts and rules, written down in words</span>
+        
+      </li>
+      
+      <li class="fragment">
+        The machine stores it, searches it, applies it<span class="nota">it adds nothing of its own</span>
+        
+      </li>
+      
+      <li class="fragment">
+        It knows nothing it was not given<span class="nota">competence is capped by what the expert could put into words</span>
+        
+      </li>
+      
+      <li class="fragment">
+        <strong>The test</strong> — can you point at the line that decided?<span class="nota">if you can, it is symbolic AI</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">What AI Is, and How It Got Here · 13/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Does it meet the definition?</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li class="fragment">
+        Tax and payroll engines<span class="nota">every deduction is a rule someone wrote — point at the line</span>
+        
+      </li>
+      
+      <li class="fragment">
+        Credit and fraud rules<span class="nota">hundreds of named rules, each alert traces to exactly one</span>
+        
+      </li>
+      
+      <li class="fragment">
+        Product and price configurators<span class="nota">an engineer wrote down which parts fit together</span>
+        
+      </li>
+      
+      <li class="fragment">
+        Compliance and sanctions screening<span class="nota">authored, and required by law to be auditable</span>
+        
+      </li>
+      
+      <li class="fragment">
+        ELIZA, the 1966 chatbot<span class="nota">a few hundred patterns, and the whole program fits on a slide</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">What AI Is, and How It Got Here · 14/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-demo">
+    <h2>A loan desk, in rules</h2><div class="rule"></div>
+    <div class="demo-wrap">
+      <iframe class="demo-frame" data-src="assets/regras.html" data-preload
+              title="Rule engine. Left, six editable IF-THEN rules in English. Right, an applicant&#39;s figures, the decision, the rule that produced it, and a table of six applicants comparing the rules&#39; verdict with a loan officer&#39;s."
+              loading="lazy"></iframe>
+    </div>
+    <div class="demo-legenda">Read the rules. Edit them. Watch a fix break something else.</div>
+    <div class="fonte">Built for this session · runs locally, no network</div>
+    <div class="deck-footer">What AI Is, and How It Got Here · 15/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-demo">
+    <h2>ELIZA · DOCTOR script</h2><div class="rule"></div>
+    <div class="demo-wrap">
+      <iframe class="demo-frame" data-src="assets/eliza.html" data-preload
+              title="Interactive reimplementation of the 1966 ELIZA DOCTOR script: a text box where the user types a sentence and the program answers with a template filled from a matched keyword."
+              loading="lazy"></iframe>
+    </div>
+    <div class="demo-legenda">Click into the box and type. <code>Esc</code> returns keyboard control to the slides.</div>
+    <div class="fonte">After Weizenbaum (1966) · runs locally, no network</div>
+    <div class="deck-footer">What AI Is, and How It Got Here · 16/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>How ELIZA works — the whole program</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li class="fragment">
+        Find a keyword in what you typed<span class="nota">a list of about forty, each with a priority</span>
+        
+      </li>
+      
+      <li class="fragment">
+        Match a pattern built around it<span class="nota">“… i am …” · “… my …” · “… you are …”</span>
+        
+      </li>
+      
+      <li class="fragment">
+        Fill a template with the rest of your sentence<span class="nota">the leftover words are copied, not read</span>
+        
+      </li>
+      
+      <li class="fragment">
+        Swap the pronouns<span class="nota">“I am” → “you are” · “my” → “your”</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">What AI Is, and How It Got Here · 17/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Weizenbaum wrote it as a parody</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        He was demonstrating how shallow the trick was
+        
+      </li>
+      
+      <li>
+        People talked to it for hours
+        
+      </li>
+      
+      <li>
+        His own secretary asked him to leave the room<span class="nota">his account, in Computer Power and Human Reason (1976)</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">What AI Is, and How It Got Here · 18/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Three limits of writing the rules down</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        The expert cannot say what they know<span class="nota">a senior underwriter knows a file is wrong and cannot give you the checklist</span>
+        
+      </li>
+      
+      <li>
+        It works inside the rules and nowhere else<span class="nota">not a worse answer outside them — no answer at all</span>
+        
+      </li>
+      
+      <li>
+        Rules interact, so maintenance compounds<span class="nota">rule 900 silently breaks rule 12 · every rule is owned by someone forever</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">What AI Is, and How It Got Here · 19/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-linha-tempo">
+    <h2>Two winters, one boom between them</h2>
+    <div class="rule"></div>
+    <ol class="tl">
+      
+      <li class="tl-marco fragment">
+        <div class="tl-marca"></div>
+        <div class="tl-corpo">
+          <div class="tl-data">1969</div>
+          <div class="tl-texto">Perceptrons</div>
+          <div class="tl-nota">generally credited with the retreat from neural networks</div>
+        </div>
+      </li>
+      
+      <li class="tl-marco fragment">
+        <div class="tl-marca"></div>
+        <div class="tl-corpo">
+          <div class="tl-data">1973</div>
+          <div class="tl-texto">Lighthill report</div>
+          <div class="tl-nota">UK funding cut</div>
+        </div>
+      </li>
+      
+      <li class="tl-marco periodo fragment">
+        <div class="tl-marca"></div>
+        <div class="tl-corpo">
+          <div class="tl-data">1974–80</div>
+          <div class="tl-texto">First winter</div>
+          
+        </div>
+      </li>
+      
+      <li class="tl-marco fragment">
+        <div class="tl-marca"></div>
+        <div class="tl-corpo">
+          <div class="tl-data">1980s</div>
+          <div class="tl-texto">Expert systems boom</div>
+          <div class="tl-nota">expert systems sold, deployed and maintained commercially</div>
+        </div>
+      </li>
+      
+      <li class="tl-marco periodo fragment">
+        <div class="tl-marca"></div>
+        <div class="tl-corpo">
+          <div class="tl-data">1987–93</div>
+          <div class="tl-texto">Second winter</div>
+          
+        </div>
+      </li>
+      
+    </ol>
+    <div class="fonte">First winter ≈ 1974–1980 · second ≈ 1987–1993</div>
+    <div class="deck-footer">What AI Is, and How It Got Here · 20/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Symbolic AI is running your day</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li class="fragment">
+        The route an app gave you this morning<span class="nota">shortest path over a graph of roads — search, not learning</span>
+        
+      </li>
+      
+      <li class="fragment">
+        Your payslip, and the tax withheld from it<span class="nota">INSS and IRRF are rules someone wrote down</span>
+        
+      </li>
+      
+      <li class="fragment">
+        The fare and the fees on your last flight
+        
+      </li>
+      
+      <li class="fragment">
+        Sanctions and money-laundering screening at your bank<span class="nota">it must be auditable, so it is written down</span>
+        
+      </li>
+      
+      <li class="fragment">
+        The guardrails around every chatbot you use
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">What AI Is, and How It Got Here · 21/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Rules are often the right choice</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        They win where logic is knowable, stable and auditable
+        
+      </li>
+      
+      <li>
+        They are cheaper, faster and explainable<span class="nota">you can show a regulator the line that produced the outcome</span>
+        
+      </li>
+      
+      <li>
+        Choosing a learned model where a rule would do<span class="nota">you get opacity, and you still have to find the data</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">What AI Is, and How It Got Here · 22/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">02</div>
+    <h1>Learning from data</h1>
+    <p class="sub">The human supplies examples. The machine writes the rule.</p>
+    <div class="deck-footer">What AI Is, and How It Got Here · 23/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>The inversion</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="Two panels. Left, classical IT: an input flows into a decision diamond labelled X, branching to do Y or do Z; caption, a person wrote the rule. Right, AI: historical data flows into learning, which produces a learned rule, highlighted, which produces a decision; caption, nobody wrote the rule.">
+      <!-- Classical IT vs AI: who writes the rule.
+     Cores vêm das classes dg-* (tema/base.css) → seguem o toggle claro/escuro.
+     O id do marker é único no arquivo porque TODOS os slides do deck vivem no
+     mesmo documento HTML — id repetido faria url(#…) resolver no primeiro. -->
+<svg viewBox="0 0 820 380" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="seta-itai" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path class="dg-seta-cabeca" d="M 0 0 L 10 5 L 0 10 z"/>
+    </marker>
+  </defs>
+
+  <!-- ============ painel esquerdo: TI clássica ============ -->
+  <text class="dg-titulo" x="215" y="30" font-size="21" text-anchor="middle">Classical IT</text>
+
+  <rect class="dg-forma" x="160" y="58" width="110" height="40" rx="6" stroke-width="1.8"/>
+  <text class="dg-rotulo" x="215" y="83" font-size="17" text-anchor="middle">input</text>
+
+  <path class="dg-seta" d="M 215 98 L 215 128" stroke-width="1.8" marker-end="url(#seta-itai)"/>
+
+  <path class="dg-forma" d="M 215 132 L 283 170 L 215 208 L 147 170 Z" stroke-width="1.8"/>
+  <text class="dg-rotulo" x="215" y="176" font-size="18" text-anchor="middle">X ?</text>
+
+  <!-- ramos: canto arredondado (Q) — o ângulo reto seco fica duro na projeção -->
+  <path class="dg-seta" d="M 147 170 L 113 170 Q 105 170 105 178 L 105 246" stroke-width="1.8" marker-end="url(#seta-itai)"/>
+  <path class="dg-seta" d="M 283 170 L 317 170 Q 325 170 325 178 L 325 246" stroke-width="1.8" marker-end="url(#seta-itai)"/>
+  <text class="dg-menor" x="126" y="162" font-size="14" text-anchor="middle">yes</text>
+  <text class="dg-menor" x="304" y="162" font-size="14" text-anchor="middle">no</text>
+
+  <rect class="dg-forma" x="55" y="250" width="100" height="40" rx="6" stroke-width="1.8"/>
+  <text class="dg-rotulo" x="105" y="275" font-size="17" text-anchor="middle">do Y</text>
+  <rect class="dg-forma" x="275" y="250" width="100" height="40" rx="6" stroke-width="1.8"/>
+  <text class="dg-rotulo" x="325" y="275" font-size="17" text-anchor="middle">do Z</text>
+
+  <text class="dg-menor" x="215" y="330" font-size="16" text-anchor="middle">a person wrote the rule</text>
+
+  <!-- ============ divisória ============ -->
+  <line class="dg-traco" x1="410" y1="20" x2="410" y2="350" stroke-width="1"/>
+
+  <!-- ============ painel direito: IA ============ -->
+  <text class="dg-titulo" x="615" y="30" font-size="21" text-anchor="middle">AI</text>
+
+  <rect class="dg-forma" x="505" y="58" width="220" height="40" rx="6" stroke-width="1.8"/>
+  <text class="dg-rotulo" x="615" y="83" font-size="17" text-anchor="middle">historical data</text>
+
+  <path class="dg-seta" d="M 615 98 L 615 118" stroke-width="1.8" marker-end="url(#seta-itai)"/>
+
+  <rect class="dg-forma" x="505" y="122" width="220" height="40" rx="6" stroke-width="1.8"/>
+  <text class="dg-rotulo" x="615" y="147" font-size="17" text-anchor="middle">learning</text>
+
+  <path class="dg-seta" d="M 615 162 L 615 182" stroke-width="1.8" marker-end="url(#seta-itai)"/>
+
+  <rect class="dg-linha-2" x="505" y="186" width="220" height="40" rx="6" stroke-width="2.4"/>
+  <text class="dg-rotulo" x="615" y="211" font-size="17" text-anchor="middle">a learned rule</text>
+
+  <path class="dg-seta" d="M 615 226 L 615 246" stroke-width="1.8" marker-end="url(#seta-itai)"/>
+
+  <rect class="dg-forma" x="505" y="250" width="220" height="40" rx="6" stroke-width="1.8"/>
+  <text class="dg-rotulo" x="615" y="275" font-size="17" text-anchor="middle">decision</text>
+
+  <text class="dg-menor" x="615" y="330" font-size="16" text-anchor="middle">nobody wrote the rule</text>
+</svg>
+    </figure>
+    <figcaption class="dg-legenda">Same input, same output — and a different account of where the rule came from.</figcaption>
+    
+    <div class="deck-footer">What AI Is, and How It Got Here · 24/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-demo">
+    <h2>The examples produce the rule</h2><div class="rule"></div>
+    <div class="demo-wrap">
+      <iframe class="demo-frame" data-src="assets/aprende.html" data-preload
+              title="A scatter plot. The user clicks to place past customers, blue for renewed and orange for churned; the background shades into two regions showing the boundary the machine derived from those points. A dropdown switches between a simple and a flexible model."
+              loading="lazy"></iframe>
+    </div>
+    <div class="demo-legenda">Each dot is a past customer. Nobody draws the line.</div>
+    <div class="fonte">Built for this session · runs locally, no network</div>
+    <div class="deck-footer">What AI Is, and How It Got Here · 25/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>How it draws the line</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li class="fragment">
+        It averages the position of each colour<span class="nota">one centre for “renewed”, one for “churned”</span>
+        
+      </li>
+      
+      <li class="fragment">
+        A new customer joins the closer centre<span class="nota">that is the entire rule — there is nothing else in it</span>
+        
+      </li>
+      
+      <li class="fragment">
+        You change it by changing the dots<span class="nota">there is no rule to edit, because nobody wrote one</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">What AI Is, and How It Got Here · 26/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>What this gets sold as</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li class="fragment">
+        Image recognition<span class="nota">is this a defect · a tumour · a licence plate · this person</span>
+        
+      </li>
+      
+      <li class="fragment">
+        Language<span class="nota">sentiment · translation · pulling figures out of documents</span>
+        
+      </li>
+      
+      <li class="fragment">
+        Recommendation<span class="nota">what to show next, to this person, now</span>
+        
+      </li>
+      
+      <li class="fragment">
+        Forecasting<span class="nota">demand · churn · credit risk</span>
+        
+      </li>
+      
+      <li class="fragment">
+        Anomaly detection<span class="nota">fraud, and equipment about to fail</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">What AI Is, and How It Got Here · 27/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-demo">
+    <h2>From dots to words</h2><div class="rule"></div>
+    <div class="demo-wrap">
+      <iframe class="demo-frame" data-src="assets/sentimento.html" data-preload
+              title="Sentiment classifier. Left, twelve customer reviews each tagged positive or negative by a human, editable. Right, a box to type a new review, the verdict, and the words it recognised from the examples underlined."
+              loading="lazy"></iframe>
+    </div>
+    <div class="demo-legenda">Same method as the dots — a human labels examples, the machine derives the rule.</div>
+    <div class="fonte">Built for this session · runs locally, no network</div>
+    <div class="deck-footer">What AI Is, and How It Got Here · 28/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Why 2012 and not 1986</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li class="fragment">
+        The method was published in 1986<span class="nota">a way to train a network with many layers · the maths barely changed after</span>
+        
+      </li>
+      
+      <li class="fragment">
+        The machine could not run it yet<span class="nota">too little data to learn from, and computers too slow to chew it</span>
+        
+      </li>
+      
+      <li class="fragment">
+        Then both arrived<span class="nota">the internet supplied the examples · chips built for video games supplied the speed</span>
+        
+      </li>
+      
+      <li class="fragment">
+        2012 — a network wins an image contest, by a lot<span class="nota">the field reorganised around the approach within about two years</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">What AI Is, and How It Got Here · 29/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Deep Blue vs. AlphaGo</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        1997 · chess · a human wrote what a good position looks like<span class="nota">grandmasters tuned the evaluation function by hand — that is symbolic AI</span>
+        
+      </li>
+      
+      <li>
+        2016 · Go · nobody wrote it down<span class="nota">trained on human games, then on games against itself — learning from data</span>
+        
+      </li>
+      
+      <li>
+        Same headline, two different kinds of machine
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">What AI Is, and How It Got Here · 30/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">03</div>
+    <h1>Generative AI</h1>
+    <p class="sub">The output stops being a verdict.</p>
+    <div class="deck-footer">What AI Is, and How It Got Here · 31/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>From judging to producing</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Symbolic and learning systems return a verdict<span class="nota">is this spam · will this customer leave · is this position good</span>
+        
+      </li>
+      
+      <li>
+        A generative one returns a thing that did not exist<span class="nota">a paragraph · an image · a contract clause · a line of code</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">What AI Is, and How It Got Here · 32/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Four properties of generative systems</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        General-purpose<span class="nota">learning from data meant a project per problem; generative AI means a subscription</span>
+        
+      </li>
+      
+      <li>
+        No technical skill required<span class="nota">which is why it arrived inside your organisation before anyone approved it</span>
+        
+      </li>
+      
+      <li>
+        Non-deterministic<span class="nota">ask twice, get two answers</span>
+        
+      </li>
+      
+      <li>
+        It fails fluently<span class="nota">confident, well-formed, wrong — and nothing in it notices</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">What AI Is, and How It Got Here · 33/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-demo">
+    <h2>Predict a word, feed it back, repeat</h2><div class="rule"></div>
+    <div class="demo-wrap">
+      <iframe class="demo-frame" data-src="assets/gera.html" data-preload
+              title="Text generator. Left, an editable corpus of corporate boilerplate. Right, the text it produced from it, and a panel listing, for each step, the candidate next words and how often each followed in the corpus."
+              loading="lazy"></iframe>
+    </div>
+    <div class="demo-legenda">Not a language model. A table of which word followed which, in the text on the left.</div>
+    <div class="fonte">Built for this session · runs locally, no network</div>
+    <div class="deck-footer">What AI Is, and How It Got Here · 34/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>What failure looks like</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li class="fragment">
+        Symbolic — silence<span class="nota">outside the rules it does nothing at all</span>
+        
+      </li>
+      
+      <li class="fragment">
+        Learning — confident error<span class="nota">on any case unlike the past</span>
+        
+      </li>
+      
+      <li class="fragment">
+        Generative — fluent, plausible, sincere, and wrong
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">What AI Is, and How It Got Here · 35/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Which kind did you buy?</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        <strong>A</strong> — fraud engine · 400+ configurable rules, fully auditable
+        
+      </li>
+      
+      <li>
+        <strong>B</strong> — credit model · learns from eight years of your repayment history
+        
+      </li>
+      
+      <li>
+        <strong>C</strong> — assistant · drafts customer replies in your brand's voice
+        
+      </li>
+      
+      <li>
+        <strong>D</strong> — recruitment tool · trained on your highest performers, ranks applicants
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">What AI Is, and How It Got Here · 36/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>For each one, in writing</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Which kind?
+        
+      </li>
+      
+      <li>
+        What single piece of evidence would confirm it?<span class="nota">not the vendor's word</span>
+        
+      </li>
+      
+      <li>
+        When it is wrong, how do you find out?<span class="nota">and can you explain the decision to the person affected?</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">What AI Is, and How It Got Here · 37/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Read your sentence again</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Cross it out and write a better one
+        
+      </li>
+      
+      <li>
+        Or leave it, and be ready to defend it
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">What AI Is, and How It Got Here · 38/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-destaque">
+    <div class="frase">Which one is this — and <span class="accent">how would I know?</span></div>
+    
+    <div class="deck-footer">What AI Is, and How It Got Here · 39/40</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Before you go</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        One system you use that is symbolic AI
+        
+      </li>
+      
+      <li>
+        One that is learning from data
+        
+      </li>
+      
+      <li>
+        One thing you called AI this morning that you would not now<span class="nota">or the reverse</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">What AI Is, and How It Got Here · 40/40</div>
+  </div>
+</section>
+      
+    </div>
+  </div>
+
+  <script src="../../../../vendor/reveal/dist/reveal.js"></script>
+  <script src="../../../../vendor/reveal/plugin/highlight/highlight.js"></script>
+  <script src="../../../../vendor/reveal/plugin/zoom/zoom.js"></script>
+  <script src="../../../../vendor/chartjs/chart.umd.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: false,   // a página aparece no rodapé do slide (ver .deck-footer)
+      transition: 'slide',
+      transitionSpeed: 'default',
+      controls: true,
+      progress: true,
+      center: false,
+      pdfSeparateFragments: false,
+      width: 1280, height: 720,
+      margin: 0.0,
+      plugins: [ RevealHighlight, RevealZoom ]
+    });
+
+    // ---- Renderização dos gráficos Chart.js ----
+    // getComputedStyle é "vivo": ler as cores DENTRO do montarGrafico faz o
+    // gráfico seguir o tema atual (importa ao alternar claro/escuro).
+    const V = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+    const TIPOS = { barra: 'bar', linha: 'line', rosca: 'doughnut', pizza: 'pie', area: 'line' };
+    function montarGrafico(canvas) {
+      const SERIES = [1,2,3,4,5,6,7,8].map(i => V('--series-'+i));
+      Chart.defaults.font.family = V('--font-sans') || 'system-ui, sans-serif';
+      Chart.defaults.color = V('--chart-ink-2');
+      Chart.defaults.borderColor = V('--chart-grid');
+
+      const cfg = JSON.parse(canvas.dataset.chart);
+      const tipo = TIPOS[cfg.tipo] || cfg.tipo;   // aceita nomes PT ou os do Chart.js
+      const circular = ['doughnut','pie','polarArea'].includes(tipo);
+      const ehArea = cfg.tipo === 'area';
+      const datasets = (cfg.series || []).map((s, i) => ({
+        label: s.nome,
+        data: s.dados,
+        backgroundColor: circular ? (cfg.series[0].dados.map((_, k) => SERIES[k % 8]))
+                                   : (ehArea ? SERIES[i % 8] + '33' : SERIES[i % 8]),
+        borderColor: SERIES[i % 8],
+        borderWidth: tipo === 'line' ? 2.4 : 0,
+        borderRadius: tipo === 'bar' ? 4 : 0,
+        pointRadius: tipo === 'line' ? 3 : 0,
+        tension: 0.25, fill: ehArea
+      }));
+      // Série única não tem legenda (seria uma caixinha só) — então o nome da
+      // série, que é onde mora a unidade, vira o rótulo do eixo Y. Sem isso o
+      // gráfico mostra números sem unidade.
+      const legenda = (cfg.series && cfg.series.length > 1) || circular;
+      const rotuloY = (!legenda && !circular && datasets.length === 1) ? datasets[0].label : '';
+      new Chart(canvas, {
+        type: tipo,
+        data: { labels: cfg.labels, datasets },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          animation: false,
+          plugins: {
+            legend: {
+              display: legenda,
+              position: 'bottom',
+              labels: { boxWidth: 12, boxHeight: 12, usePointStyle: true, padding: 16,
+                        color: V('--chart-ink-2'), font: { size: 15 } }
+            },
+            tooltip: { enabled: true }
+          },
+          scales: circular ? {} : {
+            x: { grid: { display: false }, border: { color: V('--chart-axis') },
+                 ticks: { color: V('--chart-muted'), font: { size: 14 } } },
+            y: { grid: { color: V('--chart-grid') }, border: { display: false },
+                 ticks: { color: V('--chart-muted'), font: { size: 14 } },
+                 title: { display: !!rotuloY, text: rotuloY,
+                          color: V('--chart-ink-2'), font: { size: 15 } },
+                 beginAtZero: true }
+          }
+        }
+      });
+    }
+    // Renderiza os gráficos do slide atual (evita medir canvas escondido = 0px)
+    function renderVisiveis() {
+      document.querySelectorAll('section.present canvas[data-chart]').forEach(c => {
+        if (!c.dataset.pronto) { c.dataset.pronto = '1'; montarGrafico(c); }
+      });
+    }
+    function renderTodos() {
+      document.querySelectorAll('canvas[data-chart]').forEach(c => {
+        if (!c.dataset.pronto) { c.dataset.pronto = '1'; montarGrafico(c); }
+      });
+    }
+    const modoPDF = window.location.search.includes('print-pdf');
+    if (modoPDF) {
+      // No modo PDF todos os slides ficam visíveis: renderiza tudo.
+      Reveal.on('ready', () => setTimeout(renderTodos, 200));
+    } else {
+      Reveal.on('ready', renderVisiveis);
+      Reveal.on('slidechanged', renderVisiveis);
+    }
+    window.__renderTodos = renderTodos;
+    // Redesenha os gráficos com as cores do tema atual (ao alternar claro/escuro).
+    window.__reRenderGraficos = function () {
+      document.querySelectorAll('canvas[data-chart]').forEach(c => {
+        const ex = Chart.getChart(c); if (ex) ex.destroy(); delete c.dataset.pronto;
+      });
+      (modoPDF ? renderTodos : renderVisiveis)();
+    };
+  </script>
+
+  <script>
+    // ---- Toggle de tema (o ícone sol/lua é trocado por CSS via [data-theme]) ----
+    (function () {
+      const root = document.documentElement;
+      const btn = document.querySelector('.tema-toggle');
+      function aplicar(modo) {
+        root.setAttribute('data-theme', modo);
+        try { localStorage.setItem('gs-tema', modo); } catch (e) {}
+        if (window.__reRenderGraficos) window.__reRenderGraficos();
+      }
+      btn.addEventListener('click', () =>
+        aplicar(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+    })();
+  </script>
+  
+  <script>
+  (function () {
+    var root = document.documentElement;
+    // revela os botões do topo quando o mouse está na faixa de cima
+    window.addEventListener('mousemove', function (e) {
+      root.classList.toggle('mostrar-topo', e.clientY < 80);
+    });
+    var link = document.querySelector('.btn-voltar');
+    if (!link) return;
+    // origem explícita passada pelo plano (?de=): só caminho relativo seguro
+    try {
+      var de = new URLSearchParams(location.search).get('de');
+      if (de && !/^[a-z][a-z0-9+.-]*:/i.test(de) && de[0] !== '/') link.setAttribute('href', de);
+    } catch (e) {}
+    // se você veio de outra página do site, volta pra ELA via histórico
+    link.addEventListener('click', function (ev) {
+      try {
+        if (document.referrer &&
+            new URL(document.referrer).origin === location.origin &&
+            history.length > 1) {
+          ev.preventDefault();
+          history.back();
+        }
+      } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>

@@ -86,6 +86,18 @@
   width: var(--rule-len); height: var(--rule-w); background: var(--accent);
   border-radius: var(--rule-w); margin: 0.7em 0 0;
 }
+/* Crédito de fonte — UMA declaração para todos os layouts. Estava repetida em
+   cinco (grafico, diagrama, linha-tempo, imagem-texto, demo) com o mesmo
+   tamanho e a mesma cor, variando só a margem por deriva. Abaixo de cada
+   layout ficam só as diferenças reais (largura numa coluna estreita etc.). */
+.fonte, .l-citacao .cit-fonte {
+  font-size: var(--fs-caption); color: var(--muted); margin-top: 0.6em;
+}
+/* Legenda sob o visual — mesmo papel no diagrama e na demo, logo mesma regra. */
+.l-diagrama .dg-legenda, .l-demo .demo-legenda {
+  font-size: var(--fs-body); color: var(--ink-2); text-align: center;
+  margin-top: 0.7em; max-width: 34em; align-self: center; line-height: 1.35;
+}
 
 /* ---------- titulo ---------- */
 .l-titulo { display: flex; flex-direction: column; justify-content: center; }
@@ -130,7 +142,7 @@
 .l-imagem-texto .texto p + p { margin-top: 0.6em; }
 /* Mesma linha de crédito discreta de `grafico` e `diagrama` — a atribuição da
    figura tem o mesmo peso visual em todos os layouts que mostram imagem. */
-.l-imagem-texto .fonte { font-size: var(--fs-caption); color: var(--muted); margin-top: 0.9em; max-width: 22em; line-height: 1.3; }
+.l-imagem-texto .fonte { margin-top: 0.9em; max-width: 22em; line-height: 1.3; }
 
 /* ---------- imagem-cheia ---------- */
 .l-imagem-cheia { padding: 0; overflow: hidden; }
@@ -145,18 +157,24 @@
 .l-grafico .chart-wrap { flex: 1 1 auto; min-height: 0; position: relative; }
 .l-grafico .chart-wrap canvas { display: block; }
 .l-grafico .chart-wrap img { width: 100%; height: 100%; object-fit: contain; }
-.l-grafico .fonte { font-size: var(--fs-caption); color: var(--muted); margin-top: 0.6em; }
 
 /* ---------- diagrama ---------- */
 /* O SVG é embutido no HTML (build.py), então usa os tokens do tema lá dentro e
    acompanha o toggle claro/escuro sozinho. Nada de cor fixa no arquivo .svg. */
+/* demo — página interativa embutida (iframe). Só posição/tamanho aqui;
+   as cores são as do tema, e o conteúdo do frame tem as suas próprias. */
+.l-demo { display: flex; flex-direction: column; }
+.l-demo h2 { font-size: var(--fs-h2); }
+.l-demo .rule { margin-bottom: 0.8em; }
+.l-demo .demo-wrap { flex: 1 1 auto; min-height: 0; display: flex; }
+.l-demo .demo-frame { flex: 1 1 auto; width: 100%; height: 100%; display: block;
+  border: 1px solid var(--rule); border-radius: 6px; background: var(--bg); }
+
 .l-diagrama { display: flex; flex-direction: column; }
 .l-diagrama h2 { font-size: var(--fs-h2); }
 .l-diagrama .rule { margin-bottom: 0.8em; }
 .l-diagrama .dg-fig { flex: 1 1 auto; min-height: 0; margin: 0; display: flex; align-items: center; justify-content: center; }
 .l-diagrama .dg-fig svg { width: 100%; height: 100%; max-height: 100%; display: block; overflow: visible; }
-.l-diagrama .dg-legenda { font-size: var(--fs-body); color: var(--ink-2); text-align: center; margin-top: 0.7em; max-width: 34em; align-self: center; line-height: 1.35; }
-.l-diagrama .fonte { font-size: var(--fs-caption); color: var(--muted); margin-top: 0.5em; }
 /* Classes usadas DENTRO dos .svg. Só cor/peso — o tamanho da fonte vai como
    atributo `font-size` no próprio SVG, em unidades do viewBox, senão não escala
    junto com o desenho. */
@@ -182,7 +200,7 @@
 .l-citacao .kicker { margin-bottom: 0.9em; }
 .l-citacao .cit-texto { font-size: var(--fs-lead); line-height: 1.3; color: var(--ink); max-width: 20em; margin: 0; padding-left: 0.7em; border-left: 3px solid var(--accent); font-style: italic; }
 .l-citacao .cit-autor { font-size: var(--fs-body); color: var(--ink-2); margin-top: 0.9em; font-weight: 600; }
-.l-citacao .cit-fonte { font-size: var(--fs-caption); color: var(--muted); margin-top: 0.25em; max-width: 26em; line-height: 1.3; }
+.l-citacao .cit-fonte { margin-top: 0.25em; max-width: 26em; line-height: 1.3; }
 
 /* ---------- linha-tempo ---------- */
 /* Eixo horizontal contínuo: cada marco desenha seu próprio segmento (::before),
@@ -202,7 +220,6 @@
 .l-linha-tempo .tl-marco.periodo .tl-data { color: var(--accent-2); }
 .l-linha-tempo .tl-texto { font-size: 0.85em; color: var(--ink); line-height: 1.25; margin-top: 0.15em; }
 .l-linha-tempo .tl-nota { font-size: var(--fs-caption); color: var(--muted); line-height: 1.25; margin-top: 0.25em; }
-.l-linha-tempo .fonte { font-size: var(--fs-caption); color: var(--muted); margin-top: 0.6em; }
 
 /* Os controles do topo (voltar + tema) ficam em tema/controles.css — fonte
    única compartilhada com o plano (carregada no deck.html.j2). */

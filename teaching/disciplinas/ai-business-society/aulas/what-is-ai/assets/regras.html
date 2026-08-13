@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Rule engine — symbolic AI</title>
+<link rel="stylesheet" href="demo.css">
+<!--
+  SYMBOLIC AI, LIVE — a rule engine you can read, edit and break in front of the room.
+
+  Ours, written for this session. No library, no network. Style comes from
+  demo.css, which mirrors the deck theme (see the note at the top of that file).
+
+  HOW TO RUN IT — three beats, about four minutes:
+
+  1. READ THE RULES OUT LOUD. They are on the left, in English, and that is the
+     whole program. "A person wrote these. You can read every one. You could
+     argue with the person who wrote them."
+     Click through Ana, Bruno, Carla — right answers, and the rule that decided
+     is highlighted. This is auditability: you can point at the line.
+
+  2. CLICK ELENA. Denied. She is 58, no debt, credit score 780, and half a
+     million in assets — she is buying a flat. The rules deny her because the
+     loan is more than ten times her income, and THE RULES HAVE NO CONCEPT OF
+     ASSETS. The column is right there in the data; no rule looks at it.
+     "Who is going to notice? Elena. And she is not in the room."
+
+  3. NOW FIX IT — and this is the beat that matters. Add to the TOP of the rules:
+         IF assets > amount THEN APPROVE "secured by assets"
+     Elena passes. Press "run all cases": CARLA NOW BREAKS. Her credit score is
+     500, and she has assets too, so the new rule approves her before the score
+     rule is ever reached. One line, one fix, one silent regression.
+     "That is rule nine hundred breaking rule twelve. Now imagine four thousand
+     of them, and the person who wrote the first hundred has left."
+
+  ALSO IN THE TABLE: Felipe. The rules approve him — high income, great score.
+  He has been employed six months. The rules have no concept of stability
+  either. Elena is a false denial, Felipe a false approval: the same rule set
+  fails in both directions, and neither failure is visible from inside it.
+
+  ⚠️ Rule conditions are evaluated with `new Function`, so whatever is typed in
+  the rules box runs as JavaScript. Fine for a local classroom page; do not put
+  this on the open web.
+-->
+</head>
+<body>
+
+<header>
+  <h1>Rule engine <span class="sub">· symbolic AI · a human wrote every line</span></h1>
+  <span class="spacer"></span>
+  <label class="toggle"><input type="checkbox" id="verTrace"> show the machinery</label>
+</header>
+
+<main class="duas">
+  <div class="painel">
+    <h2>The rules — this is the whole program</h2>
+    <textarea class="codigo" id="regras" spellcheck="false"></textarea>
+    <div class="linha" style="margin-top:.7em">
+      <button id="rodar">Apply to the applicant</button>
+      <button class="sec" id="reset">Reset rules</button>
+    </div>
+    <div class="nota-rodape">
+      Editable. Rules are tried <b>in order</b>; the first one that matches decides.
+    </div>
+  </div>
+
+  <div class="painel">
+    <h2>The applicant</h2>
+    <div class="linha">
+      <label for="caso">Load a case</label>
+      <select id="caso"></select>
+    </div>
+    <div id="campos"></div>
+
+    <div id="saida"></div>
+
+    <h2 style="margin-top:1.2em">All cases</h2>
+    <div class="linha">
+      <button class="sec" id="rodarTodos">Run all cases</button>
+    </div>
+    <div id="tabela"></div>
+    <div class="nota-rodape" id="resumo"></div>
+  </div>
+</main>
+
+<script>
+"use strict";
+
+const REGRAS_PADRAO = [
+  'IF age < 18             THEN DENY  "under 18"',
+  'IF income < 2000        THEN DENY  "income below the minimum"',
+  'IF score < 550          THEN DENY  "credit score too low"',
+  'IF debt / income > 0.4  THEN DENY  "debt-to-income too high"',
+  'IF amount > income * 10 THEN DENY  "loan too large for the income"',
+  'APPROVE'
+].join('\n');
+
+/* `esperado` = what a human loan officer would decide. It is NOT computed by
+   the rules — it is there so the room can see where the rules and the world
+   disagree. */
+const CASOS = [
+  { nome:'Ana',    age:34, income:6000,  score:720, debt:800,  amount:20000,  assets:5000,   months_employed:60,  esperado:'APPROVE' },
+  { nome:'Bruno',  age:22, income:1500,  score:700, debt:100,  amount:5000,   assets:0,      months_employed:14,  esperado:'DENY'    },
+  { nome:'Carla',  age:41, income:4000,  score:500, debt:500,  amount:10000,  assets:15000,  months_employed:90,  esperado:'DENY'    },
+  { nome:'Diego',  age:29, income:3000,  score:680, debt:1400, amount:8000,   assets:2000,   months_employed:40,  esperado:'DENY'    },
+  { nome:'Elena',  age:58, income:2500,  score:780, debt:0,    amount:60000,  assets:500000, months_employed:200, esperado:'APPROVE' },
+  { nome:'Felipe', age:31, income:12000, score:810, debt:2000, amount:100000, assets:3000,   months_employed:6,   esperado:'DENY'    }
+];
+
+const CAMPOS = ['age','income','score','debt','amount','assets','months_employed'];
+
+/* ---------- parser: uma linha, uma regra ---------- */
+function parse(texto) {
+  return texto.split('\n').map((linha, i) => {
+    const cru = linha.trim();
+    if (!cru || cru.startsWith('#')) return null;
+    const m = cru.match(/^IF\s+(.+?)\s+THEN\s+(DENY|APPROVE)\s*(?:"([^"]*)")?$/i);
+    if (m) return { n:i, cru:linha, cond:m[1], acao:m[2].toUpperCase(), motivo:m[3]||'' };
+    const m2 = cru.match(/^(DENY|APPROVE)\s*(?:"([^"]*)")?$/i);
+    if (m2) return { n:i, cru:linha, cond:null, acao:m2[1].toUpperCase(), motivo:m2[2]||'no rule matched — the fallback decided' };
+    return { n:i, cru:linha, erro:true };
+  }).filter(Boolean);
+}
+
+function avaliar(regras, caso) {
+  for (const r of regras) {
+    if (r.erro) continue;
+    if (r.cond === null) return { ...r, disparou:true };
+    let ok = false;
+    try {
+      ok = Function(...CAMPOS, 'return (' + r.cond + ')')(...CAMPOS.map(c => caso[c]));
+    } catch (e) { continue; }
+    if (ok) return { ...r, disparou:true };
+  }
+  return { acao:'APPROVE', motivo:'no rule matched and there is no fallback', n:-1, cru:'' };
+}
+
+/* ---------- interface ---------- */
+const $ = id => document.getElementById(id);
+const regrasBox = $('regras'), sel = $('caso'), campos = $('campos'),
+      saida = $('saida'), tabela = $('tabela'), resumo = $('resumo'),
+      verTrace = $('verTrace');
+
+regrasBox.value = REGRAS_PADRAO;
+CASOS.forEach((c, i) => sel.add(new Option(c.nome, i)));
+
+campos.innerHTML = CAMPOS.map(c =>
+  '<div class="linha"><label for="f_' + c + '">' + c.replace(/_/g, ' ') + '</label>' +
+  '<input type="number" id="f_' + c + '"></div>').join('');
+
+function carregar(i) {
+  const c = CASOS[i];
+  CAMPOS.forEach(f => $('f_' + f).value = c[f]);
+  decidir();
+}
+function lerCampos() {
+  const o = {};
+  CAMPOS.forEach(f => o[f] = Number($('f_' + f).value));
+  return o;
+}
+
+function decidir() {
+  const regras = parse(regrasBox.value);
+  const caso = lerCampos();
+  const r = avaliar(regras, caso);
+  const sim = r.acao === 'APPROVE';
+  saida.innerHTML =
+    '<div class="veredicto ' + (sim ? 'sim' : 'nao') + '">' + r.acao + '</div>' +
+    '<div class="porque">' + (r.motivo || '') + '</div>' +
+    '<div class="trace"' + (verTrace.checked ? '' : ' hidden') + '>' +
+      '<b>rule</b>  ' + (r.n >= 0 ? 'line ' + (r.n + 1) : '(none)') + '\n' +
+      '<b>text</b>  ' + (r.cru || '').trim().replace(/</g, '&lt;') +
+    '</div>';
+}
+
+function rodarTodos() {
+  const regras = parse(regrasBox.value);
+  let erradas = 0;
+  const linhas = CASOS.map(c => {
+    const r = avaliar(regras, c);
+    const bate = r.acao === c.esperado;
+    if (!bate) erradas++;
+    return '<tr class="' + (bate ? '' : 'quebrou') + '">' +
+      '<td>' + c.nome + '</td>' +
+      '<td class="' + (r.acao === 'APPROVE' ? 'sim' : 'nao') + '">' + r.acao + '</td>' +
+      '<td class="' + (c.esperado === 'APPROVE' ? 'sim' : 'nao') + '">' + c.esperado + '</td>' +
+      '<td>' + (bate ? '' : '✗ wrong') + '</td></tr>';
+  }).join('');
+  tabela.innerHTML = '<table><tr><th>applicant</th><th>the rules say</th>' +
+    '<th>a loan officer would say</th><th></th></tr>' + linhas + '</table>';
+  resumo.innerHTML = erradas === 0
+    ? '<b>All six agree.</b> Change one rule and press this again.'
+    : '<b>' + erradas + ' of 6 wrong.</b> Every red row is a person the rule set cannot see.';
+}
+
+sel.onchange = () => carregar(Number(sel.value));
+$('rodar').onclick = decidir;
+$('rodarTodos').onclick = rodarTodos;
+$('reset').onclick = () => { regrasBox.value = REGRAS_PADRAO; decidir(); rodarTodos(); };
+regrasBox.oninput = decidir;
+CAMPOS.forEach(f => { const el = $('f_' + f); if (el) el.oninput = decidir; });
+verTrace.onchange = () => document.querySelectorAll('.trace')
+  .forEach(e => e.hidden = !verTrace.checked);
+
+carregar(0);
+rodarTodos();
+</script>
+</body>
+</html>

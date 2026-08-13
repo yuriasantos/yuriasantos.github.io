@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Learning from examples — learning from data</title>
+<link rel="stylesheet" href="demo.css">
+<!--
+  LEARNING FROM DATA, LIVE — nobody writes the rule; the examples produce it.
+
+  Ours, written for this session. No library, no network. Style from demo.css.
+
+  THE FRAME: each dot is a past customer. Position is two things you know about
+  them — say, months as a customer (x) and monthly spend (y). Colour is what
+  ACTUALLY HAPPENED: blue = renewed, orange = churned. That is all the human
+  supplies. The shaded background is the rule the machine produced.
+
+  HOW TO RUN IT — three beats, about four minutes:
+
+  1. CLICK ABOUT SIX BLUE DOTS ON ONE SIDE AND SIX ORANGE ON THE OTHER, out
+     loud, narrating: "I am not writing a rule. I am showing it what happened."
+     The background fills in as you go. Stop and point at it:
+     "Nobody in this room wrote that boundary. It came out of the dots."
+     ↩ CALLBACK to the CRITERIA column: somebody said the test was "nobody wrote
+     down the rules it follows". This is that, on a screen.
+
+  2. DROP A TEST POINT (switch to "new customer" and click somewhere new). It
+     predicts. "That customer does not exist yet. The machine has an opinion
+     about them anyway, and the opinion comes from the past."
+
+  3. SWITCH THE MODEL TO "flexible" — and this is the beat that matters.
+     Same dots, wildly different rule: little islands wrapped around individual
+     points. It is now RIGHT ABOUT EVERY DOT ON THE SCREEN and will be wrong
+     about half the customers you meet tomorrow. "It stopped finding the pattern
+     and started memorising the class list. That has a name, and you get it in
+     full in two weeks."
+     Then add one stray orange dot deep in the blue region and switch back and
+     forth: simple ignores it, flexible builds a shrine to it.
+
+  DELIBERATELY NOT HERE: any formula, any mention of what the models are called.
+  The session's boundary is what each kind IS, not how it works inside.
+-->
+</head>
+<body>
+
+<header>
+  <h1>Learning from examples <span class="sub">· learning from data · nobody wrote the rule</span></h1>
+  <span class="spacer"></span>
+  <label class="toggle"><input type="checkbox" id="verTrace"> show the machinery</label>
+</header>
+
+<main>
+  <div class="painel" style="flex:1 1 62%">
+    <div class="linha">
+      <button id="bAzul">● renewed</button>
+      <button class="sec" id="bLaranja">● churned</button>
+      <button class="sec" id="bTeste">? new customer</button>
+      <span class="spacer"></span>
+      <button class="sec" id="bLimpar">Clear</button>
+    </div>
+    <div id="wrap" style="flex:1 1 auto; min-height:0; position:relative">
+      <canvas id="cv" style="position:absolute; inset:0; width:100%; height:100%;
+        border:1px solid var(--rule); border-radius:var(--radius); cursor:crosshair"></canvas>
+    </div>
+    <div class="nota-rodape">
+      Click to place a past customer. <b>x</b> = months as a customer · <b>y</b> = monthly spend.
+      Colour = what actually happened.
+    </div>
+  </div>
+
+  <div class="painel" style="flex:1 1 38%">
+    <h2>The rule the examples produced</h2>
+    <div class="linha">
+      <label for="modelo">Model</label>
+      <select id="modelo">
+        <option value="simples">simple</option>
+        <option value="flexivel">flexible</option>
+      </select>
+    </div>
+    <div id="saida"></div>
+    <div class="nota-rodape" id="dica"></div>
+  </div>
+</main>
+
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const cv = $('cv'), ctx = cv.getContext('2d');
+const AZUL = 'azul', LARANJA = 'laranja';
+
+let pontos = [];      // {x, y, cls}  em coordenadas 0..1
+let teste = null;     // {x, y}
+let classeAtual = AZUL;
+let modelo = 'simples';
+
+function cor(cls, alpha) {
+  const c = getComputedStyle(document.documentElement)
+    .getPropertyValue(cls === AZUL ? '--accent' : '--accent-2').trim();
+  if (alpha === undefined) return c;
+  const n = parseInt(c.slice(1), 16);
+  return 'rgba(' + (n >> 16) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + alpha + ')';
+}
+
+/* ---------- os dois modelos ----------
+   simples  : centro de cada classe; o ponto vai para o centro mais próximo.
+              Produz uma fronteira reta. Ignora ponto solitário.
+   flexivel : o vizinho mais próximo decide. Acerta TODO ponto da tela e
+              constrói ilhas em volta de cada um.                              */
+function prever(x, y) {
+  if (!pontos.length) return null;
+  if (modelo === 'flexivel') {
+    let melhor = null, d0 = Infinity;
+    for (const p of pontos) {
+      const d = (p.x - x) ** 2 + (p.y - y) ** 2;
+      if (d < d0) { d0 = d; melhor = p; }
+    }
+    return melhor.cls;
+  }
+  const c = centros();
+  if (!c.azul || !c.laranja) return pontos[0].cls;
+  const da = (c.azul.x - x) ** 2 + (c.azul.y - y) ** 2;
+  const dl = (c.laranja.x - x) ** 2 + (c.laranja.y - y) ** 2;
+  return da <= dl ? AZUL : LARANJA;
+}
+function centros() {
+  const o = {};
+  for (const cls of [AZUL, LARANJA]) {
+    const g = pontos.filter(p => p.cls === cls);
+    if (g.length) o[cls] = { x: g.reduce((s, p) => s + p.x, 0) / g.length,
+                             y: g.reduce((s, p) => s + p.y, 0) / g.length };
+  }
+  return o;
+}
+
+/* ---------- desenho ---------- */
+function desenhar() {
+  const w = cv.clientWidth, h = cv.clientHeight, dpr = devicePixelRatio || 1;
+  cv.width = w * dpr; cv.height = h * dpr;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, w, h);
+
+  if (pontos.length) {
+    const passo = 7;
+    for (let px = 0; px < w; px += passo)
+      for (let py = 0; py < h; py += passo) {
+        const cls = prever(px / w, py / h);
+        if (!cls) continue;
+        ctx.fillStyle = cor(cls, 0.16);
+        ctx.fillRect(px, py, passo, passo);
+      }
+  }
+  for (const p of pontos) {
+    ctx.beginPath();
+    ctx.arc(p.x * w, p.y * h, Math.max(6, h * 0.018), 0, 7);
+    ctx.fillStyle = cor(p.cls); ctx.fill();
+    ctx.lineWidth = 2; ctx.strokeStyle = getComputedStyle(document.body).backgroundColor;
+    ctx.stroke();
+  }
+  if (teste) {
+    const r = Math.max(9, h * 0.026);
+    ctx.beginPath(); ctx.arc(teste.x * w, teste.y * h, r, 0, 7);
+    const cls = prever(teste.x, teste.y);
+    ctx.fillStyle = cls ? cor(cls, 0.55) : 'transparent'; ctx.fill();
+    ctx.lineWidth = 3; ctx.setLineDash([5, 4]);
+    ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--ink').trim();
+    ctx.stroke(); ctx.setLineDash([]);
+  }
+  relatorio();
+}
+
+function relatorio() {
+  const nA = pontos.filter(p => p.cls === AZUL).length;
+  const nL = pontos.length - nA;
+  let html = '';
+  if (!pontos.length) {
+    html = '<div class="porque">Nothing yet. The machine has no opinion, because ' +
+           'it has seen nothing.</div>';
+  } else {
+    const cls = teste ? prever(teste.x, teste.y) : null;
+    html = '<div class="veredicto ' + (cls === AZUL ? 'sim' : cls ? 'nao' : '') + '">' +
+      (teste ? (cls === AZUL ? 'will renew' : 'will churn') : nA + ' renewed · ' + nL + ' churned') +
+      '</div>' +
+      '<div class="porque">' + (teste
+        ? 'A customer who does not exist yet, judged by what happened to others.'
+        : 'Place a “new customer” to get a prediction.') + '</div>';
+    html += '<div class="trace"' + ($('verTrace').checked ? '' : ' hidden') + '>' +
+      '<b>examples</b>  ' + pontos.length + ' customers, coloured by a human\n' +
+      '<b>rule</b>      ' + (modelo === 'simples'
+        ? 'whichever colour’s average position is closer'
+        : 'copy the single closest customer') +
+      '</div>';
+  }
+  $('saida').innerHTML = html;
+  $('dica').innerHTML = modelo === 'flexivel'
+    ? '<b>Flexible.</b> It is now right about every dot on this screen — and it has stopped describing a pattern.'
+    : '<b>Simple.</b> One straight boundary. It gets some dots wrong on purpose.';
+}
+
+/* ---------- eventos ---------- */
+cv.addEventListener('click', e => {
+  const r = cv.getBoundingClientRect();
+  const x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+  if (classeAtual === 'teste') teste = { x, y };
+  else pontos.push({ x, y, cls: classeAtual });
+  desenhar();
+});
+function marcar(id) {
+  ['bAzul', 'bLaranja', 'bTeste'].forEach(b =>
+    $(b).className = b === id ? '' : 'sec');
+}
+$('bAzul').onclick = () => { classeAtual = AZUL; marcar('bAzul'); };
+$('bLaranja').onclick = () => { classeAtual = LARANJA; marcar('bLaranja'); };
+$('bTeste').onclick = () => { classeAtual = 'teste'; marcar('bTeste'); };
+$('bLimpar').onclick = () => { pontos = []; teste = null; desenhar(); };
+$('modelo').onchange = e => { modelo = e.target.value; desenhar(); };
+$('verTrace').onchange = () => document.querySelectorAll('.trace')
+  .forEach(el => el.hidden = !$('verTrace').checked);
+addEventListener('resize', desenhar);
+desenhar();
+</script>
+</body>
+</html>

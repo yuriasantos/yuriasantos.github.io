@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Sentiment — learning from data on text</title>
+<link rel="stylesheet" href="demo.css">
+<!--
+  LEARNING FROM DATA, ON TEXT — the same inversion, in a domain they actually buy.
+
+  Ours, written for this session. No library, no network. Style from demo.css.
+
+  WHY IT EXISTS: aprende.html shows the inversion with dots on a plane, which is
+  clean but abstract. This shows it on customer reviews, which is a product your
+  students will be sold. Same machine, same lesson, recognisable object.
+
+  ⚠️ WHAT IS DELIBERATELY HIDDEN: the weights. You can see WHICH words it
+  recognised, never HOW MUCH each one counts. That table is the engine of the
+  machine-learning session, built live on the board there, and it lands far
+  harder if the room has already watched the effect without being shown the
+  cause. Do not open it here.
+
+  HOW TO RUN IT — three beats, about three minutes:
+
+  1. TYPE "the staff were friendly and the delivery arrived early".
+     Positive. The words it recognised from the examples are underlined.
+     "Nobody wrote a rule about the word 'friendly'. It appeared in reviews a
+     human had already marked positive, and that is the whole of its opinion."
+
+  2. ADD A TRAINING EXAMPLE, live. Type a new negative review on the left using
+     a word it has never seen — "the packaging was hideous" — mark it negative,
+     retrain, and now test "hideous". The verdict moved.
+     ➜ "I changed the examples. I did not touch a rule, because there is no rule
+     to touch. That is the inversion, in a product you will be sold."
+
+  3. NOW BREAK IT — this is the beat that matters. Type:
+         the delivery was not late
+     It says NEGATIVE. It is a compliment. The machine has no concept of
+     negation; it has words that sat near outcomes. "It cannot read. It counts
+     company. Every failure you will meet in a text product for the next decade
+     is a version of this one."
+
+  Optional, if a student asks whether more examples would fix it: yes, partly,
+  and never completely — you would be teaching it that "not late" is a phrase,
+  not teaching it what "not" does. Hold the question; it is the right one, and
+  it is answered in the machine-learning session.
+-->
+</head>
+<body>
+
+<header>
+  <h1>Sentiment <span class="sub">· learning from data · the examples are the program</span></h1>
+  <span class="spacer"></span>
+  <label class="toggle"><input type="checkbox" id="verTrace"> show the machinery</label>
+</header>
+
+<main class="duas">
+  <div class="painel">
+    <h2>What a human labelled</h2>
+    <textarea class="codigo" id="exemplos" spellcheck="false"></textarea>
+    <div class="linha" style="margin-top:.7em">
+      <button id="treinar">Learn from these</button>
+      <button class="sec" id="reset">Reset examples</button>
+    </div>
+    <div class="nota-rodape">
+      One review per line, tagged <b>+</b> or <b>−</b>. Add your own and learn again.
+    </div>
+  </div>
+
+  <div class="painel">
+    <h2>A review it has never seen</h2>
+    <div class="linha">
+      <input type="text" id="frase" placeholder="type a review and press Enter" spellcheck="false">
+    </div>
+    <div class="linha">
+      <button class="sec" id="ex1">staff were friendly, delivery arrived early</button>
+    </div>
+    <div class="linha">
+      <button class="sec" id="ex2">the delivery was not late</button>
+    </div>
+    <div id="saida"></div>
+  </div>
+</main>
+
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+
+const EXEMPLOS = [
+  '+ the service was excellent',
+  '+ great value and very fast delivery',
+  '+ I loved it, the quality is wonderful',
+  '+ arrived early and works perfectly',
+  '+ friendly staff, would recommend',
+  '+ excellent quality and a fair price',
+  '− terrible service and a rude reply',
+  '− the delivery was late and the box was damaged',
+  '− I hated it, poor quality',
+  '− does not work, a waste of money',
+  '− rude staff, slow and unhelpful',
+  '− late, damaged and overpriced'
+].join('\n');
+
+let pesos = null, vistas = null;
+
+function tokenizar(t) {
+  return t.toLowerCase().replace(/[^a-z\s']/g, ' ').split(/\s+/).filter(Boolean);
+}
+
+function aprender(texto) {
+  const cont = new Map();          // palavra -> [positivas, negativas]
+  let nP = 0, nN = 0;
+  for (const linha of texto.split('\n')) {
+    const m = linha.trim().match(/^([+−-])\s*(.+)$/);
+    if (!m) continue;
+    const positivo = m[1] === '+';
+    positivo ? nP++ : nN++;
+    for (const p of new Set(tokenizar(m[2]))) {
+      if (!cont.has(p)) cont.set(p, [0, 0]);
+      cont.get(p)[positivo ? 0 : 1]++;
+    }
+  }
+  const w = new Map();
+  for (const [p, [a, b]] of cont) w.set(p, (a / Math.max(1, nP)) - (b / Math.max(1, nN)));
+  return { w, vocab: new Set(cont.keys()), nP, nN };
+}
+
+function classificar(frase) {
+  const pal = tokenizar(frase);
+  let soma = 0; const reconhecidas = [];
+  for (const p of pal) {
+    if (pesos.has(p)) { soma += pesos.get(p); reconhecidas.push(p); }
+  }
+  return { soma, reconhecidas, pal };
+}
+
+function render() {
+  const frase = $('frase').value.trim();
+  if (!frase) { $('saida').innerHTML = ''; return; }
+  const { soma, reconhecidas, pal } = classificar(frase);
+  const positivo = soma > 0;
+  const nada = reconhecidas.length === 0;
+
+  const marcada = pal.map(p => pesos.has(p)
+    ? '<u style="text-decoration-color:var(--accent); text-underline-offset:.25em">' + p + '</u>'
+    : '<span style="color:var(--muted)">' + p + '</span>').join(' ');
+
+  $('saida').innerHTML =
+    '<div class="veredicto ' + (nada ? '' : positivo ? 'sim' : 'nao') + '">' +
+      (nada ? 'no opinion' : positivo ? 'POSITIVE' : 'NEGATIVE') + '</div>' +
+    '<div class="porque" style="margin-bottom:.5em">' + marcada + '</div>' +
+    '<div class="porque">' + (nada
+      ? 'Not one of these words appeared in the labelled examples. It has nothing to go on.'
+      : 'Underlined: words it met in the examples. Grey: words it has never seen.') + '</div>' +
+    '<div class="trace"' + ($('verTrace').checked ? '' : ' hidden') + '>' +
+      '<b>learned from</b>  ' + (vistas.nP + vistas.nN) + ' reviews a human tagged\n' +
+      '<b>vocabulary</b>    ' + vistas.vocab.size + ' words — every word it will ever know' +
+    '</div>';
+}
+
+function treinar() {
+  vistas = aprender($('exemplos').value);
+  pesos = vistas.w;
+  render();
+}
+
+$('exemplos').value = EXEMPLOS;
+$('treinar').onclick = treinar;
+$('reset').onclick = () => { $('exemplos').value = EXEMPLOS; treinar(); };
+$('frase').oninput = render;
+$('ex1').onclick = () => { $('frase').value = 'staff were friendly and the delivery arrived early'; render(); };
+$('ex2').onclick = () => { $('frase').value = 'the delivery was not late'; render(); };
+$('verTrace').onchange = () => document.querySelectorAll('.trace')
+  .forEach(e => e.hidden = !$('verTrace').checked);
+treinar();
+</script>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Producing, not judging — generative AI</title>
+<link rel="stylesheet" href="demo.css">
+<!--
+  GENERATIVE, LIVE — from judging to producing, and the failure mode inverts.
+
+  Ours, written for this session. No library, no network. Style from demo.css.
+
+  ⚠️ SAY THIS OUT LOUD, FIRST, OR THE DEMO MISLEADS: this is NOT a large
+  language model. It is the toy ancestor — a word-frequency table built from the
+  text on the left. Its one trick is the one that matters today: predict a
+  likely next word, then feed it back in and predict again. Modern systems
+  differ enormously in how they choose, and not at all in that loop.
+  "You get the real machinery in a later session. What you can see here is the
+  SHAPE, and the shape is what makes the failure mode what it is."
+
+  WHAT IT IS AND IS NOT. It does not summarise the corpus and it does not answer
+  you. It never read that text for meaning: it counted which word follows which.
+  What you type in "start it off" is a STARTING POINT, not a question — it takes
+  your last words as the context and walks on from there. Every individual step
+  is copied from the corpus; the sequence as a whole is not. Each move existed,
+  the path never did.
+
+  HOW TO RUN IT — four beats, about three minutes:
+
+  1. TYPE A START ("our strategy") and generate. What you typed stays grey, what
+     the machine added is black. Read it aloud in a board-meeting voice. It
+     scans. It has cadence. It is about nothing. Ask: "would this pass in a
+     slide deck you have seen?" The honest answer, usually, is yes.
+     ➜ Point at the board table: this is the generative row, live. The human
+     supplies an objective in words; the machine supplies content.
+
+  2. PRESS IT AGAIN, same start. Different text. NON-DETERMINISTIC — property
+     three on the four-properties slide, demonstrated in one click. "Ask twice,
+     get two answers. Now imagine that is your compliance memo."
+
+  2b. TYPE SOMETHING IT HAS NEVER READ — "quantum blockchain synergy". It stops
+     and says so. The sharpest moment in the demo: it can only continue what it
+     has read, and everything it will ever say is a recombination of the box on
+     the left.
+
+  3. TURN ON "show the machinery" — AND SWITCH "looks back at" TO 1 WORD.
+     (At 2 words this corpus is small enough that most contexts have a single
+     candidate, which makes a dull panel. At 1 word the shortlists are rich:
+     `after "in" -> the(4) our(1) line(1) service(1)`. The text gets choppier;
+     that is the trade, and it is worth naming out loud — a longer memory reads
+     better and copies more.)
+     Now each generated word shows the shortlist
+     it was drawn from and how often each candidate followed in the corpus.
+     There is no plan, no sentence being aimed at, no fact being checked — one
+     lookup, one weighted pick, repeat. THAT is why it fails fluently: nothing
+     in the loop has any state that could notice being wrong.
+     "Fluency and accuracy were bolted together for all of human history because
+     the only thing that could produce fluent language was a mind that knew
+     what it was talking about. That bolt is gone."
+
+  OPTIONAL, if the room is quick: paste your own text into the corpus (a news
+  article, a syllabus, a bank's annual report) and generate again. It picks up
+  the register instantly, which is the point — register is a statistic.
+-->
+</head>
+<body>
+
+<header>
+  <h1>Producing, not judging <span class="sub">· generative AI · the toy ancestor, not an LLM</span></h1>
+  <span class="spacer"></span>
+  <label class="toggle"><input type="checkbox" id="verTrace"> show the machinery</label>
+</header>
+
+<main class="duas">
+  <div class="painel">
+    <h2>What it has read — the whole of it</h2>
+    <textarea class="codigo" id="corpus" spellcheck="false"></textarea>
+    <div class="linha" style="margin-top:.7em">
+      <label for="inicio">Start it off</label>
+      <input type="text" id="inicio" placeholder="e.g. our strategy" spellcheck="false">
+    </div>
+    <div class="linha">
+      <label for="ordem">Looks back at</label>
+      <select id="ordem">
+        <option value="1">1 word</option>
+        <option value="2" selected>2 words</option>
+      </select>
+      <button id="gerar">Generate</button>
+    </div>
+    <div class="nota-rodape">
+      Paste anything you like in here. It copies the register, because register is a statistic.
+    </div>
+  </div>
+
+  <div class="painel">
+    <h2>What it produced</h2>
+    <div id="saida" class="porque" style="font-size:var(--fs-body); line-height:1.5"></div>
+    <div id="trace" class="trace" hidden></div>
+  </div>
+</main>
+
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+
+const CORPUS = `Our strategy this year is to accelerate growth while
+maintaining disciplined cost control across the organisation. The board remains
+confident in the long term outlook of the business. We continue to invest in our
+people, our platform and our customers. Operating margin improved in the second
+half, driven by efficiency initiatives and a favourable product mix. Management
+believes the company is well positioned to capture the opportunity ahead. We
+remain committed to delivering sustainable value for our shareholders. The
+transformation programme is progressing in line with expectations and we expect
+further benefits in the coming year. Customer satisfaction improved in all key
+markets, supported by continued investment in service quality. We are focused on
+execution, on operational excellence and on building capability for the future.
+The competitive environment remains challenging, but our differentiated position
+gives us confidence in the long term. We continue to prioritise investment where
+it delivers the greatest return for our shareholders. We are investing in the
+capability of our people and in the resilience of our platform. The board
+believes the group is well positioned for the year ahead. Revenue growth was
+supported by strong demand in our core markets and by disciplined execution
+across the business. We continue to see opportunity in adjacent segments. Our
+priority remains the customer, and we continue to invest in the quality of the
+experience we deliver. Cost discipline remains a priority for management and for
+the board. We expect margin to improve further in the second half of the coming
+year, driven by the transformation programme and by continued investment in
+automation. The group is committed to sustainable growth and to delivering long
+term value for our shareholders, our people and our customers. We remain
+confident in the outlook, and we continue to believe the business is well
+positioned to capture the opportunity ahead of us. Management is focused on
+execution and on building the capability the group will need for the future.`
+  .replace(/\s+/g, ' ').trim();
+
+let modelo = null, ordem = 2;
+
+function treinar(texto, n) {
+  const pal = texto.split(/\s+/).filter(Boolean);
+  const m = new Map();
+  for (let i = 0; i + n < pal.length; i++) {
+    const chave = pal.slice(i, i + n).join(' ').toLowerCase();
+    if (!m.has(chave)) m.set(chave, new Map());
+    const seg = m.get(chave), prox = pal[i + n];
+    seg.set(prox, (seg.get(prox) || 0) + 1);
+  }
+  return { m, pal, n };
+}
+
+function escolher(seg) {
+  let total = 0; for (const c of seg.values()) total += c;
+  let r = Math.random() * total;
+  for (const [p, c] of seg) { r -= c; if (r <= 0) return p; }
+  return [...seg.keys()][0];
+}
+
+/* semente: as últimas n palavras do que o humano digitou. Se aquele contexto
+   nunca apareceu no corpus, o programa não tem o que dizer — e isso é o ponto,
+   então avisa em vez de disfarçar. */
+function semear(texto, n, m, pal) {
+  const dadas = texto.trim().split(/\s+/).filter(Boolean);
+  if (!dadas.length) {
+    const i = Math.floor(Math.random() * Math.max(1, pal.length - n));
+    return { janela: pal.slice(i, i + n), dadas: [], aviso: '' };
+  }
+  const janela = dadas.slice(-n);
+  while (janela.length < n) janela.unshift(pal[0]);
+  if (m.has(janela.join(' ').toLowerCase()))
+    return { janela, dadas, aviso: '' };
+  return { janela, dadas, aviso:
+    'it has never seen “' + janela.join(' ') + '” — nothing follows those words in what it read' };
+}
+
+function gerar(quantas, inicio) {
+  const { m, pal, n } = modelo;
+  const s0 = semear(inicio, n, m, pal);
+  let janela = s0.janela;
+  const saida = s0.dadas.length ? [...s0.dadas] : [...janela];
+  const passos = [];
+  if (s0.aviso) return { texto: '', passos: [], aviso: s0.aviso, dadas: s0.dadas.length };
+  for (let k = 0; k < quantas; k++) {
+    const chave = janela.join(' ').toLowerCase();
+    const seg = m.get(chave);
+    if (!seg) break;
+    const escolhido = escolher(seg);
+    const opcoes = [...seg.entries()].sort((a, b) => b[1] - a[1]);
+    passos.push({ chave, escolhido, opcoes });
+    saida.push(escolhido);
+    janela = saida.slice(-n);
+  }
+  return { texto: saida.join(' '), passos, aviso:'', dadas: s0.dadas.length };
+}
+
+/* mostra em cinza o que o humano deu e em cor o que a máquina acrescentou */
+function saida_html(texto, dadas) {
+  const pal = texto.split(' ');
+  return '<span style="color:var(--muted)">' + pal.slice(0, dadas).join(' ') + '</span> ' +
+         '<span style="color:var(--ink)">' + pal.slice(dadas).join(' ') + '…</span>';
+}
+
+function render() {
+  ordem = Number($('ordem').value);
+  modelo = treinar($('corpus').value, ordem);
+  const { texto, passos, aviso, dadas } = gerar(55, $('inicio').value);
+  if (aviso) {
+    $('saida').innerHTML = '<span style="color:var(--no)">' + aviso + '.</span> ' +
+      'Try words that appear in the text on the left.';
+  } else {
+    $('saida').innerHTML = dadas
+      ? '<span style="color:var(--muted)">' + saida_html(texto, dadas) + '</span>'
+      : texto + '…';
+  }
+
+  const linhas = passos.slice(0, 7).map(p => {
+    const lista = p.opcoes.slice(0, 4)
+      .map(([w, c]) => (w === p.escolhido ? '▸' : ' ') + w + '(' + c + ')').join('  ');
+    return '<b>after</b> “' + p.chave + '”\n   ' + lista +
+           (p.opcoes.length > 4 ? '  +' + (p.opcoes.length - 4) + ' more' : '');
+  });
+  $('trace').innerHTML =
+    '<b>corpus</b>    ' + modelo.pal.length + ' words · ' + modelo.m.size + ' distinct contexts\n' +
+    '<b>each step</b> look up the last ' + ordem + ' word' + (ordem > 1 ? 's' : '') +
+    ', pick one of the words that followed it, append, repeat\n\n' +
+    linhas.join('\n');
+  $('trace').hidden = !$('verTrace').checked;
+}
+
+$('corpus').value = CORPUS;
+$('gerar').onclick = render;
+$('inicio').onkeydown = e => { if (e.key === 'Enter') render(); };
+$('ordem').onchange = render;
+$('verTrace').onchange = () => { $('trace').hidden = !$('verTrace').checked; };
+render();
+</script>
+</body>
+</html>
