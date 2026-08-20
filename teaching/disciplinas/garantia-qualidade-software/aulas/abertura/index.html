@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Garantia da Qualidade de Software</title>
+
+  <link rel="stylesheet" href="../../../../vendor/reveal/dist/reset.css">
+  <link rel="stylesheet" href="../../../../vendor/reveal/dist/reveal.css">
+  <link rel="stylesheet" href="../../../../tema/base.css">
+  <!-- tema claro (base) + tema escuro embutido, ativado por [data-theme="dark"] -->
+  <link rel="stylesheet" href="../../../../tema/tema-default.css">
+  <style>/* tema-dark.css — escuro, para salas com projeção em ambiente escuro.
+   Séries = mesma paleta stepada para superfície escura (dataviz skill). */
+:root[data-theme="dark"] {
+  --bg:      #1a1a19;
+  --ink:     #ffffff;
+  --ink-2:   #c3c2b7;
+  --muted:   #898781;
+  --accent:  #3987e5;
+  --accent-2:#d95926;
+  --rule:    #2c2c2a;
+  --code-bg: #2c2c2a;
+
+  --chart-surface: #1a1a19;
+  --chart-grid:    #2c2c2a;
+  --chart-axis:    #383835;
+  --chart-ink:     #ffffff;
+  --chart-ink-2:   #c3c2b7;
+  --chart-muted:   #898781;
+
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+  --series-5: #d55181;
+  --series-6: #008300;
+  --series-7: #9085e9;
+  --series-8: #e66767;
+}
+</style>
+  <link rel="stylesheet" href="../../../../tema/controles.css">
+  <link rel="stylesheet" href="../../../../vendor/reveal/plugin/highlight/monokai.css">
+  <script>
+    // Define o modo (claro/escuro) o quanto antes, evitando "flash".
+    (function () {
+      var salvo = null;
+      try { salvo = localStorage.getItem('gs-tema'); } catch (e) {}
+      document.documentElement.setAttribute('data-theme', salvo || 'light');
+    })();
+  </script>
+</head>
+<body>
+  <a class="btn-topo btn-voltar" href="../../../../index.html"
+     title="Voltar" aria-label="Voltar"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></a>
+  <button class="btn-topo tema-toggle" aria-label="Alternar tema claro/escuro"><svg class="ico ico-lua" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="ico ico-sol" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+  <div class="reveal">
+    <div class="slides">
+      
+      
+<section>
+  <div class="slide l-titulo">
+    <div class="kicker">Sessão 1 · Abertura</div>
+    <h1>Garantia da Qualidade de <strong>Software</strong></h1>
+    <div class="rule"></div>
+    <p class="subtitulo">Una · 2026.2 · quintas, 19h–21h50</p>
+    <p class="rodape">Prof. Yuri Alexandre dos Santos</p>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">01</div>
+    <h1>Contrato de aprendizagem</h1>
+    <p class="sub">O que vai ser cobrado de vocês, e como.</p>
+    <div class="deck-footer">Garantia da Qualidade de Software · 2/29</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>A nota — 100 pontos</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        <strong>A1</strong> · discursiva, em sala<span class="nota">30 pontos · 22/10</span>
+        
+      </li>
+      
+      <li>
+        <strong>A2</strong> · objetiva<span class="nota">30 pontos · data institucional, fora do nosso dia de aula</span>
+        
+      </li>
+      
+      <li>
+        <strong>A3</strong> · projeto<span class="nota">30 pontos · com o outro docente · avaliação contínua</span>
+        
+      </li>
+      
+      <li>
+        <strong>A3</strong> · apresentações<span class="nota">10 pontos · duas rodadas de 5 · comigo</span>
+        
+      </li>
+      
+      <li>
+        <strong>AI</strong> · recuperação<span class="nota">0 a 30 · 16/12</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 3/29</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>As apresentações</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        10 grupos · 15 minutos cronometrados<span class="nota">no início do Bloco 1, logo depois da chamada</span>
+        
+      </li>
+      
+      <li>
+        Duas rodadas ao longo do semestre<span class="nota">5 pontos por integrante em cada uma</span>
+        
+      </li>
+      
+      <li>
+        Não é resumo do texto
+        
+      </li>
+      
+      <li>
+        Um grupo revisor a cada apresentação<span class="nota">entrega por escrito dois problemas e um acerto — é a prática da aula de inspeção e revisão, feita toda semana</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 4/29</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>O formato da apresentação é fixo</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Uma ideia central
+      </li>
+      
+      <li>
+        Uma aplicação ao projeto da UC
+      </li>
+      
+      <li>
+        Uma pergunta que o texto não responde
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 5/29</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>A regra da AI</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Substitui só a <strong>menor</strong> entre A1 e A2
+        
+      </li>
+      
+      <li>
+        Nunca substitui a A3
+        
+      </li>
+      
+      <li>
+        Direito à AI — 40 pontos em A1+A3 ou A2+A3
+        
+      </li>
+      
+      <li>
+        Direito à AI — 75% de presença
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 6/29</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Uso de IA generativa</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Permitido para estudar e preparar a apresentação
+        
+      </li>
+      
+      <li>
+        Vedado em A1 e A2<span class="nota">em sala, sem celular e sem qualquer dispositivo conectado</span>
+        
+      </li>
+      
+      <li>
+        Declarar quatro coisas: que · para quê · qual ferramenta · como
+        
+      </li>
+      
+      <li>
+        <strong>Declarar não reduz nota</strong>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 7/29</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">02</div>
+    <h1>O caso</h1>
+    <p class="sub">Post Office Horizon · Reino Unido</p>
+    <div class="deck-footer">Garantia da Qualidade de Software · 8/29</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Post Office Horizon</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li class="fragment">
+        O sistema<span class="nota">1999 · Correios do Reino Unido · Horizon, da Fujitsu/ICL</span>
+        
+      </li>
+      
+      <li class="fragment">
+        O sintoma<span class="nota">faltas de caixa que os agentes juram não existir</span>
+        
+      </li>
+      
+      <li class="fragment">
+        A resposta institucional<span class="nota">cada caso tratado como isolado · processos e prisões</span>
+        
+      </li>
+      
+      <li class="fragment">
+        A causa<span class="nota">defeitos conhecidos internamente · acesso remoto</span>
+        
+      </li>
+      
+      <li class="fragment">
+        O desfecho<span class="nota">anulações a partir de 2019–2021 · inquérito público</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 9/29</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-destaque">
+    <div class="frase">Em que ponto isso poderia ter sido <span class="accent">interrompido</span>?</div>
+    
+    <div class="deck-footer">Garantia da Qualidade de Software · 10/29</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">03</div>
+    <h1>Ponto flutuante e valores monetários</h1>
+    <p class="sub">Demonstração ao vivo · o parcelamento no <code>pedidos-api</code></p>
+    <div class="deck-footer">Garantia da Qualidade de Software · 11/29</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-destaque">
+    <div class="frase">Parece resolvido. Como você <span class="accent">prova</span> que está?</div>
+    
+    <div class="deck-footer">Garantia da Qualidade de Software · 12/29</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">04</div>
+    <h1>Mercado</h1>
+    <p class="sub">Por que isto importa para o emprego de vocês.</p>
+    <div class="deck-footer">Garantia da Qualidade de Software · 13/29</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>GitHub Octoverse 2025</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        TypeScript passou Python e JavaScript<span class="nota">agosto de 2025 · primeira vez · margem de cerca de 42 mil contribuidores · GitHub Octoverse 2025</span>
+        
+      </li>
+      
+      <li>
+        Maior realocação de linguagem em uma década<span class="nota">a caracterização é do próprio GitHub</span>
+        
+      </li>
+      
+      <li>
+        Python em segundo<span class="nota">cerca de 2,6 milhões de contribuidores · ~49% de crescimento no ano</span>
+        
+      </li>
+      
+      <li>
+        Python domina IA e dados<span class="nota">582.196 novos repositórios de IA, +50,7% — quase metade do total</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 14/29</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-destaque">
+    <div class="frase">A maior realocação de linguagem em uma década aconteceu por causa de um <span class="accent">atributo de qualidade</span>.</div>
+    
+    <div class="deck-footer">Garantia da Qualidade de Software · 15/29</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Por que Python nesta UC</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Não é por popularidade — é por menor atrito<span class="nota">instala em cinco minutos, e o tempo de aula fica no conceito em vez da cerimônia da linguagem</span>
+        
+      </li>
+      
+      <li>
+        Técnica de teste independe de linguagem<span class="nota">a ementa da UC cita "JUnit, pytest, etc."</span>
+        
+      </li>
+      
+      <li>
+        Os livros usam Java<span class="nota">Gonçalves aplica JUnit e Java (p. 92, 141, 152) e Selenium na automação de interface (p. 187); Valente também é Java</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 16/29</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>DORA 2025 · IA no desenvolvimento</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Cerca de 90% já usam IA no trabalho<span class="nota">e mais de 80% se acham mais produtivos</span>
+        
+      </li>
+      
+      <li>
+        Cerca de 30% confiam pouco ou nada nela<span class="nota">usam todo dia uma ferramenta em que não confiam</span>
+        
+      </li>
+      
+      <li>
+        Mais IA, mais instabilidade de entrega<span class="nota">mais falhas de mudança e retrabalho</span>
+        
+      </li>
+      
+      <li>
+        A IA amplifica o que o time já é<span class="nota">ela não conserta um time</span>
+        
+      </li>
+      
+      <li>
+        Sem teste, versionamento e feedback rápido<span class="nota">volume de mudança sobre base frágil → instabilidade</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 17/29</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-destaque">
+    <div class="frase">Escrever a primeira versão deixou de ser o gargalo. O gargalo virou <span class="accent">verificar</span>.</div>
+    
+    <div class="deck-footer">Garantia da Qualidade de Software · 18/29</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>"Mas a IA também escreve os testes"</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Escreve, e é boa nisso
+        
+      </li>
+      
+      <li>
+        Teste derivado do mesmo código carrega o mesmo equívoco
+        
+      </li>
+      
+      <li>
+        Um teste que confirma o bug passa
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 19/29</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">05</div>
+    <h1>A UC</h1>
+    <p class="sub">O que vocês saem sabendo, e onde ler.</p>
+    <div class="deck-footer">Garantia da Qualidade de Software · 20/29</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Qualidade NÃO é</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Ausência de bugs
+      </li>
+      
+      <li>
+        Código bonito
+      </li>
+      
+      <li>
+        Opinião de um desenvolvedor sênior
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 21/29</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>O semestre, em quatro perguntas</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li class="fragment">
+        Como definir e medir qualidade?<span class="nota">fundamentos, atributos, normas, plano de qualidade</span>
+        
+      </li>
+      
+      <li class="fragment">
+        Como achar defeito antes do cliente?<span class="nota">inspeção, revisão, técnicas de caixa-preta e caixa-branca</span>
+        
+      </li>
+      
+      <li class="fragment">
+        Como automatizar isso?<span class="nota">automação de teste, versionamento, integração contínua</span>
+        
+      </li>
+      
+      <li class="fragment">
+        Como gerenciar com número e responsabilidade?<span class="nota">métricas, gestão de defeitos, ética profissional</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 22/29</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Bibliografia — o que ler em cada uma</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Gallotti · <strong><em>Qualidade de software</em></strong><span class="nota">conceitos, atributos e normas · BV Pearson</span>
+        
+      </li>
+      
+      <li>
+        Valente · <strong><em>Engenharia de Software Moderna</em></strong><span class="nota">testes, refatoração, DevOps · grátis em engsoftmoderna.info</span>
+        
+      </li>
+      
+      <li>
+        Gonçalves et al. · <strong><em>Testes de software e gerência de configuração</em></strong><span class="nota">plano de teste e versionamento · Minha Biblioteca</span>
+        
+      </li>
+      
+      <li>
+        ISTQB/BSTQB · <strong><em>Certified Tester Foundation Level</em></strong> v4.0<span class="nota">vocabulário e formato da A2 · grátis em bstqb.online</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 23/29</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    
+    <h1>Intervalo</h1>
+    <p class="sub">20 minutos · voltamos às 21h00</p>
+    <div class="deck-footer">Garantia da Qualidade de Software · 24/29</div>
+  </div>
+
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">06</div>
+    <h1>De onde nascem os defeitos</h1>
+    <p class="sub">Atividade · ~30 min</p>
+    <div class="deck-footer">Garantia da Qualidade de Software · 25/29</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Em duplas · ~8 min</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Conte um bug que te ferrou<span class="nota">como usuário, não como desenvolvedor</span>
+        
+      </li>
+      
+      <li>
+        Que te custou dinheiro, tempo ou paciência
+        
+      </li>
+      
+      <li>
+        Depois: 90 segundos por dupla, na roda
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 26/29</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">07</div>
+    <h1>Grupos e leituras</h1>
+    <p class="sub">Formação dos grupos, ordem das rodadas e pareamento.</p>
+    <div class="deck-footer">Garantia da Qualidade de Software · 27/29</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>O que fica definido hoje</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Os 10 grupos formados
+      </li>
+      
+      <li>
+        A ordem das duas rodadas
+      </li>
+      
+      <li>
+        A tabela de leituras por aula
+      </li>
+      
+      <li>
+        O formato fixo e a rubrica
+      </li>
+      
+      <li>
+        O pareamento apresentador × revisor
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 28/29</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Tarefa da semana</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Abrir o Codespace uma vez<span class="nota">repositório <code>gqs-una-2026-2</code> · só confirmar que abre, nada além disso</span>
+        
+      </li>
+      
+      <li>
+        Ler o capítulo de conceitos e princípios de qualidade<span class="nota">Gallotti, BV Pearson</span>
+        
+      </li>
+      
+      <li>
+        Trazer um atributo de qualidade por escrito<span class="nota">de um sistema que você usa, redigido de forma verificável</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 29/29</div>
+  </div>
+</section>
+      
+    </div>
+  </div>
+
+  <script src="../../../../vendor/reveal/dist/reveal.js"></script>
+  <script src="../../../../vendor/reveal/plugin/highlight/highlight.js"></script>
+  <script src="../../../../vendor/reveal/plugin/zoom/zoom.js"></script>
+  <script src="../../../../vendor/chartjs/chart.umd.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: false,   // a página aparece no rodapé do slide (ver .deck-footer)
+      transition: 'slide',
+      transitionSpeed: 'default',
+      controls: true,
+      progress: true,
+      center: false,
+      pdfSeparateFragments: false,
+      width: 1280, height: 720,
+      margin: 0.0,
+      plugins: [ RevealHighlight, RevealZoom ]
+    });
+
+    // ---- Renderização dos gráficos Chart.js ----
+    // getComputedStyle é "vivo": ler as cores DENTRO do montarGrafico faz o
+    // gráfico seguir o tema atual (importa ao alternar claro/escuro).
+    const V = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+    const TIPOS = { barra: 'bar', linha: 'line', rosca: 'doughnut', pizza: 'pie', area: 'line' };
+    function montarGrafico(canvas) {
+      const SERIES = [1,2,3,4,5,6,7,8].map(i => V('--series-'+i));
+      Chart.defaults.font.family = V('--font-sans') || 'system-ui, sans-serif';
+      Chart.defaults.color = V('--chart-ink-2');
+      Chart.defaults.borderColor = V('--chart-grid');
+
+      const cfg = JSON.parse(canvas.dataset.chart);
+      const tipo = TIPOS[cfg.tipo] || cfg.tipo;   // aceita nomes PT ou os do Chart.js
+      const circular = ['doughnut','pie','polarArea'].includes(tipo);
+      const ehArea = cfg.tipo === 'area';
+      const datasets = (cfg.series || []).map((s, i) => ({
+        label: s.nome,
+        data: s.dados,
+        backgroundColor: circular ? (cfg.series[0].dados.map((_, k) => SERIES[k % 8]))
+                                   : (ehArea ? SERIES[i % 8] + '33' : SERIES[i % 8]),
+        borderColor: SERIES[i % 8],
+        borderWidth: tipo === 'line' ? 2.4 : 0,
+        borderRadius: tipo === 'bar' ? 4 : 0,
+        pointRadius: tipo === 'line' ? 3 : 0,
+        tension: 0.25, fill: ehArea
+      }));
+      // Série única não tem legenda (seria uma caixinha só) — então o nome da
+      // série, que é onde mora a unidade, vira o rótulo do eixo Y. Sem isso o
+      // gráfico mostra números sem unidade.
+      const legenda = (cfg.series && cfg.series.length > 1) || circular;
+      const rotuloY = (!legenda && !circular && datasets.length === 1) ? datasets[0].label : '';
+      new Chart(canvas, {
+        type: tipo,
+        data: { labels: cfg.labels, datasets },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          animation: false,
+          plugins: {
+            legend: {
+              display: legenda,
+              position: 'bottom',
+              labels: { boxWidth: 12, boxHeight: 12, usePointStyle: true, padding: 16,
+                        color: V('--chart-ink-2'), font: { size: 15 } }
+            },
+            tooltip: { enabled: true }
+          },
+          scales: circular ? {} : {
+            x: { grid: { display: false }, border: { color: V('--chart-axis') },
+                 ticks: { color: V('--chart-muted'), font: { size: 14 } } },
+            y: { grid: { color: V('--chart-grid') }, border: { display: false },
+                 ticks: { color: V('--chart-muted'), font: { size: 14 } },
+                 title: { display: !!rotuloY, text: rotuloY,
+                          color: V('--chart-ink-2'), font: { size: 15 } },
+                 beginAtZero: true }
+          }
+        }
+      });
+    }
+    // Renderiza os gráficos do slide atual (evita medir canvas escondido = 0px)
+    function renderVisiveis() {
+      document.querySelectorAll('section.present canvas[data-chart]').forEach(c => {
+        if (!c.dataset.pronto) { c.dataset.pronto = '1'; montarGrafico(c); }
+      });
+    }
+    function renderTodos() {
+      document.querySelectorAll('canvas[data-chart]').forEach(c => {
+        if (!c.dataset.pronto) { c.dataset.pronto = '1'; montarGrafico(c); }
+      });
+    }
+    const modoPDF = window.location.search.includes('print-pdf');
+    if (modoPDF) {
+      // No modo PDF todos os slides ficam visíveis: renderiza tudo.
+      Reveal.on('ready', () => setTimeout(renderTodos, 200));
+    } else {
+      Reveal.on('ready', renderVisiveis);
+      Reveal.on('slidechanged', renderVisiveis);
+    }
+    window.__renderTodos = renderTodos;
+    // Redesenha os gráficos com as cores do tema atual (ao alternar claro/escuro).
+    window.__reRenderGraficos = function () {
+      document.querySelectorAll('canvas[data-chart]').forEach(c => {
+        const ex = Chart.getChart(c); if (ex) ex.destroy(); delete c.dataset.pronto;
+      });
+      (modoPDF ? renderTodos : renderVisiveis)();
+    };
+  </script>
+
+  <script>
+    // ---- Toggle de tema (o ícone sol/lua é trocado por CSS via [data-theme]) ----
+    (function () {
+      const root = document.documentElement;
+      const btn = document.querySelector('.tema-toggle');
+      function aplicar(modo) {
+        root.setAttribute('data-theme', modo);
+        try { localStorage.setItem('gs-tema', modo); } catch (e) {}
+        if (window.__reRenderGraficos) window.__reRenderGraficos();
+      }
+      btn.addEventListener('click', () =>
+        aplicar(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+    })();
+  </script>
+  
+  <script>
+  (function () {
+    var root = document.documentElement;
+    // revela os botões do topo quando o mouse está na faixa de cima
+    window.addEventListener('mousemove', function (e) {
+      root.classList.toggle('mostrar-topo', e.clientY < 80);
+    });
+    var link = document.querySelector('.btn-voltar');
+    if (!link) return;
+    // origem explícita passada pelo plano (?de=): só caminho relativo seguro
+    try {
+      var de = new URLSearchParams(location.search).get('de');
+      if (de && !/^[a-z][a-z0-9+.-]*:/i.test(de) && de[0] !== '/') link.setAttribute('href', de);
+    } catch (e) {}
+    // se você veio de outra página do site, volta pra ELA via histórico
+    link.addEventListener('click', function (ev) {
+      try {
+        if (document.referrer &&
+            new URL(document.referrer).origin === location.origin &&
+            history.length > 1) {
+          ev.preventDefault();
+          history.back();
+        }
+      } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>
