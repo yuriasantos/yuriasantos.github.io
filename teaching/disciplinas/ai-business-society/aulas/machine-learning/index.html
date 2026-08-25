@@ -1,0 +1,1837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>How Machine Learning Works</title>
+
+  <link rel="stylesheet" href="../../../../vendor/reveal/dist/reset.css">
+  <link rel="stylesheet" href="../../../../vendor/reveal/dist/reveal.css">
+  <link rel="stylesheet" href="../../../../tema/base.css">
+  <!-- tema claro (base) + tema escuro embutido, ativado por [data-theme="dark"] -->
+  <link rel="stylesheet" href="../../../../tema/tema-default.css">
+  <style>/* tema-dark.css — escuro, para salas com projeção em ambiente escuro.
+   Séries = mesma paleta stepada para superfície escura (dataviz skill). */
+:root[data-theme="dark"] {
+  --bg:      #1a1a19;
+  --ink:     #ffffff;
+  --ink-2:   #c3c2b7;
+  --muted:   #898781;
+  --accent:  #3987e5;
+  --accent-2:#d95926;
+  --rule:    #2c2c2a;
+  --code-bg: #2c2c2a;
+
+  --chart-surface: #1a1a19;
+  --chart-grid:    #2c2c2a;
+  --chart-axis:    #383835;
+  --chart-ink:     #ffffff;
+  --chart-ink-2:   #c3c2b7;
+  --chart-muted:   #898781;
+
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+  --series-5: #d55181;
+  --series-6: #008300;
+  --series-7: #9085e9;
+  --series-8: #e66767;
+}
+</style>
+  <link rel="stylesheet" href="../../../../tema/controles.css">
+  <link rel="stylesheet" href="../../../../vendor/reveal/plugin/highlight/monokai.css">
+  <script>
+    // Define o modo (claro/escuro) o quanto antes, evitando "flash".
+    (function () {
+      var salvo = null;
+      try { salvo = localStorage.getItem('gs-tema'); } catch (e) {}
+      document.documentElement.setAttribute('data-theme', salvo || 'light');
+    })();
+  </script>
+</head>
+<body>
+  <a class="btn-topo btn-voltar" href="../../../../index.html"
+     title="Back" aria-label="Back"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></a>
+  <button class="btn-topo tema-toggle" aria-label="Toggle light/dark theme"><svg class="ico ico-lua" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="ico ico-sol" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+  <div class="reveal">
+    <div class="slides">
+      
+      
+<section>
+  <div class="slide l-titulo">
+    <div class="kicker">Session 5 · Foundations</div>
+    <h1>How <strong>Machine Learning</strong> Works</h1>
+    <div class="rule"></div>
+    <p class="subtitulo">No math. Three live demos. You vote before I show the answer.</p>
+    <p class="rodape">Prof. Yuri · 2026.2</p>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Today</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li class="fragment">
+        Writing a rule versus learning a rule
+      </li>
+      
+      <li class="fragment">
+        Three live demonstrations<span class="nota">you vote first, I reveal second</span>
+        
+      </li>
+      
+      <li class="fragment">
+        The four questions a manager must ask<span class="nota">which decision, who acts, which error hurts, who answers for it</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">How Machine Learning Works · 2/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">01</div>
+    <h1>Writing a rule vs. learning one</h1>
+    <p class="sub">Why the exception list never stops growing.</p>
+    <div class="deck-footer">How Machine Learning Works · 3/58</div>
+  </div>
+
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Write me the rule for "this customer will cancel"</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        “Fewer than two visits a week → they'll cancel”<span class="nota">and the person who has trained once a week, religiously, for six years?</span>
+        
+      </li>
+      
+      <li>
+        “They complained → they'll cancel”<span class="nota">people who complain are engaged. People who vanish don't complain.</span>
+        
+      </li>
+      
+      <li>
+        “They stopped using the app”<span class="nota">and the ones who never used the app, only the turnstile?</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">How Machine Learning Works · 4/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-destaque">
+    <div class="frase">Every exception you add is a line <span class="accent">someone must maintain forever</span>. The problem was never the rule's intelligence. It's the maintenance.</div>
+    
+    <div class="deck-footer">How Machine Learning Works · 5/58</div>
+  </div>
+
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>The inversion</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Traditional software — the analyst writes the rule<span class="nota">explicit, auditable, breaks at the thousandth exception</span>
+        
+      </li>
+      
+      <li>
+        Machine learning — you hand over the history<span class="nota">the system finds the combination of signals; exceptions become statistics</span>
+        
+      </li>
+      
+      <li>
+        Rules still win when the logic is known, stable and must be audited<span class="nota">payroll, tax, compliance — buying ML there buys opacity for free</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">How Machine Learning Works · 6/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Naming things</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        AI<span class="nota">the umbrella term</span>
+        
+      </li>
+      
+      <li>
+        Machine learning<span class="nota">the subset that learns from examples — this is today</span>
+        
+      </li>
+      
+      <li>
+        Deep learning<span class="nota">networks with many layers — that is next class</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">How Machine Learning Works · 7/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">02</div>
+    <h1>Where this data comes from</h1>
+    <p class="sub">The question almost nobody asks in a meeting.</p>
+    <div class="deck-footer">How Machine Learning Works · 8/58</div>
+  </div>
+
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Read the filename before you read the numbers</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        <code>WA_Fn-UseC_-Telco-Customer-Churn.csv</code><span class="nota">WA = Watson Analytics · UseC = Use Case. This is an IBM sample file, built to teach.</span>
+        
+      </li>
+      
+      <li>
+        IBM's own words: “a fictional telco company”<span class="nota">7,043 customers in California, one quarter — none of them exist. The data is synthetic.</span>
+        
+      </li>
+      
+      <li>
+        So what is real here?<span class="nota">the method is real — train/test, overfitting, thresholds, bias. The conclusions about telecom are not.</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">How Machine Learning Works · 9/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>What is actually in the file</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        7,043 rows × 21 columns — one row is one customer<span class="nota">no date column. This is a photograph, not a film — you cannot ask "what changed last month?"</span>
+        
+      </li>
+      
+      <li>
+        Four kinds of column — who the customer is · what they subscribed to · the commercial relationship · the target<span class="nota"><code>customerID</code> is an identifier, not information — it stays out of the model</span>
+        
+      </li>
+      
+      <li>
+        The target is <code>Churn</code> — and it means <em>cancelled in the last month</em><span class="nota">not "will cancel some day". Every conclusion today is locked to that one-month window.</span>
+        
+      </li>
+      
+      <li>
+        26.5% cancelled — 1,869 of 7,043<span class="nota">imbalanced</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">How Machine Learning Works · 10/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-grafico">
+    <h2>An imbalanced target</h2>
+    <div class="rule"></div>
+    <div class="chart-wrap">
+      
+        <canvas data-chart='{"labels": ["Stayed", "Cancelled"], "series": [{"dados": [5174, 1869], "nome": "Customers"}], "tipo": "rosca"}'></canvas>
+      
+    </div>
+    <div class="fonte">IBM Telco Customer Churn sample (fictional data) · n = 7,043</div>
+    <div class="deck-footer">How Machine Learning Works · 11/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>The trap in the dataset page</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        The Kaggle page promises more than the file delivers<span class="nota">it copied the description of a <em>different</em>, 33-column version IBM shipped later — zip code, latitude, Satisfaction Score, Churn Score, Churn Reason, CLTV</span>
+        
+      </li>
+      
+      <li>
+        Imagine feeding <em>Churn Score</em> into a model that predicts churn<span class="nota">you'd get 99% accuracy and a standing ovation. It is worth nothing — you used the answer to predict the answer.</span>
+        
+      </li>
+      
+      <li>
+        This has a name — <strong>target leakage</strong><span class="nota">the #1 cause of models that shine on a slide and die in production</span>
+        
+      </li>
+      
+      <li>
+        The question that catches it: <em>did this column exist at the moment I needed the prediction?</em><span class="nota">if not, it cannot go in</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">How Machine Learning Works · 12/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">03</div>
+    <h1>Act 1 — You are the model</h1>
+    <p class="sub">Six rows. No rule, no training, no formula.</p>
+    <div class="deck-footer">How Machine Learning Works · 13/58</div>
+  </div>
+
+</section>
+      
+      
+<section>
+  <div class="slide l-tabela">
+    <h2>Six customers. Who cancelled?</h2><div class="rule"></div>
+    <div class="tabela-wrap">
+      <table>
+        
+        <thead><tr><th>Customer</th><th>Tenure</th><th>Contract</th><th>Internet</th><th>Tech support</th><th>Payment</th><th>Monthly bill</th></tr></thead>
+        
+        <tbody>
+          
+          <tr>
+            
+            <th scope="row">1</th>
+            
+            
+            <td>38 months</td>
+            
+            <td>Month-to-month</td>
+            
+            <td>DSL</td>
+            
+            <td>No</td>
+            
+            <td>Credit card</td>
+            
+            <td>$57.15</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">2</th>
+            
+            
+            <td>29 months</td>
+            
+            <td>One year</td>
+            
+            <td>DSL</td>
+            
+            <td>No</td>
+            
+            <td>Electronic check</td>
+            
+            <td>$55.25</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">3</th>
+            
+            
+            <td>3 months</td>
+            
+            <td>Month-to-month</td>
+            
+            <td>DSL</td>
+            
+            <td>Yes</td>
+            
+            <td>Mailed check</td>
+            
+            <td>$34.25</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">4</th>
+            
+            
+            <td>65 months</td>
+            
+            <td>Two year</td>
+            
+            <td>none</td>
+            
+            <td>—</td>
+            
+            <td>Mailed check</td>
+            
+            <td>$19.90</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">5</th>
+            
+            
+            <td>11 months</td>
+            
+            <td>Month-to-month</td>
+            
+            <td>Fiber optic</td>
+            
+            <td>No</td>
+            
+            <td>Bank transfer</td>
+            
+            <td>$80.50</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">6</th>
+            
+            
+            <td>33 months</td>
+            
+            <td>Month-to-month</td>
+            
+            <td>Fiber optic</td>
+            
+            <td>No</td>
+            
+            <td>Bank transfer</td>
+            
+            <td>$100.60</td>
+            
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+    <div class="fonte">Six real rows from the file · one at a time — who thinks this customer cancelled?</div>
+    <div class="deck-footer">How Machine Learning Works · 14/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-tabela">
+    <h2>The answer</h2><div class="rule"></div>
+    <div class="tabela-wrap">
+      <table>
+        
+        <thead><tr><th>Customer</th><th>Tenure</th><th>Contract</th><th>Internet</th><th>Tech support</th><th>Payment</th><th>Monthly bill</th><th>Result</th></tr></thead>
+        
+        <tbody>
+          
+          <tr class="destaque">
+            
+            <th scope="row">1</th>
+            
+            
+            <td>38 months</td>
+            
+            <td>Month-to-month</td>
+            
+            <td>DSL</td>
+            
+            <td>No</td>
+            
+            <td>Credit card</td>
+            
+            <td>$57.15</td>
+            
+            <td><strong>Cancelled</strong></td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">2</th>
+            
+            
+            <td>29 months</td>
+            
+            <td>One year</td>
+            
+            <td>DSL</td>
+            
+            <td>No</td>
+            
+            <td>Electronic check</td>
+            
+            <td>$55.25</td>
+            
+            <td>Stayed</td>
+            
+          </tr>
+          
+          <tr class="destaque">
+            
+            <th scope="row">3</th>
+            
+            
+            <td>3 months</td>
+            
+            <td>Month-to-month</td>
+            
+            <td>DSL</td>
+            
+            <td>Yes</td>
+            
+            <td>Mailed check</td>
+            
+            <td>$34.25</td>
+            
+            <td><strong>Cancelled</strong></td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">4</th>
+            
+            
+            <td>65 months</td>
+            
+            <td>Two year</td>
+            
+            <td>none</td>
+            
+            <td>—</td>
+            
+            <td>Mailed check</td>
+            
+            <td>$19.90</td>
+            
+            <td>Stayed</td>
+            
+          </tr>
+          
+          <tr class="destaque">
+            
+            <th scope="row">5</th>
+            
+            
+            <td>11 months</td>
+            
+            <td>Month-to-month</td>
+            
+            <td>Fiber optic</td>
+            
+            <td>No</td>
+            
+            <td>Bank transfer</td>
+            
+            <td>$80.50</td>
+            
+            <td><strong>Cancelled</strong></td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">6</th>
+            
+            
+            <td>33 months</td>
+            
+            <td>Month-to-month</td>
+            
+            <td>Fiber optic</td>
+            
+            <td>No</td>
+            
+            <td>Bank transfer</td>
+            
+            <td>$100.60</td>
+            
+            <td>Stayed</td>
+            
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+    <div class="fonte">Now look at customers 5 and 6.</div>
+    <div class="deck-footer">How Machine Learning Works · 15/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Customers 5 and 6</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Both on fiber optic. Both month-to-month. Both without tech support. Both on automatic debit.<span class="nota">the only difference is tenure — 11 months against 33</span>
+        
+      </li>
+      
+      <li>
+        One cancelled. The other stayed.<span class="nota">no rule you write on paper separates those two with certainty. Neither will the model.</span>
+        
+      </li>
+      
+      <li>
+        The best anything can do — person or machine — is say customer 5 is <strong>more likely</strong> to cancel<span class="nota">a model does not return a verdict. It returns a probability. We come back to this in Act 3.</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">How Machine Learning Works · 16/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Give it names — you just did what a machine does</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li class="fragment">
+        The six columns you looked at → the <strong>input variables</strong>
+        
+      </li>
+      
+      <li class="fragment">
+        The column I covered → the <strong>target</strong>
+        
+      </li>
+      
+      <li class="fragment">
+        Your guess → the <strong>prediction</strong>
+        
+      </li>
+      
+      <li class="fragment">
+        Your life experience — you have all subscribed and cancelled something → the <strong>history</strong><span class="nota">no history, no learning. Only guessing that looks technical.</span>
+        
+      </li>
+      
+      <li class="fragment">
+        Did anyone agree beforehand what would count as a hit? → the <strong>performance measure</strong><span class="nota">when it isn't defined up front, any result looks good. True for models and for team targets.</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">How Machine Learning Works · 17/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">04</div>
+    <h1>The cycle, and the locked box</h1>
+    <p class="sub">Why you never grade on the questions you studied.</p>
+    <div class="deck-footer">How Machine Learning Works · 18/58</div>
+  </div>
+
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Five steps</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Collect
+      </li>
+      
+      <li>
+        Prepare<span class="nota">in this file, total charges arrive as <em>text</em>, and 11 rows are blank — customers who signed up and were never billed. Untreated, nothing runs.</span>
+        
+      </li>
+      
+      <li>
+        Train
+      </li>
+      
+      <li>
+        Evaluate
+      </li>
+      
+      <li>
+        Use and monitor
+      </li>
+      
+    </ul>
+    <div class="deck-footer">How Machine Learning Works · 19/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>25% of the customers go in the vault</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        5,282 customers to train · 1,761 the model never sees<span class="nota">13 original columns become 19 variables — "Contract = two years" has to become a 0/1 column</span>
+        
+      </li>
+      
+      <li>
+        Why? Because grading a model on the data it trained on is giving an exam with the answer key the student memorised<span class="nota">they score a ten. You learned nothing.</span>
+        
+      </li>
+      
+      <li>
+        There is a third slice — validation<span class="nota">the mock exam, used to choose between options before the real one</span>
+        
+      </li>
+      
+      <li>
+        I wrote the list of variables the model is allowed to look at. No algorithm made that call.<span class="nota">and <code>customerID</code> stays out — it identifies, it doesn't inform. We return to this under accountability.</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">How Machine Learning Works · 20/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">05</div>
+    <h1>Act 2 — Memorised or learned?</h1>
+    <p class="sub">Vote before I run the cell.</p>
+    <div class="deck-footer">How Machine Learning Works · 21/58</div>
+  </div>
+
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>A decision tree is a sequence of yes/no questions</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Depth 2 — the model may ask two questions before deciding
+        
+      </li>
+      
+      <li>
+        Depth 5 — five questions
+        
+      </li>
+      
+      <li>
+        Depth 30 — thirty questions
+        
+      </li>
+      
+      <li>
+        Same data, same everything. Which of the three will be the best?<span class="nota">hands up for 2. For 5. For 30.</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">How Machine Learning Works · 22/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-grafico">
+    <h2>Training accuracy vs. accuracy on customers it never saw</h2>
+    <div class="rule"></div>
+    <div class="chart-wrap">
+      
+        <canvas data-chart='{"labels": ["Depth 2", "Depth 5", "Depth 30", "\u201cNobody cancels\u201d"], "series": [{"dados": [78.8, 80.6, 99.8, 73.5], "nome": "On the training data"}, {"dados": [77.7, 78.9, 73.2, 73.5], "nome": "On the vault (test)"}], "tipo": "barra"}'></canvas>
+      
+    </div>
+    <div class="fonte">Decision trees, same training data · test set n = 1,761</div>
+    <div class="deck-footer">How Machine Learning Works · 23/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-destaque">
+    <div class="frase">The deep tree scored <span class="accent">99.8%</span> on what it saw and <span class="accent">73.2%</span> on what it didn't. A bad-tempered intern answering “nobody cancels” scores 73.5%.</div>
+    <div class="autor">— the model did worse than not looking at all</div>
+    <div class="deck-footer">How Machine Learning Works · 24/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>This is the depth-2 tree. The whole model.</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="Árvore de decisão com duas perguntas. A raiz pergunta se o cliente tem 10,5 meses de casa ou menos; os dois nós seguintes perguntam se tem fibra óptica. Das quatro folhas, só uma prevê cancelamento: cliente novo com fibra, 72,4%.">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 470" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" role="img"><path d="M590.0,91.0 L300.0,163.0" stroke="var(--rule)" stroke-width="1.5" fill="none"/><text x="399.0" y="127.0" font-size="20" fill="var(--muted)" font-weight="600" text-anchor="middle" dominant-baseline="middle">yes</text><path d="M590.0,91.0 L880.0,163.0" stroke="var(--rule)" stroke-width="1.5" fill="none"/><text x="781.0" y="127.0" font-size="20" fill="var(--muted)" font-weight="600" text-anchor="middle" dominant-baseline="middle">no</text><path d="M300.0,237.0 L120.0,305.0" stroke="var(--rule)" stroke-width="1.5" fill="none"/><text x="176.0" y="271.0" font-size="20" fill="var(--muted)" font-weight="600" text-anchor="middle" dominant-baseline="middle">no</text><path d="M300.0,237.0 L480.0,305.0" stroke="var(--rule)" stroke-width="1.5" fill="none"/><text x="424.0" y="271.0" font-size="20" fill="var(--muted)" font-weight="600" text-anchor="middle" dominant-baseline="middle">yes</text><path d="M880.0,237.0 L700.0,305.0" stroke="var(--rule)" stroke-width="1.5" fill="none"/><text x="756.0" y="271.0" font-size="20" fill="var(--muted)" font-weight="600" text-anchor="middle" dominant-baseline="middle">no</text><path d="M880.0,237.0 L1060.0,305.0" stroke="var(--rule)" stroke-width="1.5" fill="none"/><text x="1004.0" y="271.0" font-size="20" fill="var(--muted)" font-weight="600" text-anchor="middle" dominant-baseline="middle">yes</text><rect x="425.0" y="17.0" width="330" height="74" rx="8" fill="none" stroke="var(--accent)" stroke-width="2"/><text x="590" y="39" font-size="23" fill="var(--ink)" font-weight="600" text-anchor="middle" dominant-baseline="middle">tenure ≤ 10.5 months?</text><text x="590" y="70" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">5,282 · 26.5% cancelled</text><rect x="185.0" y="163.0" width="230" height="74" rx="8" fill="none" stroke="var(--accent)" stroke-width="2"/><text x="300" y="185" font-size="23" fill="var(--ink)" font-weight="600" text-anchor="middle" dominant-baseline="middle">Fiber optic?</text><text x="300" y="216" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">1,479 · 49.5% cancelled</text><rect x="765.0" y="163.0" width="230" height="74" rx="8" fill="none" stroke="var(--accent)" stroke-width="2"/><text x="880" y="185" font-size="23" fill="var(--ink)" font-weight="600" text-anchor="middle" dominant-baseline="middle">Fiber optic?</text><text x="880" y="216" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">3,803 · 17.6% cancelled</text><rect x="8.0" y="305.0" width="224" height="86" rx="8" fill="none" stroke="var(--rule)" stroke-width="1.5"/><text x="120" y="322" font-size="20" fill="var(--muted)" font-weight="600" text-anchor="middle" dominant-baseline="middle">no fiber</text><text x="120" y="352" font-size="25" fill="var(--ink)" font-weight="700" text-anchor="middle" dominant-baseline="middle">32.5% cancelled</text><text x="120" y="382" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">of 849</text><text x="120" y="418" font-size="21" fill="var(--muted)" font-weight="700" text-anchor="middle" dominant-baseline="middle">→ stays</text><rect x="368.0" y="305.0" width="224" height="86" rx="8" fill="none" stroke="var(--accent-2)" stroke-width="2.5"/><text x="480" y="322" font-size="20" fill="var(--muted)" font-weight="600" text-anchor="middle" dominant-baseline="middle">fiber</text><text x="480" y="352" font-size="25" fill="var(--accent-2)" font-weight="700" text-anchor="middle" dominant-baseline="middle">72.4% cancelled</text><text x="480" y="382" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">of 630</text><text x="480" y="418" font-size="21" fill="var(--accent-2)" font-weight="700" text-anchor="middle" dominant-baseline="middle">→ CANCELS</text><rect x="588.0" y="305.0" width="224" height="86" rx="8" fill="none" stroke="var(--rule)" stroke-width="1.5"/><text x="700" y="322" font-size="20" fill="var(--muted)" font-weight="600" text-anchor="middle" dominant-baseline="middle">no fiber</text><text x="700" y="352" font-size="25" fill="var(--ink)" font-weight="700" text-anchor="middle" dominant-baseline="middle">7.1% cancelled</text><text x="700" y="382" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">of 2,110</text><text x="700" y="418" font-size="21" fill="var(--muted)" font-weight="700" text-anchor="middle" dominant-baseline="middle">→ stays</text><rect x="948.0" y="305.0" width="224" height="86" rx="8" fill="none" stroke="var(--rule)" stroke-width="1.5"/><text x="1060" y="322" font-size="20" fill="var(--muted)" font-weight="600" text-anchor="middle" dominant-baseline="middle">fiber</text><text x="1060" y="352" font-size="25" fill="var(--ink)" font-weight="700" text-anchor="middle" dominant-baseline="middle">30.7% cancelled</text><text x="1060" y="382" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">of 1,693</text><text x="1060" y="418" font-size="21" fill="var(--muted)" font-weight="700" text-anchor="middle" dominant-baseline="middle">→ stays</text><text x="590.0" y="456" font-size="24" fill="var(--ink)" font-weight="600" text-anchor="middle" dominant-baseline="middle">Two questions. That is the whole model.</text></svg>
+    </figure>
+    
+    <div class="fonte">Trained on 5,282 customers · percentages are the share who actually cancelled in each group</div>
+    <div class="deck-footer">How Machine Learning Works · 25/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>What "depth 30" actually builds</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="Três árvores lado a lado mostrando o crescimento por profundidade: 4 folhas na profundidade 2, 32 na profundidade 5 e 1.037 na profundidade 30, das quais 390 contêm um único cliente.">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 470" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" role="img"><text x="200" y="30" font-size="21" fill="var(--ink)" font-weight="700" text-anchor="middle" dominant-baseline="middle">Depth 2</text><circle cx="200.0" cy="74" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="112.5" cy="108" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="287.5" cy="108" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="55.0" cy="142" r="3.4" fill="var(--accent)" opacity="0.95"/><circle cx="151.7" cy="142" r="3.4" fill="var(--accent)" opacity="0.95"/><circle cx="248.3" cy="142" r="3.4" fill="var(--accent)" opacity="0.95"/><circle cx="345.0" cy="142" r="3.4" fill="var(--accent)" opacity="0.95"/><text x="200" y="372" font-size="20" fill="var(--ink)" font-weight="700" text-anchor="middle" dominant-baseline="middle">4 leaves</text><text x="200" y="398" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">1320 customers per leaf</text><text x="590" y="30" font-size="21" fill="var(--ink)" font-weight="700" text-anchor="middle" dominant-baseline="middle">Depth 5</text><circle cx="590.0" cy="74" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="537.0" cy="108" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="643.0" cy="108" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="514.0" cy="142" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="564.7" cy="142" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="615.3" cy="142" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="666.0" cy="142" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="491.0" cy="176" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="519.3" cy="176" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="547.6" cy="176" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="575.9" cy="176" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="604.1" cy="176" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="632.4" cy="176" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="660.7" cy="176" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="689.0" cy="176" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="468.0" cy="210" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="484.3" cy="210" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="500.5" cy="210" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="516.8" cy="210" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="533.1" cy="210" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="549.3" cy="210" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="565.6" cy="210" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="581.9" cy="210" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="598.1" cy="210" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="614.4" cy="210" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="630.7" cy="210" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="646.9" cy="210" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="663.2" cy="210" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="679.5" cy="210" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="695.7" cy="210" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="712.0" cy="210" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="445.0" cy="244" r="3.4" fill="var(--accent)" opacity="0.95"/><circle cx="454.4" cy="244" r="3.4" fill="var(--accent)" opacity="0.95"/><circle cx="463.7" cy="244" r="3.4" fill="var(--accent)" opacity="0.95"/><circle cx="473.1" cy="244" r="3.4" fill="var(--accent)" opacity="0.95"/><circle cx="482.4" cy="244" r="3.4" fill="var(--accent)" opacity="0.95"/><circle cx="491.8" cy="244" r="3.4" fill="var(--accent)" opacity="0.95"/><circle cx="501.1" cy="244" r="3.4" fill="var(--accent)" opacity="0.95"/><circle cx="510.5" cy="244" r="3.4" fill="var(--accent)" opacity="0.95"/><circle cx="519.8" cy="244" r="3.4" fill="var(--accent)" opacity="0.95"/><circle cx="529.2" cy="244" r="3.4" fill="var(--accent)" opacity="0.95"/><circle cx="538.5" cy="244" r="3.4" fill="var(--accent)" opacity="0.95"/><circle cx="547.9" cy="244" r="3.4" fill="var(--accent)" opacity="0.95"/><circle cx="557.3" cy="244" r="3.4" fill="var(--accent)" opacity="0.95"/><circle cx="566.6" cy="244" r="3.4" fill="var(--accent)" opacity="0.95"/><circle cx="576.0" cy="244" r="3.4" fill="var(--accent)" opacity="0.95"/><circle cx="585.3" cy="244" r="3.4" fill="var(--accent)" opacity="0.95"/><circle cx="594.7" cy="244" r="3.4" fill="var(--accent)" opacity="0.95"/><circle cx="604.0" cy="244" r="3.4" fill="var(--accent)" opacity="0.95"/><circle cx="613.4" cy="244" r="3.4" fill="var(--accent)" opacity="0.95"/><circle cx="622.7" cy="244" r="3.4" fill="var(--accent)" opacity="0.95"/><circle cx="632.1" cy="244" r="3.4" fill="var(--accent)" opacity="0.95"/><circle cx="641.5" cy="244" r="3.4" fill="var(--accent)" opacity="0.95"/><circle cx="650.8" cy="244" r="3.4" fill="var(--accent)" opacity="0.95"/><circle cx="660.2" cy="244" r="3.4" fill="var(--accent)" opacity="0.95"/><circle cx="669.5" cy="244" r="3.4" fill="var(--accent)" opacity="0.95"/><circle cx="678.9" cy="244" r="3.4" fill="var(--accent)" opacity="0.95"/><circle cx="688.2" cy="244" r="3.4" fill="var(--accent)" opacity="0.95"/><circle cx="697.6" cy="244" r="3.4" fill="var(--accent)" opacity="0.95"/><circle cx="706.9" cy="244" r="3.4" fill="var(--accent)" opacity="0.95"/><circle cx="716.3" cy="244" r="3.4" fill="var(--accent)" opacity="0.95"/><circle cx="725.6" cy="244" r="3.4" fill="var(--accent)" opacity="0.95"/><circle cx="735.0" cy="244" r="3.4" fill="var(--accent)" opacity="0.95"/><text x="590" y="372" font-size="20" fill="var(--ink)" font-weight="700" text-anchor="middle" dominant-baseline="middle">32 leaves</text><text x="590" y="398" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">165 customers per leaf</text><text x="980" y="30" font-size="21" fill="var(--ink)" font-weight="700" text-anchor="middle" dominant-baseline="middle">Depth 30</text><circle cx="980.0" cy="74" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="933.6" cy="108" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1026.4" cy="108" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="917.1" cy="142" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="959.0" cy="142" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1001.0" cy="142" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1042.9" cy="142" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="900.7" cy="176" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="923.4" cy="176" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="946.0" cy="176" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="968.7" cy="176" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="991.3" cy="176" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1014.0" cy="176" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1036.6" cy="176" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1059.3" cy="176" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="884.3" cy="210" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="897.0" cy="210" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="909.8" cy="210" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="922.6" cy="210" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="935.3" cy="210" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="948.1" cy="210" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="960.9" cy="210" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="973.6" cy="210" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="986.4" cy="210" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="999.1" cy="210" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1011.9" cy="210" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1024.7" cy="210" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1037.4" cy="210" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1050.2" cy="210" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1063.0" cy="210" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1075.7" cy="210" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="867.9" cy="244" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="875.1" cy="244" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="882.3" cy="244" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="889.6" cy="244" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="896.8" cy="244" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="904.0" cy="244" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="911.3" cy="244" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="918.5" cy="244" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="925.7" cy="244" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="933.0" cy="244" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="940.2" cy="244" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="947.4" cy="244" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="954.7" cy="244" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="961.9" cy="244" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="969.1" cy="244" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="976.4" cy="244" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="983.6" cy="244" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="990.9" cy="244" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="998.1" cy="244" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1005.3" cy="244" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1012.6" cy="244" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1019.8" cy="244" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1027.0" cy="244" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1034.3" cy="244" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1041.5" cy="244" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1048.7" cy="244" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1056.0" cy="244" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1063.2" cy="244" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1070.4" cy="244" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1077.7" cy="244" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1084.9" cy="244" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1092.1" cy="244" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="851.4" cy="278" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="859.2" cy="278" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="867.0" cy="278" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="874.8" cy="278" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="882.6" cy="278" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="890.4" cy="278" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="898.2" cy="278" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="906.0" cy="278" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="913.8" cy="278" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="921.6" cy="278" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="929.4" cy="278" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="937.1" cy="278" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="944.9" cy="278" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="952.7" cy="278" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="960.5" cy="278" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="968.3" cy="278" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="976.1" cy="278" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="983.9" cy="278" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="991.7" cy="278" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="999.5" cy="278" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1007.3" cy="278" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1015.1" cy="278" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1022.9" cy="278" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1030.6" cy="278" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1038.4" cy="278" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1046.2" cy="278" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1054.0" cy="278" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1061.8" cy="278" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1069.6" cy="278" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1077.4" cy="278" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1085.2" cy="278" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1093.0" cy="278" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1100.8" cy="278" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="1108.6" cy="278" r="2.6" fill="var(--accent)" opacity="0.45"/><circle cx="835.0" cy="312" r="3.4" fill="var(--accent-2)" opacity="0.95"/><circle cx="843.8" cy="312" r="3.4" fill="var(--accent-2)" opacity="0.95"/><circle cx="852.6" cy="312" r="3.4" fill="var(--accent-2)" opacity="0.95"/><circle cx="861.4" cy="312" r="3.4" fill="var(--accent-2)" opacity="0.95"/><circle cx="870.2" cy="312" r="3.4" fill="var(--accent-2)" opacity="0.95"/><circle cx="878.9" cy="312" r="3.4" fill="var(--accent-2)" opacity="0.95"/><circle cx="887.7" cy="312" r="3.4" fill="var(--accent-2)" opacity="0.95"/><circle cx="896.5" cy="312" r="3.4" fill="var(--accent-2)" opacity="0.95"/><circle cx="905.3" cy="312" r="3.4" fill="var(--accent-2)" opacity="0.95"/><circle cx="914.1" cy="312" r="3.4" fill="var(--accent-2)" opacity="0.95"/><circle cx="922.9" cy="312" r="3.4" fill="var(--accent-2)" opacity="0.95"/><circle cx="931.7" cy="312" r="3.4" fill="var(--accent-2)" opacity="0.95"/><circle cx="940.5" cy="312" r="3.4" fill="var(--accent-2)" opacity="0.95"/><circle cx="949.2" cy="312" r="3.4" fill="var(--accent-2)" opacity="0.95"/><circle cx="958.0" cy="312" r="3.4" fill="var(--accent-2)" opacity="0.95"/><circle cx="966.8" cy="312" r="3.4" fill="var(--accent-2)" opacity="0.95"/><circle cx="975.6" cy="312" r="3.4" fill="var(--accent-2)" opacity="0.95"/><circle cx="984.4" cy="312" r="3.4" fill="var(--accent-2)" opacity="0.95"/><circle cx="993.2" cy="312" r="3.4" fill="var(--accent-2)" opacity="0.95"/><circle cx="1002.0" cy="312" r="3.4" fill="var(--accent-2)" opacity="0.95"/><circle cx="1010.8" cy="312" r="3.4" fill="var(--accent-2)" opacity="0.95"/><circle cx="1019.5" cy="312" r="3.4" fill="var(--accent-2)" opacity="0.95"/><circle cx="1028.3" cy="312" r="3.4" fill="var(--accent-2)" opacity="0.95"/><circle cx="1037.1" cy="312" r="3.4" fill="var(--accent-2)" opacity="0.95"/><circle cx="1045.9" cy="312" r="3.4" fill="var(--accent-2)" opacity="0.95"/><circle cx="1054.7" cy="312" r="3.4" fill="var(--accent-2)" opacity="0.95"/><circle cx="1063.5" cy="312" r="3.4" fill="var(--accent-2)" opacity="0.95"/><circle cx="1072.3" cy="312" r="3.4" fill="var(--accent-2)" opacity="0.95"/><circle cx="1081.1" cy="312" r="3.4" fill="var(--accent-2)" opacity="0.95"/><circle cx="1089.8" cy="312" r="3.4" fill="var(--accent-2)" opacity="0.95"/><circle cx="1098.6" cy="312" r="3.4" fill="var(--accent-2)" opacity="0.95"/><circle cx="1107.4" cy="312" r="3.4" fill="var(--accent-2)" opacity="0.95"/><circle cx="1116.2" cy="312" r="3.4" fill="var(--accent-2)" opacity="0.95"/><circle cx="1125.0" cy="312" r="3.4" fill="var(--accent-2)" opacity="0.95"/><text x="980" y="346" font-size="22" fill="var(--accent)" font-weight="700" text-anchor="middle" dominant-baseline="middle">⋮</text><text x="980" y="372" font-size="20" fill="var(--accent-2)" font-weight="700" text-anchor="middle" dominant-baseline="middle">1,037 leaves</text><text x="980" y="398" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">5 customers per leaf</text><text x="980" y="424" font-size="20" fill="var(--accent-2)" font-weight="700" text-anchor="middle" dominant-baseline="middle">390 leaves hold ONE customer</text><text x="590.0" y="456" font-size="20" fill="var(--muted)" font-weight="600" text-anchor="middle" dominant-baseline="middle">A leaf with one customer has not learned a pattern. It has stored a person.</text></svg>
+    </figure>
+    
+    <div class="fonte">Same training data · leaf counts from the real models</div>
+    <div class="deck-footer">How Machine Learning Works · 26/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>Same customers. Three models.</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="Três painéis com os mesmos dezesseis pontos. À esquerda uma reta que ignora a curva (subajuste); no meio uma curva suave que acompanha a forma (equilíbrio); à direita uma curva que passa por quase todo ponto e oscila entre eles (sobreajuste).">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 470" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" role="img"><text x="205.0" y="30" font-size="26" fill="var(--accent-2)" font-weight="700" text-anchor="middle" dominant-baseline="middle">Underfitting</text><clipPath id="painel0"><rect x="40" y="58" width="330" height="168" rx="6"/></clipPath><rect x="40" y="58" width="330" height="168" fill="none" stroke="var(--rule)" stroke-width="1.5" rx="6"/><path d="M46.6,70.7 L47.8,71.1 L49.0,71.6 L50.3,72.1 L51.5,72.6 L52.7,73.0 L53.9,73.5 L55.2,74.0 L56.4,74.5 L57.6,74.9 L58.8,75.4 L60.1,75.9 L61.3,76.4 L62.5,76.8 L63.7,77.3 L64.9,77.8 L66.2,78.3 L67.4,78.7 L68.6,79.2 L69.8,79.7 L71.1,80.2 L72.3,80.6 L73.5,81.1 L74.7,81.6 L76.0,82.0 L77.2,82.5 L78.4,83.0 L79.6,83.5 L80.8,83.9 L82.1,84.4 L83.3,84.9 L84.5,85.4 L85.7,85.8 L87.0,86.3 L88.2,86.8 L89.4,87.3 L90.6,87.7 L91.9,88.2 L93.1,88.7 L94.3,89.2 L95.5,89.6 L96.7,90.1 L98.0,90.6 L99.2,91.1 L100.4,91.5 L101.6,92.0 L102.9,92.5 L104.1,92.9 L105.3,93.4 L106.5,93.9 L107.8,94.4 L109.0,94.8 L110.2,95.3 L111.4,95.8 L112.7,96.3 L113.9,96.7 L115.1,97.2 L116.3,97.7 L117.5,98.2 L118.8,98.6 L120.0,99.1 L121.2,99.6 L122.4,100.1 L123.7,100.5 L124.9,101.0 L126.1,101.5 L127.3,102.0 L128.6,102.4 L129.8,102.9 L131.0,103.4 L132.2,103.8 L133.4,104.3 L134.7,104.8 L135.9,105.3 L137.1,105.7 L138.3,106.2 L139.6,106.7 L140.8,107.2 L142.0,107.6 L143.2,108.1 L144.5,108.6 L145.7,109.1 L146.9,109.5 L148.1,110.0 L149.3,110.5 L150.6,111.0 L151.8,111.4 L153.0,111.9 L154.2,112.4 L155.5,112.9 L156.7,113.3 L157.9,113.8 L159.1,114.3 L160.4,114.8 L161.6,115.2 L162.8,115.7 L164.0,116.2 L165.2,116.6 L166.5,117.1 L167.7,117.6 L168.9,118.1 L170.1,118.5 L171.4,119.0 L172.6,119.5 L173.8,120.0 L175.0,120.4 L176.3,120.9 L177.5,121.4 L178.7,121.9 L179.9,122.3 L181.1,122.8 L182.4,123.3 L183.6,123.8 L184.8,124.2 L186.0,124.7 L187.3,125.2 L188.5,125.7 L189.7,126.1 L190.9,126.6 L192.2,127.1 L193.4,127.5 L194.6,128.0 L195.8,128.5 L197.0,129.0 L198.3,129.4 L199.5,129.9 L200.7,130.4 L201.9,130.9 L203.2,131.3 L204.4,131.8 L205.6,132.3 L206.8,132.8 L208.1,133.2 L209.3,133.7 L210.5,134.2 L211.7,134.7 L213.0,135.1 L214.2,135.6 L215.4,136.1 L216.6,136.6 L217.8,137.0 L219.1,137.5 L220.3,138.0 L221.5,138.4 L222.7,138.9 L224.0,139.4 L225.2,139.9 L226.4,140.3 L227.6,140.8 L228.9,141.3 L230.1,141.8 L231.3,142.2 L232.5,142.7 L233.7,143.2 L235.0,143.7 L236.2,144.1 L237.4,144.6 L238.6,145.1 L239.9,145.6 L241.1,146.0 L242.3,146.5 L243.5,147.0 L244.8,147.5 L246.0,147.9 L247.2,148.4 L248.4,148.9 L249.6,149.3 L250.9,149.8 L252.1,150.3 L253.3,150.8 L254.5,151.2 L255.8,151.7 L257.0,152.2 L258.2,152.7 L259.4,153.1 L260.7,153.6 L261.9,154.1 L263.1,154.6 L264.3,155.0 L265.5,155.5 L266.8,156.0 L268.0,156.5 L269.2,156.9 L270.4,157.4 L271.7,157.9 L272.9,158.4 L274.1,158.8 L275.3,159.3 L276.6,159.8 L277.8,160.2 L279.0,160.7 L280.2,161.2 L281.4,161.7 L282.7,162.1 L283.9,162.6 L285.1,163.1 L286.3,163.6 L287.6,164.0 L288.8,164.5 L290.0,165.0 L291.2,165.5 L292.5,165.9 L293.7,166.4 L294.9,166.9 L296.1,167.4 L297.3,167.8 L298.6,168.3 L299.8,168.8 L301.0,169.3 L302.2,169.7 L303.5,170.2 L304.7,170.7 L305.9,171.2 L307.1,171.6 L308.4,172.1 L309.6,172.6 L310.8,173.0 L312.0,173.5 L313.3,174.0 L314.5,174.5 L315.7,174.9 L316.9,175.4 L318.1,175.9 L319.4,176.4 L320.6,176.8 L321.8,177.3 L323.0,177.8 L324.3,178.3 L325.5,178.7 L326.7,179.2 L327.9,179.7 L329.2,180.2 L330.4,180.6 L331.6,181.1 L332.8,181.6 L334.0,182.1 L335.3,182.5 L336.5,183.0 L337.7,183.5 L338.9,183.9 L340.2,184.4 L341.4,184.9 L342.6,185.4 L343.8,185.8 L345.1,186.3 L346.3,186.8 L347.5,187.3 L348.7,187.7 L349.9,188.2 L351.2,188.7 L352.4,189.2 L353.6,189.6 L354.8,190.1 L356.1,190.6 L357.3,191.1 L358.5,191.5 L359.7,192.0 L361.0,192.5 L362.2,193.0 L363.4,193.4" stroke="var(--accent-2)" stroke-width="3" fill="none" stroke-linejoin="round" clip-path="url(#painel0)"/><circle cx="59.8" cy="149.2" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="79.2" cy="119.6" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="98.5" cy="102.3" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="117.9" cy="90.3" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="137.2" cy="72.3" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="156.6" cy="75.6" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="176.0" cy="68.4" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="195.3" cy="66.9" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="214.7" cy="111.3" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="234.0" cy="138.1" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="253.4" cy="149.7" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="272.8" cy="174.0" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="292.1" cy="193.8" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="311.5" cy="215.2" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="330.8" cy="202.7" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="350.2" cy="183.3" r="4.6" fill="var(--ink)" opacity="0.72"/><text x="205.0" y="258" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">too simple —</text><text x="205.0" y="284" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">misses the pattern</text><text x="205.0" y="322" font-size="21" fill="var(--muted)" font-weight="600" text-anchor="middle" dominant-baseline="middle">training bad</text><text x="205.0" y="350" font-size="23" fill="var(--accent-2)" font-weight="700" text-anchor="middle" dominant-baseline="middle">new customers bad</text><text x="590.0" y="30" font-size="26" fill="var(--accent)" font-weight="700" text-anchor="middle" dominant-baseline="middle">Balance</text><clipPath id="painel1"><rect x="425" y="58" width="330" height="168" rx="6"/></clipPath><rect x="425" y="58" width="330" height="168" fill="none" stroke="var(--rule)" stroke-width="1.5" rx="6"/><path d="M431.6,162.0 L432.8,160.7 L434.0,159.4 L435.3,158.1 L436.5,156.8 L437.7,155.4 L438.9,154.1 L440.2,152.7 L441.4,151.3 L442.6,149.9 L443.8,148.5 L445.1,147.1 L446.3,145.6 L447.5,144.2 L448.7,142.7 L449.9,141.3 L451.2,139.8 L452.4,138.4 L453.6,136.9 L454.8,135.5 L456.1,134.0 L457.3,132.5 L458.5,131.1 L459.7,129.6 L461.0,128.1 L462.2,126.7 L463.4,125.2 L464.6,123.8 L465.8,122.3 L467.1,120.9 L468.3,119.5 L469.5,118.0 L470.7,116.6 L472.0,115.2 L473.2,113.8 L474.4,112.5 L475.6,111.1 L476.9,109.7 L478.1,108.4 L479.3,107.1 L480.5,105.7 L481.7,104.4 L483.0,103.1 L484.2,101.9 L485.4,100.6 L486.6,99.4 L487.9,98.2 L489.1,97.0 L490.3,95.8 L491.5,94.6 L492.8,93.5 L494.0,92.4 L495.2,91.3 L496.4,90.2 L497.7,89.1 L498.9,88.1 L500.1,87.1 L501.3,86.1 L502.5,85.1 L503.8,84.2 L505.0,83.3 L506.2,82.4 L507.4,81.5 L508.7,80.7 L509.9,79.9 L511.1,79.1 L512.3,78.4 L513.6,77.6 L514.8,76.9 L516.0,76.3 L517.2,75.6 L518.4,75.0 L519.7,74.4 L520.9,73.9 L522.1,73.4 L523.3,72.9 L524.6,72.4 L525.8,72.0 L527.0,71.6 L528.2,71.2 L529.5,70.8 L530.7,70.5 L531.9,70.2 L533.1,70.0 L534.3,69.8 L535.6,69.6 L536.8,69.4 L538.0,69.3 L539.2,69.2 L540.5,69.2 L541.7,69.1 L542.9,69.1 L544.1,69.2 L545.4,69.2 L546.6,69.3 L547.8,69.5 L549.0,69.6 L550.2,69.8 L551.5,70.1 L552.7,70.3 L553.9,70.6 L555.1,70.9 L556.4,71.3 L557.6,71.7 L558.8,72.1 L560.0,72.5 L561.3,73.0 L562.5,73.5 L563.7,74.1 L564.9,74.6 L566.1,75.2 L567.4,75.9 L568.6,76.5 L569.8,77.2 L571.0,78.0 L572.3,78.7 L573.5,79.5 L574.7,80.3 L575.9,81.2 L577.2,82.0 L578.4,82.9 L579.6,83.8 L580.8,84.8 L582.0,85.8 L583.3,86.8 L584.5,87.8 L585.7,88.9 L586.9,90.0 L588.2,91.1 L589.4,92.2 L590.6,93.4 L591.8,94.5 L593.1,95.8 L594.3,97.0 L595.5,98.2 L596.7,99.5 L598.0,100.8 L599.2,102.1 L600.4,103.5 L601.6,104.8 L602.8,106.2 L604.1,107.6 L605.3,109.0 L606.5,110.4 L607.7,111.9 L609.0,113.4 L610.2,114.8 L611.4,116.3 L612.6,117.9 L613.9,119.4 L615.1,120.9 L616.3,122.5 L617.5,124.1 L618.7,125.6 L620.0,127.2 L621.2,128.8 L622.4,130.4 L623.6,132.1 L624.9,133.7 L626.1,135.3 L627.3,136.9 L628.5,138.6 L629.8,140.2 L631.0,141.9 L632.2,143.6 L633.4,145.2 L634.6,146.9 L635.9,148.5 L637.1,150.2 L638.3,151.9 L639.5,153.5 L640.8,155.2 L642.0,156.8 L643.2,158.5 L644.4,160.1 L645.7,161.7 L646.9,163.4 L648.1,165.0 L649.3,166.6 L650.5,168.2 L651.8,169.8 L653.0,171.3 L654.2,172.9 L655.4,174.4 L656.7,175.9 L657.9,177.5 L659.1,178.9 L660.3,180.4 L661.6,181.9 L662.8,183.3 L664.0,184.7 L665.2,186.1 L666.4,187.5 L667.7,188.8 L668.9,190.1 L670.1,191.4 L671.3,192.6 L672.6,193.8 L673.8,195.0 L675.0,196.2 L676.2,197.3 L677.5,198.4 L678.7,199.4 L679.9,200.4 L681.1,201.4 L682.3,202.3 L683.6,203.2 L684.8,204.0 L686.0,204.8 L687.2,205.6 L688.5,206.3 L689.7,206.9 L690.9,207.5 L692.1,208.1 L693.4,208.5 L694.6,209.0 L695.8,209.4 L697.0,209.7 L698.3,210.0 L699.5,210.2 L700.7,210.3 L701.9,210.4 L703.1,210.4 L704.4,210.3 L705.6,210.2 L706.8,210.0 L708.0,209.8 L709.3,209.4 L710.5,209.0 L711.7,208.5 L712.9,208.0 L714.2,207.3 L715.4,206.6 L716.6,205.8 L717.8,204.9 L719.0,203.9 L720.3,202.8 L721.5,201.7 L722.7,200.4 L723.9,199.1 L725.2,197.6 L726.4,196.1 L727.6,194.5 L728.8,192.8 L730.1,190.9 L731.3,189.0 L732.5,186.9 L733.7,184.8 L734.9,182.5 L736.2,180.2 L737.4,177.7 L738.6,175.1 L739.8,172.4 L741.1,169.5 L742.3,166.6 L743.5,163.5 L744.7,160.3 L746.0,157.0 L747.2,153.5 L748.4,150.0" stroke="var(--accent)" stroke-width="3" fill="none" stroke-linejoin="round" clip-path="url(#painel1)"/><circle cx="444.8" cy="149.2" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="464.2" cy="119.6" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="483.5" cy="102.3" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="502.9" cy="90.3" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="522.2" cy="72.3" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="541.6" cy="75.6" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="561.0" cy="68.4" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="580.3" cy="66.9" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="599.7" cy="111.3" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="619.0" cy="138.1" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="638.4" cy="149.7" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="657.8" cy="174.0" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="677.1" cy="193.8" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="696.5" cy="215.2" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="715.8" cy="202.7" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="735.2" cy="183.3" r="4.6" fill="var(--ink)" opacity="0.72"/><text x="590.0" y="258" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">caught the pattern,</text><text x="590.0" y="284" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">ignored the noise</text><text x="590.0" y="322" font-size="21" fill="var(--muted)" font-weight="600" text-anchor="middle" dominant-baseline="middle">training good</text><text x="590.0" y="350" font-size="23" fill="var(--accent)" font-weight="700" text-anchor="middle" dominant-baseline="middle">new customers good</text><text x="975.0" y="30" font-size="26" fill="var(--accent-2)" font-weight="700" text-anchor="middle" dominant-baseline="middle">Overfitting</text><clipPath id="painel2"><rect x="810" y="58" width="330" height="168" rx="6"/></clipPath><rect x="810" y="58" width="330" height="168" fill="none" stroke="var(--rule)" stroke-width="1.5" rx="6"/><path d="M816.6,16.0 L817.8,16.0 L819.0,16.0 L820.3,16.0 L821.5,16.0 L822.7,16.0 L823.9,16.0 L825.2,16.0 L826.4,16.0 L827.6,16.0 L828.8,63.3 L830.1,168.0 L831.3,239.5 L832.5,268.0 L833.7,268.0 L834.9,268.0 L836.2,268.0 L837.4,268.0 L838.6,268.0 L839.8,266.7 L841.1,244.4 L842.3,221.6 L843.5,199.4 L844.7,178.5 L846.0,159.4 L847.2,142.3 L848.4,127.6 L849.6,115.2 L850.8,105.1 L852.1,97.1 L853.3,91.2 L854.5,87.2 L855.7,84.7 L857.0,83.6 L858.2,83.7 L859.4,84.7 L860.6,86.4 L861.9,88.6 L863.1,91.1 L864.3,93.7 L865.5,96.4 L866.7,98.9 L868.0,101.3 L869.2,103.3 L870.4,105.0 L871.6,106.3 L872.9,107.2 L874.1,107.7 L875.3,107.7 L876.5,107.4 L877.8,106.6 L879.0,105.5 L880.2,104.0 L881.4,102.3 L882.7,100.4 L883.9,98.3 L885.1,96.1 L886.3,93.7 L887.5,91.4 L888.8,89.0 L890.0,86.7 L891.2,84.5 L892.4,82.3 L893.7,80.4 L894.9,78.6 L896.1,76.9 L897.3,75.5 L898.6,74.3 L899.8,73.3 L901.0,72.4 L902.2,71.8 L903.4,71.4 L904.7,71.2 L905.9,71.2 L907.1,71.3 L908.3,71.5 L909.6,71.9 L910.8,72.3 L912.0,72.8 L913.2,73.4 L914.5,74.0 L915.7,74.6 L916.9,75.2 L918.1,75.8 L919.3,76.3 L920.6,76.8 L921.8,77.1 L923.0,77.4 L924.2,77.6 L925.5,77.6 L926.7,77.6 L927.9,77.4 L929.1,77.1 L930.4,76.7 L931.6,76.2 L932.8,75.6 L934.0,74.9 L935.2,74.1 L936.5,73.2 L937.7,72.3 L938.9,71.3 L940.1,70.3 L941.4,69.3 L942.6,68.3 L943.8,67.3 L945.0,66.3 L946.3,65.4 L947.5,64.6 L948.7,63.9 L949.9,63.3 L951.1,62.8 L952.4,62.5 L953.6,62.3 L954.8,62.3 L956.0,62.4 L957.3,62.8 L958.5,63.3 L959.7,64.0 L960.9,64.9 L962.2,66.0 L963.4,67.2 L964.6,68.7 L965.8,70.3 L967.0,72.1 L968.3,74.1 L969.5,76.2 L970.7,78.5 L971.9,80.8 L973.2,83.3 L974.4,85.9 L975.6,88.6 L976.8,91.4 L978.1,94.1 L979.3,97.0 L980.5,99.8 L981.7,102.6 L983.0,105.4 L984.2,108.2 L985.4,110.9 L986.6,113.5 L987.8,116.1 L989.1,118.6 L990.3,121.0 L991.5,123.2 L992.7,125.4 L994.0,127.4 L995.2,129.3 L996.4,131.0 L997.6,132.6 L998.9,134.1 L1000.1,135.5 L1001.3,136.7 L1002.5,137.8 L1003.7,138.8 L1005.0,139.8 L1006.2,140.6 L1007.4,141.3 L1008.6,142.0 L1009.9,142.6 L1011.1,143.1 L1012.3,143.7 L1013.5,144.2 L1014.8,144.7 L1016.0,145.2 L1017.2,145.8 L1018.4,146.4 L1019.6,147.1 L1020.9,147.8 L1022.1,148.6 L1023.3,149.4 L1024.5,150.4 L1025.8,151.4 L1027.0,152.5 L1028.2,153.8 L1029.4,155.1 L1030.7,156.5 L1031.9,158.0 L1033.1,159.6 L1034.3,161.3 L1035.5,163.0 L1036.8,164.8 L1038.0,166.7 L1039.2,168.5 L1040.4,170.4 L1041.7,172.3 L1042.9,174.2 L1044.1,176.0 L1045.3,177.8 L1046.6,179.6 L1047.8,181.2 L1049.0,182.8 L1050.2,184.4 L1051.4,185.8 L1052.7,187.1 L1053.9,188.3 L1055.1,189.4 L1056.3,190.3 L1057.6,191.2 L1058.8,192.0 L1060.0,192.8 L1061.2,193.4 L1062.5,194.0 L1063.7,194.6 L1064.9,195.2 L1066.1,195.8 L1067.3,196.4 L1068.6,197.2 L1069.8,198.0 L1071.0,199.0 L1072.2,200.1 L1073.5,201.5 L1074.7,203.0 L1075.9,204.7 L1077.1,206.6 L1078.4,208.8 L1079.6,211.1 L1080.8,213.7 L1082.0,216.3 L1083.3,219.1 L1084.5,221.9 L1085.7,224.7 L1086.9,227.3 L1088.1,229.7 L1089.4,231.7 L1090.6,233.1 L1091.8,233.9 L1093.0,233.9 L1094.3,232.9 L1095.5,230.6 L1096.7,227.0 L1097.9,221.9 L1099.2,215.1 L1100.4,206.5 L1101.6,196.0 L1102.8,183.7 L1104.0,169.5 L1105.3,153.6 L1106.5,136.3 L1107.7,118.0 L1108.9,99.4 L1110.2,81.2 L1111.4,64.6 L1112.6,51.0 L1113.8,42.2 L1115.1,40.4 L1116.3,48.4 L1117.5,69.4 L1118.7,107.6 L1119.9,167.6 L1121.2,255.1 L1122.4,268.0 L1123.6,268.0 L1124.8,268.0 L1126.1,268.0 L1127.3,268.0 L1128.5,268.0 L1129.7,268.0 L1131.0,268.0 L1132.2,268.0 L1133.4,268.0" stroke="var(--accent-2)" stroke-width="3" fill="none" stroke-linejoin="round" clip-path="url(#painel2)"/><circle cx="829.8" cy="149.2" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="849.2" cy="119.6" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="868.5" cy="102.3" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="887.9" cy="90.3" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="907.2" cy="72.3" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="926.6" cy="75.6" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="946.0" cy="68.4" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="965.3" cy="66.9" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="984.7" cy="111.3" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="1004.0" cy="138.1" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="1023.4" cy="149.7" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="1042.8" cy="174.0" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="1062.1" cy="193.8" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="1081.5" cy="215.2" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="1100.8" cy="202.7" r="4.6" fill="var(--ink)" opacity="0.72"/><circle cx="1120.2" cy="183.3" r="4.6" fill="var(--ink)" opacity="0.72"/><text x="975.0" y="258" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">chases every point,</text><text x="975.0" y="284" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">noise included</text><text x="975.0" y="322" font-size="21" fill="var(--muted)" font-weight="600" text-anchor="middle" dominant-baseline="middle">training great</text><text x="975.0" y="350" font-size="23" fill="var(--accent-2)" font-weight="700" text-anchor="middle" dominant-baseline="middle">new customers bad</text><text x="590.0" y="458" font-size="22" fill="var(--ink)" font-weight="600" text-anchor="middle" dominant-baseline="middle">Same 16 customers in all three panels. Only the model changed.</text></svg>
+    </figure>
+    
+    <div class="fonte">Illustrative — one input, one outcome, so the whole disagreement fits on one picture</div>
+    <div class="deck-footer">How Machine Learning Works · 27/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Three names for three outcomes</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Underfitting — bad on training, bad on test<span class="nota">too simple for the problem. Look at depth 2 — it loses too.</span>
+        
+      </li>
+      
+      <li>
+        Balance — good on training, good on test<span class="nota">caught the pattern, ignored the noise</span>
+        
+      </li>
+      
+      <li>
+        Overfitting — excellent on training, bad on test<span class="nota">memorised the history, coincidences included</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">How Machine Learning Works · 28/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-destaque">
+    <div class="frase">A vendor shows you 99% accuracy. The one question that saves the company — <span class="accent">99% accurate on whom?</span></div>
+    <div class="autor">— if the answer is &#34;on the data we trained with&#34;, the number is worth nothing</div>
+    <div class="deck-footer">How Machine Learning Works · 29/58</div>
+  </div>
+
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">06</div>
+    <h1>Three kinds of learning</h1>
+    <p class="sub">Which one fits depends on what you already recorded.</p>
+    <div class="deck-footer">How Machine Learning Works · 30/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Supervised — you already have the right answer from the past</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Classification — the answer is a category<span class="nota">will this customer cancel? is this transaction fraud? is this ticket a complaint, a question or praise?</span>
+        
+      </li>
+      
+      <li>
+        Regression — the answer is a number<span class="nota">what is this property worth? what is March demand? how many days until delivery?</span>
+        
+      </li>
+      
+      <li>
+        Both demos today were supervised classification<span class="nota">by far the most common family in business — the only one that works when you already recorded the outcome</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">How Machine Learning Works · 31/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Unsupervised — nobody knows the right answer</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        The system finds natural groups of customers nobody defined in advance
+      </li>
+      
+      <li>
+        It discovers what tends to travel together in the shopping basket
+      </li>
+      
+      <li>
+        It does <strong>not</strong> run by itself<span class="nota">it returns <em>one</em> grouping out of many possible ones. A person decides whether it is commercially useful and what to call each group. The machine does not know what "premium customer" means.</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">How Machine Learning Works · 32/58</div>
+  </div>
+
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Reinforcement — decide, observe, adjust</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        The system acts, sees the consequence, gets a reward or a penalty, adjusts next round
+      </li>
+      
+      <li>
+        Dynamic pricing, routing, inventory, robotics
+      </li>
+      
+      <li>
+        It is not the "advanced level" — it is a different fit<span class="nota">it needs a clear scoreboard and a cheap place to fail thousands of times. Hence games and simulation; rarely business, where each mistake costs a real customer.</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">How Machine Learning Works · 33/58</div>
+  </div>
+
+</section>
+      
+      
+<section>
+  <div class="slide l-tabela">
+    <h2>And what kind of machine? Four families, in broad strokes.</h2><div class="rule"></div>
+    <div class="tabela-wrap">
+      <table>
+        
+        <thead><tr><th>Family</th><th>How it decides</th><th>What it costs you</th></tr></thead>
+        
+        <tbody>
+          
+          <tr>
+            
+            <th scope="row"><strong>Trees &amp; forests</strong></th>
+            
+            
+            <td>a chain of yes/no questions</td>
+            
+            <td>one tree you can read; three hundred you cannot</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row"><strong>Regression</strong></th>
+            
+            
+            <td>a weighted sum — one weight per variable</td>
+            
+            <td>assumes a simple shape; you do the thinking about variables</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row"><strong>Neural networks</strong></th>
+            
+            
+            <td>many layers of weights, learned</td>
+            
+            <td>expensive, opaque, data-hungry</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row"><strong>Neighbours &amp; clusters</strong></th>
+            
+            
+            <td>looks at who resembles whom</td>
+            
+            <td>no model to inspect; slow as the base grows</td>
+            
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+    <div class="fonte">You watched family</div>
+    <div class="deck-footer">How Machine Learning Works · 34/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-tabela">
+    <h2>The same problem, six different machines</h2><div class="rule"></div>
+    <div class="tabela-wrap">
+      <table>
+        
+        <thead><tr><th></th><th>Accuracy</th><th>Precision</th><th>Recall</th><th>Training time</th></tr></thead>
+        
+        <tbody>
+          
+          <tr>
+            
+            <th scope="row">“Nobody cancels”</th>
+            
+            
+            <td>73.5%</td>
+            
+            <td>—</td>
+            
+            <td>0.0%</td>
+            
+            <td>0.00s</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">Decision tree (depth 5)</th>
+            
+            
+            <td>78.9%</td>
+            
+            <td>62.9%</td>
+            
+            <td>49.7%</td>
+            
+            <td>0.02s</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">Random forest (300 trees)</th>
+            
+            
+            <td>78.1%</td>
+            
+            <td>61.4%</td>
+            
+            <td>46.7%</td>
+            
+            <td>1.29s</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">Gradient boosting</th>
+            
+            
+            <td>79.0%</td>
+            
+            <td>63.0%</td>
+            
+            <td>50.7%</td>
+            
+            <td>0.47s</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">Logistic regression</th>
+            
+            
+            <td>79.6%</td>
+            
+            <td>63.9%</td>
+            
+            <td>53.1%</td>
+            
+            <td>0.08s</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">Neural network (MLP)</th>
+            
+            
+            <td>76.5%</td>
+            
+            <td>55.5%</td>
+            
+            <td>57.0%</td>
+            
+            <td>14.84s</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">Nearest neighbours (k=25)</th>
+            
+            
+            <td>78.2%</td>
+            
+            <td>59.8%</td>
+            
+            <td>54.4%</td>
+            
+            <td>0.02s</td>
+            
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+    <div class="fonte">The same 1,761 held-out customers as the rest of the lesson. Only the kind of machine changes.</div>
+    <div class="deck-footer">How Machine Learning Works · 35/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>Same six models, measured twenty times each</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="Gráfico de pontos com amplitude. Cada família aparece com a acurácia média e a faixa entre a pior e a melhor de vinte partições. As faixas se sobrepõem quase todas; só a linha de base e a rede neural ficam separadas das demais.">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 470" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" role="img"><path d="M300.0,64 L300.0,372" stroke="var(--rule)" stroke-width="1"/><text x="300.0" y="392" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">72%</text><path d="M441.8,64 L441.8,372" stroke="var(--rule)" stroke-width="1"/><text x="441.818181818182" y="392" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">74%</text><path d="M583.6,64 L583.6,372" stroke="var(--rule)" stroke-width="1"/><text x="583.636363636364" y="392" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">76%</text><path d="M725.5,64 L725.5,372" stroke="var(--rule)" stroke-width="1"/><text x="725.4545454545458" y="392" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">78%</text><path d="M867.3,64 L867.3,372" stroke="var(--rule)" stroke-width="1"/><text x="867.2727272727278" y="392" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">80%</text><path d="M1009.1,64 L1009.1,372" stroke="var(--rule)" stroke-width="1"/><text x="1009.0909090909098" y="392" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">82%</text><text x="690.0" y="30" font-size="20" fill="var(--muted)" font-weight="600" text-anchor="middle" dominant-baseline="middle">Accuracy — mean of 20 measurements, with the full range</text><text x="282" y="84" font-size="20" fill="var(--ink)" font-weight="700" text-anchor="end" dominant-baseline="middle">Logistic regression</text><path d="M680.1,84 L1006.3,84" stroke="var(--accent)" stroke-width="7" stroke-linecap="round" opacity="0.28"/><circle cx="879.0" cy="84" r="7" fill="var(--accent)"/><text x="1138" y="84" font-size="20" fill="var(--accent)" font-weight="700" text-anchor="middle" dominant-baseline="middle">80.2%</text><text x="282" y="126" font-size="20" fill="var(--ink)" font-weight="400" text-anchor="end" dominant-baseline="middle">Gradient boosting</text><path d="M705.2,126 L956.9,126" stroke="var(--accent)" stroke-width="7" stroke-linecap="round" opacity="0.28"/><circle cx="820.3" cy="126" r="7" fill="var(--accent)"/><text x="1138" y="126" font-size="20" fill="var(--accent)" font-weight="700" text-anchor="middle" dominant-baseline="middle">79.3%</text><text x="282" y="168" font-size="20" fill="var(--ink)" font-weight="400" text-anchor="end" dominant-baseline="middle">Decision tree</text><path d="M598.3,168 L916.6,168" stroke="var(--accent)" stroke-width="7" stroke-linecap="round" opacity="0.28"/><circle cx="774.7" cy="168" r="7" fill="var(--accent)"/><text x="1138" y="168" font-size="20" fill="var(--accent)" font-weight="700" text-anchor="middle" dominant-baseline="middle">78.7%</text><text x="282" y="210" font-size="20" fill="var(--ink)" font-weight="400" text-anchor="end" dominant-baseline="middle">Random forest</text><path d="M614.6,210 L886.4,210" stroke="var(--accent)" stroke-width="7" stroke-linecap="round" opacity="0.28"/><circle cx="767.7" cy="210" r="7" fill="var(--accent)"/><text x="1138" y="210" font-size="20" fill="var(--accent)" font-weight="700" text-anchor="middle" dominant-baseline="middle">78.6%</text><text x="282" y="252" font-size="20" fill="var(--ink)" font-weight="400" text-anchor="end" dominant-baseline="middle">Nearest neighbours</text><path d="M539.1,252 L946.8,252" stroke="var(--accent)" stroke-width="7" stroke-linecap="round" opacity="0.28"/><circle cx="758.4" cy="252" r="7" fill="var(--accent)"/><text x="1138" y="252" font-size="20" fill="var(--accent)" font-weight="700" text-anchor="middle" dominant-baseline="middle">78.5%</text><text x="282" y="294" font-size="20" fill="var(--ink)" font-weight="400" text-anchor="end" dominant-baseline="middle">Neural network</text><path d="M422.1,294 L699.1,294" stroke="var(--accent-2)" stroke-width="7" stroke-linecap="round" opacity="0.28"/><circle cx="568.4" cy="294" r="7" fill="var(--accent-2)"/><text x="1138" y="294" font-size="20" fill="var(--accent-2)" font-weight="700" text-anchor="middle" dominant-baseline="middle">75.8%</text><text x="282" y="336" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="end" dominant-baseline="middle">“Nobody cancels”</text><path d="M401.9,336 L407.0,336" stroke="var(--muted)" stroke-width="7" stroke-linecap="round" opacity="0.28"/><circle cx="403.7" cy="336" r="7" fill="var(--muted)"/><text x="1138" y="336" font-size="20" fill="var(--muted)" font-weight="700" text-anchor="middle" dominant-baseline="middle">73.5%</text><text x="590.0" y="442" font-size="26" fill="var(--ink)" font-weight="600" text-anchor="middle" dominant-baseline="middle">The bars overlap — one model swings 3.3 points across partitions.</text></svg>
+    </figure>
+    
+    <div class="fonte">All 7,043 customers, re-split 20 times (5-fold × 4) · the bar is the full range</div>
+    <div class="deck-footer">How Machine Learning Works · 36/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>What survives the measurement</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Everything beats “nobody cancels” — by about six points<span class="nota">that gap is far bigger than the noise, so it is a real claim</span>
+        
+      </li>
+      
+      <li>
+        The neural network is genuinely behind — and took 180× longer to train<span class="nota">also outside the noise. The most expensive machine lost, on this data.</span>
+        
+      </li>
+      
+      <li>
+        Between the other five: nothing survives<span class="nota">the gaps are the size of the error bars. "Logistic regression won" is not a finding — it is one partition's luck.</span>
+        
+      </li>
+      
+      <li>
+        So the honest answer to “which algorithm?” is — <strong>it barely moved the needle</strong><span class="nota">swapping families moved accuracy about one point. Changing the threshold moved recall from 50% to 81%.</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">How Machine Learning Works · 37/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">07</div>
+    <h1>Act 3 — The error that hurts</h1>
+    <p class="sub">Same model. Different decision. Different price.</p>
+    <div class="deck-footer">How Machine Learning Works · 38/58</div>
+  </div>
+
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>Every prediction lands in one of four squares</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="Matriz de confusão de quatro casas. Linhas: o que aconteceu de verdade. Colunas: o que o modelo disse. Verdadeiro negativo 1.157 e verdadeiro positivo 234 em azul; falso positivo 137 e falso negativo 233 em laranja.">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 470" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" role="img"><text x="684" y="26" font-size="20" fill="var(--muted)" font-weight="700" text-anchor="middle" dominant-baseline="middle">THE MODEL SAYS</text><text x="492.0" y="62" font-size="24" fill="var(--ink)" font-weight="700" text-anchor="middle" dominant-baseline="middle">stays</text><text x="876.0" y="62" font-size="24" fill="var(--ink)" font-weight="700" text-anchor="middle" dominant-baseline="middle">cancels</text><text x="112" y="252" font-size="20" fill="var(--muted)" font-weight="700" text-anchor="middle" transform="rotate(-90 112 252)">WHAT ACTUALLY HAPPENED</text><text x="232" y="174.0" font-size="24" fill="var(--ink)" font-weight="700" text-anchor="end" dominant-baseline="middle">stayed</text><text x="232" y="330.0" font-size="24" fill="var(--ink)" font-weight="700" text-anchor="end" dominant-baseline="middle">cancelled</text><rect x="305" y="101" width="374" height="146" rx="10" fill="var(--accent)" fill-opacity="0.07" stroke="var(--accent)" stroke-width="1.5"/><text x="492.0" y="118.0" font-size="20" fill="var(--accent)" font-weight="700" text-anchor="middle" dominant-baseline="middle">TRUE NEGATIVE</text><text x="492.0" y="152.0" font-size="34" fill="var(--ink)" font-weight="700" text-anchor="middle" dominant-baseline="middle">1,157</text><text x="492.0" y="186.0" font-size="20" fill="var(--ink)" font-weight="400" text-anchor="middle" dominant-baseline="middle">Said stay — they stayed</text><text x="492.0" y="218.0" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">Nothing to do. Correct.</text><rect x="689" y="101" width="374" height="146" rx="10" fill="var(--accent-2)" fill-opacity="0.13" stroke="var(--accent-2)" stroke-width="2.5"/><text x="876.0" y="118.0" font-size="20" fill="var(--accent-2)" font-weight="700" text-anchor="middle" dominant-baseline="middle">FALSE POSITIVE</text><text x="876.0" y="152.0" font-size="34" fill="var(--ink)" font-weight="700" text-anchor="middle" dominant-baseline="middle">137</text><text x="876.0" y="186.0" font-size="20" fill="var(--ink)" font-weight="400" text-anchor="middle" dominant-baseline="middle">Said cancel — they stayed</text><text x="876.0" y="218.0" font-size="20" fill="var(--accent-2)" font-weight="600" text-anchor="middle" dominant-baseline="middle">FALSE ALARM · you paid the offer for nothing</text><rect x="305" y="257" width="374" height="146" rx="10" fill="var(--accent-2)" fill-opacity="0.13" stroke="var(--accent-2)" stroke-width="2.5"/><text x="492.0" y="274.0" font-size="20" fill="var(--accent-2)" font-weight="700" text-anchor="middle" dominant-baseline="middle">FALSE NEGATIVE</text><text x="492.0" y="308.0" font-size="34" fill="var(--ink)" font-weight="700" text-anchor="middle" dominant-baseline="middle">233</text><text x="492.0" y="342.0" font-size="20" fill="var(--ink)" font-weight="400" text-anchor="middle" dominant-baseline="middle">Said stay — they left</text><text x="492.0" y="374.0" font-size="20" fill="var(--accent-2)" font-weight="600" text-anchor="middle" dominant-baseline="middle">MISSED · the customer walked out</text><rect x="689" y="257" width="374" height="146" rx="10" fill="var(--accent)" fill-opacity="0.07" stroke="var(--accent)" stroke-width="1.5"/><text x="876.0" y="274.0" font-size="20" fill="var(--accent)" font-weight="700" text-anchor="middle" dominant-baseline="middle">TRUE POSITIVE</text><text x="876.0" y="308.0" font-size="34" fill="var(--ink)" font-weight="700" text-anchor="middle" dominant-baseline="middle">234</text><text x="876.0" y="342.0" font-size="20" fill="var(--ink)" font-weight="400" text-anchor="middle" dominant-baseline="middle">Said cancel — they cancelled</text><text x="876.0" y="374.0" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">Caught it. The offer gets a chance.</text><text x="590.0" y="454" font-size="25" fill="var(--ink)" font-weight="600" text-anchor="middle" dominant-baseline="middle">The two orange squares are the two ways to be wrong — and they do NOT cost the same.</text></svg>
+    </figure>
+    
+    <div class="fonte">Depth-5 tree at the default 0.50 threshold · 1,761 customers the model never saw</div>
+    <div class="deck-footer">How Machine Learning Works · 39/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>Three questions you can ask the same matrix</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="Três mini-matrizes lado a lado. Em cada uma, as casas do numerador aparecem preenchidas e as do denominador contornadas: acurácia 79,0%, precisão 63,1% e recall 50,1%, com a fórmula de cada uma.">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 470" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" role="img"><text x="205" y="30" font-size="26" fill="var(--accent)" font-weight="700" text-anchor="middle" dominant-baseline="middle">ACCURACY</text><text x="205" y="62" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">of EVERYONE</text><text x="205" y="88" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">how often was I right?</text><rect x="123.0" y="124" width="82" height="60" fill="var(--accent)" fill-opacity="0.3" stroke="var(--accent)" stroke-width="2.5"/><text x="164.0" y="154.0" font-size="20" fill="var(--accent)" font-weight="700" text-anchor="middle" dominant-baseline="middle">TN</text><rect x="123.0" y="184" width="82" height="60" fill="none" fill-opacity="0" stroke="var(--accent)" stroke-width="2.5"/><text x="164.0" y="214.0" font-size="20" fill="var(--accent)" font-weight="700" text-anchor="middle" dominant-baseline="middle">FN</text><rect x="205.0" y="124" width="82" height="60" fill="none" fill-opacity="0" stroke="var(--accent)" stroke-width="2.5"/><text x="246.0" y="154.0" font-size="20" fill="var(--accent)" font-weight="700" text-anchor="middle" dominant-baseline="middle">FP</text><rect x="205.0" y="184" width="82" height="60" fill="var(--accent)" fill-opacity="0.3" stroke="var(--accent)" stroke-width="2.5"/><text x="246.0" y="214.0" font-size="20" fill="var(--accent)" font-weight="700" text-anchor="middle" dominant-baseline="middle">TP</text><text x="205" y="272" font-size="21" fill="var(--accent)" font-weight="700" text-anchor="middle" dominant-baseline="middle">TP + TN</text><path d="M101,288 L309,288" stroke="var(--accent)" stroke-width="1.8"/><text x="205" y="304" font-size="21" fill="var(--accent)" font-weight="700" text-anchor="middle" dominant-baseline="middle">TP + TN + FP + FN</text><text x="205" y="344" font-size="20" fill="var(--muted)" font-weight="600" text-anchor="middle" dominant-baseline="middle">1,391 ÷ 1,761</text><text x="205" y="390" font-size="40" fill="var(--accent)" font-weight="700" text-anchor="middle" dominant-baseline="middle">79.0%</text><text x="590" y="30" font-size="26" fill="var(--accent)" font-weight="700" text-anchor="middle" dominant-baseline="middle">PRECISION</text><text x="590" y="62" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">when I said CANCEL</text><text x="590" y="88" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">was I right?</text><rect x="508.0" y="124" width="82" height="60" fill="none" fill-opacity="0" stroke="var(--rule)" stroke-width="1"/><text x="549.0" y="154.0" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">TN</text><rect x="508.0" y="184" width="82" height="60" fill="none" fill-opacity="0" stroke="var(--rule)" stroke-width="1"/><text x="549.0" y="214.0" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">FN</text><rect x="590.0" y="124" width="82" height="60" fill="none" fill-opacity="0" stroke="var(--accent)" stroke-width="2.5"/><text x="631.0" y="154.0" font-size="20" fill="var(--accent)" font-weight="700" text-anchor="middle" dominant-baseline="middle">FP</text><rect x="590.0" y="184" width="82" height="60" fill="var(--accent)" fill-opacity="0.3" stroke="var(--accent)" stroke-width="2.5"/><text x="631.0" y="214.0" font-size="20" fill="var(--accent)" font-weight="700" text-anchor="middle" dominant-baseline="middle">TP</text><text x="590" y="272" font-size="21" fill="var(--accent)" font-weight="700" text-anchor="middle" dominant-baseline="middle">TP</text><path d="M486,288 L694,288" stroke="var(--accent)" stroke-width="1.8"/><text x="590" y="304" font-size="21" fill="var(--accent)" font-weight="700" text-anchor="middle" dominant-baseline="middle">TP + FP</text><text x="590" y="344" font-size="20" fill="var(--muted)" font-weight="600" text-anchor="middle" dominant-baseline="middle">234 ÷ 371</text><text x="590" y="390" font-size="40" fill="var(--accent)" font-weight="700" text-anchor="middle" dominant-baseline="middle">63.1%</text><text x="975" y="30" font-size="26" fill="var(--accent)" font-weight="700" text-anchor="middle" dominant-baseline="middle">RECALL</text><text x="975" y="62" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">of those who CANCELLED</text><text x="975" y="88" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">how many did I catch?</text><rect x="893.0" y="124" width="82" height="60" fill="none" fill-opacity="0" stroke="var(--rule)" stroke-width="1"/><text x="934.0" y="154.0" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">TN</text><rect x="893.0" y="184" width="82" height="60" fill="none" fill-opacity="0" stroke="var(--accent)" stroke-width="2.5"/><text x="934.0" y="214.0" font-size="20" fill="var(--accent)" font-weight="700" text-anchor="middle" dominant-baseline="middle">FN</text><rect x="975.0" y="124" width="82" height="60" fill="none" fill-opacity="0" stroke="var(--rule)" stroke-width="1"/><text x="1016.0" y="154.0" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">FP</text><rect x="975.0" y="184" width="82" height="60" fill="var(--accent)" fill-opacity="0.3" stroke="var(--accent)" stroke-width="2.5"/><text x="1016.0" y="214.0" font-size="20" fill="var(--accent)" font-weight="700" text-anchor="middle" dominant-baseline="middle">TP</text><text x="975" y="272" font-size="21" fill="var(--accent)" font-weight="700" text-anchor="middle" dominant-baseline="middle">TP</text><path d="M871,288 L1079,288" stroke="var(--accent)" stroke-width="1.8"/><text x="975" y="304" font-size="21" fill="var(--accent)" font-weight="700" text-anchor="middle" dominant-baseline="middle">TP + FN</text><text x="975" y="344" font-size="20" fill="var(--muted)" font-weight="600" text-anchor="middle" dominant-baseline="middle">234 ÷ 467</text><text x="975" y="390" font-size="40" fill="var(--accent)" font-weight="700" text-anchor="middle" dominant-baseline="middle">50.1%</text><text x="590.0" y="450" font-size="24" fill="var(--ink)" font-weight="600" text-anchor="middle" dominant-baseline="middle">Same model, same customers, same matrix — three very different numbers.</text></svg>
+    </figure>
+    
+    <div class="fonte">Filled = numerator · outlined = denominator · same model, same customers</div>
+    <div class="deck-footer">How Machine Learning Works · 40/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Which of the two errors hurts more?</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Fraud check that blocks a legitimate purchase<span class="nota">furious customer, lost sale — the false alarm is the expensive one</span>
+        
+      </li>
+      
+      <li>
+        Predictive maintenance that misses the failure<span class="nota">the whole line stops — here it is the miss that is expensive</span>
+        
+      </li>
+      
+      <li>
+        CV screening that discards a good candidate<span class="nota">an invisible and permanent cost — nobody ever measures this one</span>
+        
+      </li>
+      
+      <li>
+        There is no universal answer. There is only <em>your</em> answer, in writing.<span class="nota">and it has a price — which is the next slide</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">How Machine Learning Works · 41/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>The model never says “cancel”. It says a number.</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        For every customer it returns a <strong>probability</strong> — 0.03, 0.41, 0.87<span class="nota">that is all it does. It never decides anything.</span>
+        
+      </li>
+      
+      <li>
+        Somebody has to draw a line and say “from here up, we act”<span class="nota">that line is the <strong>threshold</strong> — and it is not in the data</span>
+        
+      </li>
+      
+      <li>
+        The library ships with the line at 0.50<span class="nota">not because 0.50 is right for you. Because it had to ship with something.</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">How Machine Learning Works · 42/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>The threshold is a line you draw on this picture</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="Histograma espelhado das 1.761 probabilidades do conjunto de teste. Para cima, em laranja, quem realmente cancelou; para baixo, em azul, quem ficou. Duas linhas verticais marcam os limiares 0,50 e 0,20, e uma seta indica o deslocamento de um para o outro. As quatro regiões formadas pela linha são as quatro casas da matriz de confusão.">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 470" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" role="img"><rect x="722.7" y="94" width="409.3" height="312" fill="var(--accent-2)" fill-opacity="0.06"/><rect x="269.5" y="214.0" width="42.5" height="10.0" fill="var(--accent-2)" rx="2"/><rect x="269.5" y="276.0" width="42.5" height="116.0" fill="var(--accent)" rx="2"/><rect x="315.0" y="204.7" width="42.5" height="19.3" fill="var(--accent-2)" rx="2"/><rect x="315.0" y="276.0" width="42.5" height="62.5" fill="var(--accent)" rx="2"/><rect x="360.4" y="193.9" width="42.5" height="30.1" fill="var(--accent-2)" rx="2"/><rect x="360.4" y="276.0" width="42.5" height="67.7" fill="var(--accent)" rx="2"/><rect x="405.9" y="209.8" width="42.5" height="14.2" fill="var(--accent-2)" rx="2"/><rect x="405.9" y="276.0" width="42.5" height="21.4" fill="var(--accent)" rx="2"/><rect x="451.4" y="208.1" width="42.5" height="15.9" fill="var(--accent-2)" rx="2"/><rect x="451.4" y="276.0" width="42.5" height="13.0" fill="var(--accent)" rx="2"/><rect x="496.9" y="223.2" width="42.5" height="0.8" fill="var(--accent-2)" rx="2"/><rect x="496.9" y="276.0" width="42.5" height="0.3" fill="var(--accent)" rx="2"/><rect x="542.3" y="182.1" width="42.5" height="41.9" fill="var(--accent-2)" rx="2"/><rect x="542.3" y="276.0" width="42.5" height="37.8" fill="var(--accent)" rx="2"/><rect x="587.8" y="182.1" width="42.5" height="41.9" fill="var(--accent-2)" rx="2"/><rect x="587.8" y="276.0" width="42.5" height="18.7" fill="var(--accent)" rx="2"/><rect x="633.3" y="209.8" width="42.5" height="14.2" fill="var(--accent-2)" rx="2"/><rect x="633.3" y="276.0" width="42.5" height="5.7" fill="var(--accent)" rx="2"/><rect x="678.8" y="217.3" width="42.5" height="6.7" fill="var(--accent-2)" rx="2"/><rect x="678.8" y="276.0" width="42.5" height="6.3" fill="var(--accent)" rx="2"/><rect x="724.2" y="196.4" width="42.5" height="27.6" fill="var(--accent-2)" rx="2"/><rect x="724.2" y="276.0" width="42.5" height="10.0" fill="var(--accent)" rx="2"/><rect x="769.7" y="166.2" width="42.5" height="57.8" fill="var(--accent-2)" rx="2"/><rect x="769.7" y="276.0" width="42.5" height="17.5" fill="var(--accent)" rx="2"/><rect x="815.2" y="203.1" width="42.5" height="20.9" fill="var(--accent-2)" rx="2"/><rect x="815.2" y="276.0" width="42.5" height="3.9" fill="var(--accent)" rx="2"/><rect x="951.6" y="174.6" width="42.5" height="49.4" fill="var(--accent-2)" rx="2"/><rect x="951.6" y="276.0" width="42.5" height="8.2" fill="var(--accent)" rx="2"/><rect x="1042.6" y="183.8" width="42.5" height="40.2" fill="var(--accent-2)" rx="2"/><rect x="1042.6" y="276.0" width="42.5" height="1.8" fill="var(--accent)" rx="2"/><text x="268.0" y="250" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">0.0</text><text x="358.94736842105266" y="250" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">0.1</text><text x="449.8947368421053" y="250" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">0.2</text><text x="540.8421052631579" y="250" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">0.3</text><text x="631.7894736842106" y="250" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">0.4</text><text x="722.7368421052631" y="250" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">0.5</text><text x="813.6842105263158" y="250" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">0.6</text><text x="904.6315789473684" y="250" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">0.7</text><text x="995.5789473684212" y="250" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">0.8</text><text x="1086.5263157894738" y="250" font-size="20" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">0.9</text><text x="700.0" y="454" font-size="21" fill="var(--muted)" font-weight="400" text-anchor="middle" dominant-baseline="middle">probability the model gives each customer  →</text><text x="244" y="176" font-size="21" fill="var(--accent-2)" font-weight="400" text-anchor="end" dominant-baseline="middle">actually</text><text x="244" y="204" font-size="23" fill="var(--accent-2)" font-weight="700" text-anchor="end" dominant-baseline="middle">CANCELLED</text><text x="244" y="296" font-size="21" fill="var(--accent)" font-weight="400" text-anchor="end" dominant-baseline="middle">actually</text><text x="244" y="324" font-size="23" fill="var(--accent)" font-weight="700" text-anchor="end" dominant-baseline="middle">STAYED</text><path d="M449.9,88 L449.9,416" stroke="var(--muted)" stroke-width="2" stroke-dasharray="7,6"/><text x="449.8947368421053" y="68" font-size="22" fill="var(--muted)" font-weight="700" text-anchor="middle" dominant-baseline="middle">0.20</text><path d="M722.7,88 L722.7,416" stroke="var(--ink)" stroke-width="3" /><text x="722.7368421052631" y="68" font-size="22" fill="var(--ink)" font-weight="700" text-anchor="middle" dominant-baseline="middle">0.50</text><path d="M695.5,434 L477.2,434" stroke="var(--muted)" stroke-width="2" marker-end="url(#pta)"/><defs><marker id="pta" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="var(--muted)"/></marker></defs><text x="522.6526315789474" y="114" font-size="21" fill="var(--accent-2)" font-weight="700" text-anchor="middle" dominant-baseline="middle">missed (FN)</text><text x="941.0105263157894" y="114" font-size="21" fill="var(--accent-2)" font-weight="700" text-anchor="middle" dominant-baseline="middle">caught (TP)</text><text x="522.6526315789474" y="390" font-size="21" fill="var(--accent)" font-weight="700" text-anchor="middle" dominant-baseline="middle">left alone (TN)</text><text x="941.0105263157894" y="390" font-size="21" fill="var(--accent)" font-weight="700" text-anchor="middle" dominant-baseline="middle">false alarm (FP)</text></svg>
+    </figure>
+    
+    <div class="fonte">Each group as a % of itself — otherwise the 26.5% imbalance flattens the orange</div>
+    <div class="deck-footer">How Machine Learning Works · 43/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-grafico">
+    <h2>The same model, priced in reais</h2>
+    <div class="rule"></div>
+    <div class="chart-wrap">
+      
+        <canvas data-chart='{"labels": ["0.10", "0.20", "0.30", "0.40", "0.50", "0.60", "0.70", "0.80", "0.90"], "series": [{"dados": [292110, 291670, 294870, 312520, 317270, 340260, 346360, 360940, 373600], "nome": "Total cost (R$) over 1,761 customers"}], "tipo": "linha"}'></canvas>
+      
+    </div>
+    <div class="fonte">Business assumptions — offer R$50 · lost customer R$800 · retention rate 40% (hypothesis, not data)</div>
+    <div class="deck-footer">How Machine Learning Works · 44/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Threshold 0.50 → 0.20. Same model.</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Missed cancellations — 233 → 88<span class="nota">145 customers the company now gets a chance to keep</span>
+        
+      </li>
+      
+      <li>
+        False alarms — 137 → 408<span class="nota">nearly triple. Every one of them costs R$50.</span>
+        
+      </li>
+      
+      <li>
+        Overall accuracy — 79.0% → 71.8%<span class="nota">it got <strong>less accurate</strong></span>
+        
+      </li>
+      
+      <li>
+        Estimated cost — R$317,270 → R$291,670<span class="nota">and R$25,600 cheaper. Less accurate and more profitable at the same time.</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">How Machine Learning Works · 45/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-tabela">
+    <h2>So — is the model good?</h2><div class="rule"></div>
+    <div class="tabela-wrap">
+      <table>
+        
+        <thead><tr><th></th><th>Accuracy</th><th>Precision</th><th>Recall</th><th>Cancellations caught</th></tr></thead>
+        
+        <tbody>
+          
+          <tr>
+            
+            <th scope="row">“Nobody cancels”</th>
+            
+            
+            <td>73.5%</td>
+            
+            <td>—</td>
+            
+            <td><strong>0.0%</strong></td>
+            
+            <td>0 of 467</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">Threshold 0.50</th>
+            
+            
+            <td><strong>79.0%</strong></td>
+            
+            <td>63.1%</td>
+            
+            <td>50.1%</td>
+            
+            <td>234 of 467</td>
+            
+          </tr>
+          
+          <tr class="destaque">
+            
+            <th scope="row">Threshold 0.20</th>
+            
+            
+            <td>71.8%</td>
+            
+            <td>48.2%</td>
+            
+            <td><strong>81.2%</strong></td>
+            
+            <td>379 of 467</td>
+            
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+    <div class="fonte">Same model in the last two rows. Only the threshold changed.</div>
+    <div class="deck-footer">How Machine Learning Works · 46/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-destaque">
+    <div class="frase">The threshold is not a technical decision. It is a <span class="accent">business decision</span>, it has a price, and whoever doesn't make it has delegated it to whatever default shipped with the library.</div>
+    
+    <div class="deck-footer">How Machine Learning Works · 47/58</div>
+  </div>
+
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">08</div>
+    <h1>What the model found important</h1>
+    <p class="sub">And what that has to do with hiring.</p>
+    <div class="deck-footer">How Machine Learning Works · 48/58</div>
+  </div>
+
+</section>
+      
+      
+<section>
+  <div class="slide l-grafico">
+    <h2>Weight of each variable in the decision (%)</h2>
+    <div class="rule"></div>
+    <div class="chart-wrap">
+      
+        <canvas data-chart='{"labels": ["Tenure", "Internet: fiber", "Total charges", "Internet: none", "Electronic check", "Contract: 2y", "Contract: 1y", "Gender"], "series": [{"dados": [41.0, 33.6, 5.6, 3.8, 3.5, 3.3, 3.0, 0.0], "nome": "Importance (%)"}], "tipo": "barra"}'></canvas>
+      
+    </div>
+    <div class="fonte">Decision tree, depth 5 · gender = 0.00%</div>
+    <div class="deck-footer">How Machine Learning Works · 49/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Hold on fiber optic for a second</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        The model found that fiber customers cancel more. It does <strong>not</strong> know why.<span class="nota">is it price? service quality? competitors targeting exactly that customer?</span>
+        
+      </li>
+      
+      <li>
+        Three explanations, three completely different action plans — and the machine picks none of them<span class="nota">the machine finds the <strong>correlation</strong>; a person proposes the <strong>cause</strong> and owns the decision</span>
+        
+      </li>
+      
+      <li>
+        Confuse the two and you send discounts to the wrong customer for a year
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">How Machine Learning Works · 50/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Now change the target</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Instead of "will cancel", imagine "was hired"<span class="nota">and instead of contract type, imagine zip code, or school name, or years without formal employment</span>
+        
+      </li>
+      
+      <li>
+        The mechanism is identical to the one you just watched work<span class="nota">except now it is learning who the company hired over ten years — including everything recruiters did without ever writing it down</span>
+        
+      </li>
+      
+      <li>
+        “Just delete the gender column”<span class="nota">delete it. Zip code, school, sport and part-time patterns remain. You did not remove the bias — you removed it from your own audit and left it running.</span>
+        
+      </li>
+      
+      <li>
+        The arithmetic is neutral. The history is not.<span class="nota">and choosing the target — "was hired" rather than "performed well" — is a design decision, not the data's fault</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">How Machine Learning Works · 51/58</div>
+  </div>
+
+</section>
+      
+      
+<section>
+  <div class="slide l-destaque">
+    <div class="frase">“Nobody cancels” scores <span class="accent">73.5%</span>. On real card-fraud data, “never fraud” scores <span class="accent">99.83%</span> — and catches 0 of 492 frauds.</div>
+    <div class="autor">— never ask &#34;what&#39;s the accuracy?&#34; — ask &#34;accuracy against what?&#34;</div>
+    <div class="deck-footer">How Machine Learning Works · 52/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">09</div>
+    <h1>Where projects die</h1>
+    <p class="sub">And the page you take to your internship.</p>
+    <div class="deck-footer">How Machine Learning Works · 53/58</div>
+  </div>
+
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Four causes, one sentence each</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Badly defined problem<span class="nota">starts with "we want to use AI" instead of a specific decision. Ends in an eternal pilot.</span>
+        
+      </li>
+      
+      <li>
+        Bad or scattered data<span class="nota">duplicate records, fields filled in any old way. No model fixes that.</span>
+        
+      </li>
+      
+      <li>
+        No process owner<span class="nota">the model flags a risk and nobody knows who calls the customer. Prediction without action is not value.</span>
+        
+      </li>
+      
+      <li>
+        No trust from the team<span class="nota">if the person at the front line doesn't understand the recommendation, they ignore the screen and follow their gut</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">How Machine Learning Works · 54/58</div>
+  </div>
+
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Accountability</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Bias enters through the history <strong>and</strong> through the choice of target — and leaves at scale, looking neutral
+      </li>
+      
+      <li>
+        Training a model on a customer base is processing personal data, with a declared purpose and a limit of use
+      </li>
+      
+      <li>
+        The data subject may request review of a decision taken solely by automated processing
+      </li>
+      
+      <li>
+        “System error” is not an institutional answer<span class="nota">the organisation that adopted the decision answers for it</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">How Machine Learning Works · 55/58</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Six questions — take this page with you</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li class="fragment">
+        Which specific decision will improve?<span class="nota">if the answer is generic, the project does not exist yet</span>
+        
+      </li>
+      
+      <li class="fragment">
+        Do we have history with the outcome recorded?
+      </li>
+      
+      <li class="fragment">
+        Which error is more expensive for us — false alarm or missed?
+      </li>
+      
+      <li class="fragment">
+        Who acts when the model flags something?<span class="nota">name, role, process</span>
+        
+      </li>
+      
+      <li class="fragment">
+        How do we measure the gain in money, against the way we do it today?
+      </li>
+      
+      <li class="fragment">
+        Who reviews it when someone complains?
+      </li>
+      
+    </ul>
+    <div class="deck-footer">How Machine Learning Works · 56/58</div>
+  </div>
+
+</section>
+      
+      
+<section>
+  <div class="slide l-destaque">
+    <div class="frase">The model does not decide. It offers a <span class="accent">calibrated bet</span>. The decision stays with the organisation — with a name, a criterion and accountability.</div>
+    
+    <div class="deck-footer">How Machine Learning Works · 57/58</div>
+  </div>
+
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Next class</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Today the machine looked at one row and returned a verdict<span class="nota">one input, one answer</span>
+        
+      </li>
+      
+      <li>
+        Next time the question changes — from <em>what is this?</em> to <em>what comes next?</em><span class="nota">keep everything from today: examples, pattern, generalisation, and a target that came from somewhere</span>
+        
+      </li>
+      
+      <li>
+        Just swap the target for the next word in a text, and feed the answer back into the machine<span class="nota">it is the same machine as today — and it looked like magic to the entire world</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">How Machine Learning Works · 58/58</div>
+  </div>
+</section>
+      
+    </div>
+  </div>
+
+  <script src="../../../../vendor/reveal/dist/reveal.js"></script>
+  <script src="../../../../vendor/reveal/plugin/highlight/highlight.js"></script>
+  <script src="../../../../vendor/reveal/plugin/zoom/zoom.js"></script>
+  <script src="../../../../vendor/chartjs/chart.umd.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: false,   // a página aparece no rodapé do slide (ver .deck-footer)
+      transition: 'slide',
+      transitionSpeed: 'default',
+      controls: true,
+      progress: true,
+      center: false,
+      pdfSeparateFragments: false,
+      width: 1280, height: 720,
+      margin: 0.0,
+      plugins: [ RevealHighlight, RevealZoom ]
+    });
+
+    // ---- Renderização dos gráficos Chart.js ----
+    // getComputedStyle é "vivo": ler as cores DENTRO do montarGrafico faz o
+    // gráfico seguir o tema atual (importa ao alternar claro/escuro).
+    const V = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+    const TIPOS = { barra: 'bar', linha: 'line', rosca: 'doughnut', pizza: 'pie', area: 'line' };
+    function montarGrafico(canvas) {
+      const SERIES = [1,2,3,4,5,6,7,8].map(i => V('--series-'+i));
+      Chart.defaults.font.family = V('--font-sans') || 'system-ui, sans-serif';
+      Chart.defaults.color = V('--chart-ink-2');
+      Chart.defaults.borderColor = V('--chart-grid');
+
+      const cfg = JSON.parse(canvas.dataset.chart);
+      const tipo = TIPOS[cfg.tipo] || cfg.tipo;   // aceita nomes PT ou os do Chart.js
+      const circular = ['doughnut','pie','polarArea'].includes(tipo);
+      const ehArea = cfg.tipo === 'area';
+      const datasets = (cfg.series || []).map((s, i) => ({
+        label: s.nome,
+        data: s.dados,
+        backgroundColor: circular ? (cfg.series[0].dados.map((_, k) => SERIES[k % 8]))
+                                   : (ehArea ? SERIES[i % 8] + '33' : SERIES[i % 8]),
+        borderColor: SERIES[i % 8],
+        borderWidth: tipo === 'line' ? 2.4 : 0,
+        borderRadius: tipo === 'bar' ? 4 : 0,
+        pointRadius: tipo === 'line' ? 3 : 0,
+        tension: 0.25, fill: ehArea
+      }));
+      // Série única não tem legenda (seria uma caixinha só) — então o nome da
+      // série, que é onde mora a unidade, vira o rótulo do eixo Y. Sem isso o
+      // gráfico mostra números sem unidade.
+      const legenda = (cfg.series && cfg.series.length > 1) || circular;
+      const rotuloY = (!legenda && !circular && datasets.length === 1) ? datasets[0].label : '';
+      new Chart(canvas, {
+        type: tipo,
+        data: { labels: cfg.labels, datasets },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          animation: false,
+          plugins: {
+            legend: {
+              display: legenda,
+              position: 'bottom',
+              labels: { boxWidth: 12, boxHeight: 12, usePointStyle: true, padding: 16,
+                        color: V('--chart-ink-2'), font: { size: 15 } }
+            },
+            tooltip: { enabled: true }
+          },
+          scales: circular ? {} : {
+            x: { grid: { display: false }, border: { color: V('--chart-axis') },
+                 ticks: { color: V('--chart-muted'), font: { size: 14 } } },
+            y: { grid: { color: V('--chart-grid') }, border: { display: false },
+                 ticks: { color: V('--chart-muted'), font: { size: 14 } },
+                 title: { display: !!rotuloY, text: rotuloY,
+                          color: V('--chart-ink-2'), font: { size: 15 } },
+                 beginAtZero: true }
+          }
+        }
+      });
+    }
+    // Renderiza os gráficos do slide atual (evita medir canvas escondido = 0px)
+    function renderVisiveis() {
+      document.querySelectorAll('section.present canvas[data-chart]').forEach(c => {
+        if (!c.dataset.pronto) { c.dataset.pronto = '1'; montarGrafico(c); }
+      });
+    }
+    function renderTodos() {
+      document.querySelectorAll('canvas[data-chart]').forEach(c => {
+        if (!c.dataset.pronto) { c.dataset.pronto = '1'; montarGrafico(c); }
+      });
+    }
+    const modoPDF = window.location.search.includes('print-pdf');
+    if (modoPDF) {
+      // No modo PDF todos os slides ficam visíveis: renderiza tudo.
+      Reveal.on('ready', () => setTimeout(renderTodos, 200));
+    } else {
+      Reveal.on('ready', renderVisiveis);
+      Reveal.on('slidechanged', renderVisiveis);
+    }
+    window.__renderTodos = renderTodos;
+    // Redesenha os gráficos com as cores do tema atual (ao alternar claro/escuro).
+    window.__reRenderGraficos = function () {
+      document.querySelectorAll('canvas[data-chart]').forEach(c => {
+        const ex = Chart.getChart(c); if (ex) ex.destroy(); delete c.dataset.pronto;
+      });
+      (modoPDF ? renderTodos : renderVisiveis)();
+    };
+  </script>
+
+  <script>
+    // ---- Toggle de tema (o ícone sol/lua é trocado por CSS via [data-theme]) ----
+    (function () {
+      const root = document.documentElement;
+      const btn = document.querySelector('.tema-toggle');
+      function aplicar(modo) {
+        root.setAttribute('data-theme', modo);
+        try { localStorage.setItem('gs-tema', modo); } catch (e) {}
+        if (window.__reRenderGraficos) window.__reRenderGraficos();
+      }
+      btn.addEventListener('click', () =>
+        aplicar(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+    })();
+  </script>
+  
+  <script>
+  (function () {
+    var root = document.documentElement;
+    // revela os botões do topo quando o mouse está na faixa de cima
+    window.addEventListener('mousemove', function (e) {
+      root.classList.toggle('mostrar-topo', e.clientY < 80);
+    });
+    var link = document.querySelector('.btn-voltar');
+    if (!link) return;
+    // origem explícita passada pelo plano (?de=): só caminho relativo seguro
+    try {
+      var de = new URLSearchParams(location.search).get('de');
+      if (de && !/^[a-z][a-z0-9+.-]*:/i.test(de) && de[0] !== '/') link.setAttribute('href', de);
+    } catch (e) {}
+    // se você veio de outra página do site, volta pra ELA via histórico
+    link.addEventListener('click', function (ev) {
+      try {
+        if (document.referrer &&
+            new URL(document.referrer).origin === location.origin &&
+            history.length > 1) {
+          ev.preventDefault();
+          history.back();
+        }
+      } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>
