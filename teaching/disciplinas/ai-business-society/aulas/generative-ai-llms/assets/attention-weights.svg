@@ -1,0 +1,40 @@
+<!-- D17: where "bank" looks — attention weights as bars and as a map. After ia-advocacia slide 15. Numbers illustrative. -->
+<svg viewBox="0 0 820 400" xmlns="http://www.w3.org/2000/svg">
+  <g font-size="19" text-anchor="middle">
+    <text class="dg-menor" x="120" y="48">The</text>
+    <text class="dg-titulo" x="190" y="48" font-weight="700">bank</text>
+    <text class="dg-rotulo" x="280" y="48">denied</text>
+    <text class="dg-menor" x="355" y="48">the</text>
+    <text class="dg-rotulo" x="420" y="48">loan</text>
+    <text class="dg-menor" x="475" y="48">to the</text>
+    <text class="dg-rotulo" x="570" y="48">customer</text>
+  </g>
+  <line class="dg-traco" x1="30" y1="70" x2="790" y2="70" stroke-width="1"/>
+
+  <text class="dg-menor" x="30" y="100" font-size="14">where "bank" looks</text>
+  <g font-size="15">
+    <text class="dg-rotulo" x="30" y="136">loan</text><rect class="dg-ponto" x="130" y="122" width="245" height="18" rx="3"/><text class="dg-menor" x="385" y="136">0.35</text>
+    <text class="dg-rotulo" x="30" y="172">customer</text><rect class="dg-ponto" x="130" y="158" width="140" height="18" rx="3"/><text class="dg-menor" x="280" y="172">0.20</text>
+    <text class="dg-rotulo" x="30" y="208">denied</text><rect class="dg-ponto" x="130" y="194" width="126" height="18" rx="3"/><text class="dg-menor" x="266" y="208">0.18</text>
+    <text class="dg-rotulo" x="30" y="244">bank</text><rect class="dg-ponto" x="130" y="230" width="84" height="18" rx="3"/><text class="dg-menor" x="224" y="244">0.12</text>
+    <text class="dg-rotulo" x="30" y="280">the · to</text><rect class="dg-ponto" x="130" y="266" width="28" height="18" rx="3"/><text class="dg-menor" x="168" y="280">≈ 0.04 each</text>
+  </g>
+  <text class="dg-menor" x="30" y="320" font-size="14">→ this "bank" is built mostly from <tspan font-style="italic">loan</tspan>, <tspan font-style="italic">customer</tspan>, <tspan font-style="italic">denied</tspan></text>
+
+  <text class="dg-menor" x="480" y="100" font-size="14">every word does it to every other word</text>
+  <g class="dg-menor" font-size="12" text-anchor="middle">
+    <text x="536" y="126">the</text><text x="588" y="126">bank</text><text x="640" y="126">denied</text><text x="692" y="126">loan</text><text x="744" y="126">customer</text>
+  </g>
+  <g class="dg-menor" font-size="12" text-anchor="end">
+    <text x="508" y="160">the</text><text x="508" y="212">bank</text><text x="508" y="264">denied</text><text x="508" y="316">loan</text><text x="508" y="368">customer</text>
+  </g>
+  <g class="dg-ponto">
+    <circle cx="536" cy="156" r="5"/><circle cx="588" cy="156" r="9"/><circle cx="640" cy="156" r="4"/><circle cx="692" cy="156" r="4"/><circle cx="744" cy="156" r="3"/>
+    <circle cx="536" cy="208" r="3"/><circle cx="588" cy="208" r="7"/><circle cx="640" cy="208" r="9"/><circle cx="692" cy="208" r="14"/><circle cx="744" cy="208" r="10"/>
+    <circle cx="536" cy="260" r="3"/><circle cx="588" cy="260" r="10"/><circle cx="640" cy="260" r="6"/><circle cx="692" cy="260" r="11"/><circle cx="744" cy="260" r="7"/>
+    <circle cx="536" cy="312" r="3"/><circle cx="588" cy="312" r="13"/><circle cx="640" cy="312" r="9"/><circle cx="692" cy="312" r="6"/><circle cx="744" cy="312" r="6"/>
+    <circle cx="536" cy="364" r="3"/><circle cx="588" cy="364" r="8"/><circle cx="640" cy="364" r="7"/><circle cx="692" cy="364" r="10"/><circle cx="744" cy="364" r="6"/>
+  </g>
+  <rect class="dg-linha-2" x="512" y="186" width="258" height="44" rx="4" stroke-width="1.6"/>
+  <text class="dg-menor" x="30" y="352" font-size="13">weights illustrative · the outlined row is the bar chart</text>
+</svg>

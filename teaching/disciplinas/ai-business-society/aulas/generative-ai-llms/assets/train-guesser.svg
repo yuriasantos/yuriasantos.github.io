@@ -1,0 +1,46 @@
+<!-- D13: one training step of the guesser (skip-gram with negative sampling), after J&M §5.5 and Fig. 5.7. -->
+<svg viewBox="0 0 820 400" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="seta-treino" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="dg-seta-cabeca" d="M 0 0 L 10 5 L 0 10 z"/></marker></defs>
+
+  <!-- 1 · one piece of training data -->
+  <text class="dg-menor" x="30" y="34" font-size="14">one piece of text · window of ±2 around the target</text>
+  <text class="dg-titulo" x="30" y="66" font-size="19" font-family="monospace">… lemon, a [tablespoon of <tspan class="dg-ponto" font-weight="700">apricot</tspan> jam, a] pinch …</text>
+
+  <!-- 2 · the two piles -->
+  <rect class="dg-forma" x="30" y="92" width="360" height="132" rx="6" stroke-width="1.2"/>
+  <text class="dg-rotulo" x="48" y="118" font-size="15">from the text — real neighbours · <tspan font-weight="700">near</tspan></text>
+  <g class="dg-menor" font-size="15" font-family="monospace">
+    <text x="48" y="146">apricot · tablespoon</text>
+    <text x="48" y="168">apricot · of</text>
+    <text x="48" y="190">apricot · jam</text>
+    <text x="48" y="212">apricot · a</text>
+  </g>
+
+  <rect class="dg-forma" x="430" y="92" width="360" height="132" rx="6" stroke-width="1.2"/>
+  <text class="dg-rotulo" x="448" y="118" font-size="15">drawn at random — noise · <tspan font-weight="700">not near</tspan></text>
+  <g class="dg-menor" font-size="15" font-family="monospace">
+    <text x="448" y="146">apricot · aardvark</text>
+    <text x="448" y="168">apricot · seven</text>
+    <text x="448" y="190">apricot · my</text>
+    <text x="448" y="212">apricot · forever</text>
+  </g>
+
+  <!-- 3 · one step: the vectors move -->
+  <text class="dg-menor" x="30" y="262" font-size="14">the guesser answers "near?" by how similar the two vectors are — then the vectors move</text>
+  <line class="dg-traco" x1="60" y1="318" x2="760" y2="318" stroke-width="1"/>
+
+  <circle class="dg-ponto-2" cx="150" cy="318" r="7"/>
+  <text class="dg-rotulo" x="150" y="350" font-size="15" text-anchor="middle" font-style="italic">aardvark</text>
+  <path class="dg-linha-2" d="M 136 318 L 82 318" stroke-width="2.4" marker-end="url(#seta-treino)"/>
+  <text class="dg-menor" x="110" y="296" font-size="14" text-anchor="middle">push apart</text>
+
+  <circle class="dg-ponto" cx="430" cy="318" r="9"/>
+  <text class="dg-rotulo" x="430" y="350" font-size="15" text-anchor="middle" font-weight="700" font-style="italic">apricot</text>
+
+  <circle class="dg-ponto" cx="640" cy="318" r="7"/>
+  <text class="dg-rotulo" x="640" y="350" font-size="15" text-anchor="middle" font-style="italic">jam</text>
+  <path class="dg-linha" d="M 626 318 L 460 318" stroke-width="2.4" marker-end="url(#seta-treino)"/>
+  <text class="dg-menor" x="543" y="296" font-size="14" text-anchor="middle">pull closer</text>
+
+  <text class="dg-menor" x="30" y="388" font-size="14">start with random vectors · repeat this step for every word of every sentence in the corpus · throw the guesser away, keep the vectors</text>
+</svg>

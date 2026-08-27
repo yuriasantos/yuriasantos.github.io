@@ -1,0 +1,21 @@
+<!-- D3: three near-identical emails; shared words fade (low weight), the three specific words stand (high weight). -->
+<svg viewBox="0 0 820 380" xmlns="http://www.w3.org/2000/svg">
+  <g font-size="17">
+    <text class="dg-menor" x="30" y="60">1 · we regret to inform you that your order</text><text class="dg-ponto" x="440" y="60" font-weight="700">flight</text><text class="dg-menor" x="500" y="60">was cancelled</text>
+    <text class="dg-menor" x="30" y="105">2 · we regret to inform you that your order</text><text class="dg-ponto" x="440" y="105" font-weight="700">hotel</text><text class="dg-menor" x="500" y="105">was cancelled</text>
+    <text class="dg-menor" x="30" y="150">3 · we regret to inform you that your order</text><text class="dg-ponto" x="440" y="150" font-weight="700">insurance</text><text class="dg-menor" x="530" y="150">was cancelled</text>
+  </g>
+  <line class="dg-traco" x1="30" y1="180" x2="790" y2="180" stroke-width="1"/>
+  <text class="dg-titulo" x="30" y="215" font-size="17">weight</text>
+  <g stroke-width="1">
+    <rect class="dg-eixo" x="120" y="205" width="14" height="12"/><text class="dg-menor" x="145" y="216" font-size="14">we</text>
+    <rect class="dg-eixo" x="190" y="205" width="14" height="12"/><text class="dg-menor" x="215" y="216" font-size="14">regret</text>
+    <rect class="dg-eixo" x="275" y="205" width="14" height="12"/><text class="dg-menor" x="300" y="216" font-size="14">inform</text>
+    <rect class="dg-eixo" x="365" y="205" width="14" height="12"/><text class="dg-menor" x="390" y="216" font-size="14">order</text>
+    <rect class="dg-eixo" x="450" y="205" width="14" height="12"/><text class="dg-menor" x="475" y="216" font-size="14">cancelled</text>
+  </g>
+  <rect class="dg-ponto" x="120" y="250" width="14" height="70"/><text class="dg-rotulo" x="145" y="300" font-size="16">flight</text>
+  <rect class="dg-ponto" x="275" y="250" width="14" height="70"/><text class="dg-rotulo" x="300" y="300" font-size="16">hotel</text>
+  <rect class="dg-ponto" x="450" y="250" width="14" height="70"/><text class="dg-rotulo" x="475" y="300" font-size="16">insurance</text>
+  <text class="dg-menor" x="30" y="355" font-size="15">frequent here × rare everywhere else → high weight · in every document → weight ≈ 0</text>
+</svg>

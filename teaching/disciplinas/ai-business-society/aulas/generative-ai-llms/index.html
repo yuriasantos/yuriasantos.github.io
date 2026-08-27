@@ -1,0 +1,1915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>From Counting Words to Agents</title>
+
+  <link rel="stylesheet" href="../../../../vendor/reveal/dist/reset.css">
+  <link rel="stylesheet" href="../../../../vendor/reveal/dist/reveal.css">
+  <link rel="stylesheet" href="../../../../tema/base.css">
+  <!-- tema claro (base) + tema escuro embutido, ativado por [data-theme="dark"] -->
+  <link rel="stylesheet" href="../../../../tema/tema-default.css">
+  <style>/* tema-dark.css — escuro, para salas com projeção em ambiente escuro.
+   Séries = mesma paleta stepada para superfície escura (dataviz skill). */
+:root[data-theme="dark"] {
+  --bg:      #1a1a19;
+  --ink:     #ffffff;
+  --ink-2:   #c3c2b7;
+  --muted:   #898781;
+  --accent:  #3987e5;
+  --accent-2:#d95926;
+  --rule:    #2c2c2a;
+  --code-bg: #2c2c2a;
+
+  --chart-surface: #1a1a19;
+  --chart-grid:    #2c2c2a;
+  --chart-axis:    #383835;
+  --chart-ink:     #ffffff;
+  --chart-ink-2:   #c3c2b7;
+  --chart-muted:   #898781;
+
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+  --series-5: #d55181;
+  --series-6: #008300;
+  --series-7: #9085e9;
+  --series-8: #e66767;
+}
+</style>
+  <link rel="stylesheet" href="../../../../tema/controles.css">
+  <link rel="stylesheet" href="../../../../vendor/reveal/plugin/highlight/monokai.css">
+  <script>
+    // Define o modo (claro/escuro) o quanto antes, evitando "flash".
+    (function () {
+      var salvo = null;
+      try { salvo = localStorage.getItem('gs-tema'); } catch (e) {}
+      document.documentElement.setAttribute('data-theme', salvo || 'light');
+    })();
+  </script>
+</head>
+<body>
+  <a class="btn-topo btn-voltar" href="../../../../index.html"
+     title="Back" aria-label="Back"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></a>
+  <button class="btn-topo tema-toggle" aria-label="Toggle light/dark theme"><svg class="ico ico-lua" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="ico ico-sol" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+  <div class="reveal">
+    <div class="slides">
+      
+      
+<section>
+  <div class="slide l-titulo">
+    <div class="kicker">Session 4</div>
+    <h1>From Counting Words <strong>to Agents</strong></h1>
+    <div class="rule"></div>
+    <p class="subtitulo">Four ways to turn text into numbers — then what companies wrap around the last one</p>
+    
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-destaque">
+    <div class="frase">Last week the machine looked at one row and returned a verdict. What is the <span class="accent">row</span> now — and what is the <span class="accent">verdict</span>?</div>
+    
+    <div class="deck-footer">From Counting Words to Agents · 2/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>One idea, four machines</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="A ladder with four rungs, numbered 1 to 4 from the bottom, each labelled with a question mark. Beside the rungs, in grey, the names of the techniques — n-grams and bag of words, embeddings 2013, attention 2017, large language models — and a caption saying every rung is a different way of turning text into numbers.">
+      <!-- The ladder of the session: four rungs, one idea (text → numbers). Two files: labels hidden at the opening, shown at the close. -->
+<svg viewBox="0 0 820 380" xmlns="http://www.w3.org/2000/svg">
+  <line class="dg-eixo" x1="250" y1="40" x2="250" y2="350" stroke-width="3"/>
+  <line class="dg-eixo" x1="570" y1="40" x2="570" y2="350" stroke-width="3"/>
+  <g>
+    <line class="dg-forma" x1="250" y1="320" x2="570" y2="320" stroke-width="3"/>
+    <text class="dg-menor" x="230" y="326" font-size="15" text-anchor="end">1</text>
+    <text class="dg-menor" x="410" y="308" font-size="20" text-anchor="middle">?</text>
+    <text class="dg-menor" x="600" y="326" font-size="15">n-grams · bag of words</text>
+  </g>
+  <g>
+    <line class="dg-forma" x1="250" y1="235" x2="570" y2="235" stroke-width="3"/>
+    <text class="dg-menor" x="230" y="241" font-size="15" text-anchor="end">2</text>
+    <text class="dg-menor" x="410" y="223" font-size="20" text-anchor="middle">?</text>
+    <text class="dg-menor" x="600" y="241" font-size="15">embeddings · 2013</text>
+  </g>
+  <g>
+    <line class="dg-forma" x1="250" y1="150" x2="570" y2="150" stroke-width="3"/>
+    <text class="dg-menor" x="230" y="156" font-size="15" text-anchor="end">3</text>
+    <text class="dg-menor" x="410" y="138" font-size="20" text-anchor="middle">?</text>
+    <text class="dg-menor" x="600" y="156" font-size="15">attention · 2017</text>
+  </g>
+  <g>
+    <line class="dg-linha-2" x1="250" y1="65" x2="570" y2="65" stroke-width="4"/>
+    <text class="dg-menor" x="230" y="71" font-size="15" text-anchor="end">4</text>
+    <text class="dg-menor" x="410" y="53" font-size="20" text-anchor="middle">?</text>
+    <text class="dg-menor" x="600" y="71" font-size="15">large language models</text>
+  </g>
+  <text class="dg-menor" x="410" y="365" font-size="15" text-anchor="middle">every rung: a different way of turning text into numbers</text>
+</svg>
+    </figure>
+    <figcaption class="dg-legenda">Every rung is a different way of turning text into numbers. The labels appear as we climb.</figcaption>
+    
+    <div class="deck-footer">From Counting Words to Agents · 3/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">01</div>
+    <h1>Text becomes numbers</h1>
+    <p class="sub">Count — and the four things counting cannot do</p>
+    <div class="deck-footer">From Counting Words to Agents · 4/66</div>
+  </div>
+
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>A computer cannot read</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="A sentence in a box becomes a list of numbers in a highlighted box, which branches to three uses — compare, how close; classify, which group; search, the nearest. Caption, without numbers there is no similar.">
+      <!-- D1: any text becomes a list of numbers; with numbers you can measure. -->
+<svg viewBox="0 0 820 380" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="seta-t2v" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="dg-seta-cabeca" d="M 0 0 L 10 5 L 0 10 z"/></marker></defs>
+  <rect class="dg-forma" x="20" y="130" width="220" height="120" rx="8" stroke-width="1.8"/>
+  <text class="dg-rotulo" x="130" y="175" font-size="17" text-anchor="middle">"The customer</text>
+  <text class="dg-rotulo" x="130" y="200" font-size="17" text-anchor="middle">returned the product"</text>
+  <text class="dg-menor" x="130" y="232" font-size="12.5" text-anchor="middle">a word · a sentence · a document</text>
+  <path class="dg-seta" d="M 232 190 L 292 190" stroke-width="1.8" marker-end="url(#seta-t2v)"/>
+  <rect class="dg-linha-2" x="298" y="130" width="230" height="120" rx="8" stroke-width="2.4"/>
+  <text class="dg-rotulo" x="413" y="180" font-size="19" text-anchor="middle" font-family="monospace">[0.12  −0.87  0.45</text>
+  <text class="dg-rotulo" x="413" y="206" font-size="19" text-anchor="middle" font-family="monospace">0.33  …  −0.21]</text>
+  <text class="dg-menor" x="413" y="232" font-size="14" text-anchor="middle">a list of numbers — a vector</text>
+  <path class="dg-seta" d="M 530 160 L 580 100" stroke-width="1.8" marker-end="url(#seta-t2v)"/>
+  <path class="dg-seta" d="M 530 190 L 580 190" stroke-width="1.8" marker-end="url(#seta-t2v)"/>
+  <path class="dg-seta" d="M 530 220 L 580 280" stroke-width="1.8" marker-end="url(#seta-t2v)"/>
+  <rect class="dg-forma" x="586" y="70" width="224" height="50" rx="8" stroke-width="1.8"/>
+  <text class="dg-rotulo" x="698" y="101" font-size="15" text-anchor="middle">compare — how close?</text>
+  <rect class="dg-forma" x="586" y="165" width="224" height="50" rx="8" stroke-width="1.8"/>
+  <text class="dg-rotulo" x="698" y="196" font-size="15" text-anchor="middle">classify — which group?</text>
+  <rect class="dg-forma" x="586" y="260" width="224" height="50" rx="8" stroke-width="1.8"/>
+  <text class="dg-rotulo" x="698" y="291" font-size="15" text-anchor="middle">search — the nearest</text>
+  <text class="dg-menor" x="410" y="345" font-size="15" text-anchor="middle">without numbers there is no "similar"</text>
+</svg>
+    </figure>
+    <figcaption class="dg-legenda">A word, a sentence, a whole document — any unit of text becomes a list of numbers. Then you can measure.</figcaption>
+    
+    <div class="deck-footer">From Counting Words to Agents · 5/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-citacao">
+    <div class="kicker">The oldest idea — count</div>
+    <blockquote class="cit-texto">an unordered set of words with their position ignored, keeping only their frequency in the document</blockquote>
+    <div class="cit-autor">Jurafsky &amp; Martin</div>
+    <div class="cit-fonte">Speech and Language Processing (3rd ed. draft, 2026), p. 255</div>
+    <div class="deck-footer">From Counting Words to Agents · 6/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>Two topics, no word in common</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="Two sentences, A, the customer returned the product, and B, the supplier missed the delivery deadline. Below, a vocabulary row of eight words and two rows of counts — A has ones under the, customer, returned, product; B has ones under the, supplier, missed, delivery, deadline. At the bottom, two arrows from the same origin far apart with a large angle theta between them, and the caption, one shared position out of eight, the two vectors point in different directions, large angle, low similarity.">
+      <!-- D14: bag of words when it works — two topics, one shared position out of eight, a large angle. After ia-advocacia slide 7 (left half). -->
+<svg viewBox="0 0 820 420" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="seta-bow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="dg-seta-cabeca" d="M 0 0 L 10 5 L 0 10 z"/></marker></defs>
+  <text class="dg-titulo" x="30" y="40" font-size="19">A · "The customer returned the product"</text>
+  <text class="dg-titulo" x="30" y="72" font-size="19">B · "The supplier missed the delivery deadline"</text>
+  <line class="dg-traco" x1="30" y1="95" x2="790" y2="95" stroke-width="1"/>
+  <text class="dg-menor" x="30" y="135" font-size="15">vocabulary</text>
+  <text class="dg-menor" x="30" y="190" font-size="15">A counts</text>
+  <text class="dg-menor" x="30" y="245" font-size="15">B counts</text>
+  <g font-size="15" text-anchor="middle">
+    <text class="dg-rotulo" x="170" y="135">the</text><text class="dg-rotulo" x="252" y="135">customer</text><text class="dg-rotulo" x="334" y="135">returned</text><text class="dg-rotulo" x="416" y="135">product</text><text class="dg-rotulo" x="498" y="135">supplier</text><text class="dg-rotulo" x="580" y="135">missed</text><text class="dg-rotulo" x="662" y="135">delivery</text><text class="dg-rotulo" x="744" y="135">deadline</text>
+  </g>
+  <g stroke-width="1.8">
+    <rect class="dg-forma" x="147" y="166" width="46" height="34" rx="5"/><rect class="dg-forma" x="229" y="166" width="46" height="34" rx="5"/><rect class="dg-forma" x="311" y="166" width="46" height="34" rx="5"/><rect class="dg-forma" x="393" y="166" width="46" height="34" rx="5"/><rect class="dg-forma" x="475" y="166" width="46" height="34" rx="5"/><rect class="dg-forma" x="557" y="166" width="46" height="34" rx="5"/><rect class="dg-forma" x="639" y="166" width="46" height="34" rx="5"/><rect class="dg-forma" x="721" y="166" width="46" height="34" rx="5"/>
+    <rect class="dg-forma" x="147" y="221" width="46" height="34" rx="5"/><rect class="dg-forma" x="229" y="221" width="46" height="34" rx="5"/><rect class="dg-forma" x="311" y="221" width="46" height="34" rx="5"/><rect class="dg-forma" x="393" y="221" width="46" height="34" rx="5"/><rect class="dg-forma" x="475" y="221" width="46" height="34" rx="5"/><rect class="dg-forma" x="557" y="221" width="46" height="34" rx="5"/><rect class="dg-forma" x="639" y="221" width="46" height="34" rx="5"/><rect class="dg-forma" x="721" y="221" width="46" height="34" rx="5"/>
+  </g>
+  <g font-size="18" text-anchor="middle" font-family="monospace">
+    <text class="dg-ponto" x="170" y="190">1</text><text class="dg-ponto" x="252" y="190">1</text><text class="dg-ponto" x="334" y="190">1</text><text class="dg-ponto" x="416" y="190">1</text><text class="dg-rotulo" x="498" y="190">0</text><text class="dg-rotulo" x="580" y="190">0</text><text class="dg-rotulo" x="662" y="190">0</text><text class="dg-rotulo" x="744" y="190">0</text>
+    <text class="dg-ponto-2" x="170" y="245">1</text><text class="dg-rotulo" x="252" y="245">0</text><text class="dg-rotulo" x="334" y="245">0</text><text class="dg-rotulo" x="416" y="245">0</text><text class="dg-ponto-2" x="498" y="245">1</text><text class="dg-ponto-2" x="580" y="245">1</text><text class="dg-ponto-2" x="662" y="245">1</text><text class="dg-ponto-2" x="744" y="245">1</text>
+  </g>
+  <line class="dg-traco" x1="30" y1="280" x2="790" y2="280" stroke-width="1"/>
+  <!-- the angle -->
+  <path class="dg-linha" d="M 90 400 L 300 340" stroke-width="2.6" marker-end="url(#seta-bow2)"/>
+  <path class="dg-linha-2" d="M 90 400 L 120 300" stroke-width="2.6" marker-end="url(#seta-bow2)"/>
+  <path class="dg-eixo" d="M 150 383 A 62 62 0 0 0 108 342" stroke-width="1.2" fill="none"/>
+  <text class="dg-rotulo" x="300" y="330" font-size="15">A</text>
+  <text class="dg-rotulo" x="128" y="298" font-size="15">B</text>
+  <text class="dg-rotulo" x="140" y="365" font-size="18" font-style="italic">θ</text>
+  <text class="dg-menor" x="360" y="345" font-size="15">one shared position out of eight — "the"</text>
+  <text class="dg-menor" x="360" y="372" font-size="15">the two vectors point in different directions → large angle → low similarity ✓</text>
+</svg>
+    </figure>
+    <figcaption class="dg-legenda">Counting works when the topics differ — the two vectors point in different directions.</figcaption>
+    
+    <div class="deck-footer">From Counting Words to Agents · 7/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>Six positions out of seven agree</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="Two sentences, A, the customer is satisfied with the service, and B, the customer is not satisfied with the service. Below, a vocabulary row of seven words and two rows of counts. The two rows are identical except in the last position, the word not, highlighted, which is zero in A and one in B.">
+      <!-- D2: two sentences, one vocabulary, two count vectors — six of seven positions agree. -->
+<svg viewBox="0 0 820 380" xmlns="http://www.w3.org/2000/svg">
+  <text class="dg-titulo" x="30" y="40" font-size="19">A · "The customer is satisfied with the service"</text>
+  <text class="dg-titulo" x="30" y="72" font-size="19">B · "The customer is <tspan class="dg-ponto-2">not</tspan> satisfied with the service"</text>
+  <line class="dg-traco" x1="30" y1="95" x2="790" y2="95" stroke-width="1"/>
+  <text class="dg-menor" x="30" y="140" font-size="15">vocabulary</text>
+  <text class="dg-menor" x="30" y="205" font-size="15">A counts</text>
+  <text class="dg-menor" x="30" y="270" font-size="15">B counts</text>
+  <g font-size="16" text-anchor="middle">
+    <text class="dg-rotulo" x="200" y="140">the</text><text class="dg-rotulo" x="290" y="140">customer</text><text class="dg-rotulo" x="380" y="140">is</text><text class="dg-rotulo" x="470" y="140">satisfied</text><text class="dg-rotulo" x="560" y="140">with</text><text class="dg-rotulo" x="650" y="140">service</text><text class="dg-ponto-2" x="740" y="140">not</text>
+  </g>
+  <g stroke-width="1.8">
+    <rect class="dg-forma" x="175" y="180" width="50" height="36" rx="5"/><rect class="dg-forma" x="265" y="180" width="50" height="36" rx="5"/><rect class="dg-forma" x="355" y="180" width="50" height="36" rx="5"/><rect class="dg-forma" x="445" y="180" width="50" height="36" rx="5"/><rect class="dg-forma" x="535" y="180" width="50" height="36" rx="5"/><rect class="dg-forma" x="625" y="180" width="50" height="36" rx="5"/><rect class="dg-forma" x="715" y="180" width="50" height="36" rx="5"/>
+    <rect class="dg-forma" x="175" y="245" width="50" height="36" rx="5"/><rect class="dg-forma" x="265" y="245" width="50" height="36" rx="5"/><rect class="dg-forma" x="355" y="245" width="50" height="36" rx="5"/><rect class="dg-forma" x="445" y="245" width="50" height="36" rx="5"/><rect class="dg-forma" x="535" y="245" width="50" height="36" rx="5"/><rect class="dg-forma" x="625" y="245" width="50" height="36" rx="5"/><rect class="dg-linha-2" x="715" y="245" width="50" height="36" rx="5" stroke-width="2.6"/>
+  </g>
+  <g font-size="19" text-anchor="middle" font-family="monospace">
+    <text class="dg-rotulo" x="200" y="205">1</text><text class="dg-rotulo" x="290" y="205">1</text><text class="dg-rotulo" x="380" y="205">1</text><text class="dg-rotulo" x="470" y="205">1</text><text class="dg-rotulo" x="560" y="205">1</text><text class="dg-rotulo" x="650" y="205">1</text><text class="dg-rotulo" x="740" y="205">0</text>
+    <text class="dg-rotulo" x="200" y="270">1</text><text class="dg-rotulo" x="290" y="270">1</text><text class="dg-rotulo" x="380" y="270">1</text><text class="dg-rotulo" x="470" y="270">1</text><text class="dg-rotulo" x="560" y="270">1</text><text class="dg-rotulo" x="650" y="270">1</text><text class="dg-ponto-2" x="740" y="270">1</text>
+  </g>
+  <text class="dg-menor" x="410" y="335" font-size="16" text-anchor="middle">order ignored · position ignored · only how many times each word occurs</text>
+</svg>
+    </figure>
+    <figcaption class="dg-legenda">What does the machine think of these two texts?</figcaption>
+    
+    <div class="deck-footer">From Counting Words to Agents · 8/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>Count with judgement — TF-IDF</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="Three near-identical complaint emails that differ in one word — flight, hotel, insurance. Below, a bar for each word&#39;s weight — the shared words we, regret, inform, order, cancelled get small grey bars; flight, hotel and insurance get tall bars in the accent colour.">
+      <!-- D3: three near-identical emails; shared words fade (low weight), the three specific words stand (high weight). -->
+<svg viewBox="0 0 820 380" xmlns="http://www.w3.org/2000/svg">
+  <g font-size="17">
+    <text class="dg-menor" x="30" y="60">1 · we regret to inform you that your order</text><text class="dg-ponto" x="440" y="60" font-weight="700">flight</text><text class="dg-menor" x="500" y="60">was cancelled</text>
+    <text class="dg-menor" x="30" y="105">2 · we regret to inform you that your order</text><text class="dg-ponto" x="440" y="105" font-weight="700">hotel</text><text class="dg-menor" x="500" y="105">was cancelled</text>
+    <text class="dg-menor" x="30" y="150">3 · we regret to inform you that your order</text><text class="dg-ponto" x="440" y="150" font-weight="700">insurance</text><text class="dg-menor" x="530" y="150">was cancelled</text>
+  </g>
+  <line class="dg-traco" x1="30" y1="180" x2="790" y2="180" stroke-width="1"/>
+  <text class="dg-titulo" x="30" y="215" font-size="17">weight</text>
+  <g stroke-width="1">
+    <rect class="dg-eixo" x="120" y="205" width="14" height="12"/><text class="dg-menor" x="145" y="216" font-size="14">we</text>
+    <rect class="dg-eixo" x="190" y="205" width="14" height="12"/><text class="dg-menor" x="215" y="216" font-size="14">regret</text>
+    <rect class="dg-eixo" x="275" y="205" width="14" height="12"/><text class="dg-menor" x="300" y="216" font-size="14">inform</text>
+    <rect class="dg-eixo" x="365" y="205" width="14" height="12"/><text class="dg-menor" x="390" y="216" font-size="14">order</text>
+    <rect class="dg-eixo" x="450" y="205" width="14" height="12"/><text class="dg-menor" x="475" y="216" font-size="14">cancelled</text>
+  </g>
+  <rect class="dg-ponto" x="120" y="250" width="14" height="70"/><text class="dg-rotulo" x="145" y="300" font-size="16">flight</text>
+  <rect class="dg-ponto" x="275" y="250" width="14" height="70"/><text class="dg-rotulo" x="300" y="300" font-size="16">hotel</text>
+  <rect class="dg-ponto" x="450" y="250" width="14" height="70"/><text class="dg-rotulo" x="475" y="300" font-size="16">insurance</text>
+  <text class="dg-menor" x="30" y="355" font-size="15">frequent here × rare everywhere else → high weight · in every document → weight ≈ 0</text>
+</svg>
+    </figure>
+    <figcaption class="dg-legenda">Frequent here, rare everywhere else → weighs more. Words in every document → weight ≈ 0.</figcaption>
+    <div class="fonte">After Jurafsky &amp; Martin (2026), §11.1</div>
+    <div class="deck-footer">From Counting Words to Agents · 9/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>Where the three emails land</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="Two panels. Left, bag of words, a small plane with three dots almost on top of each other, labelled one flight, two hotel, three insurance, caption ten words in common, nearly the same point. Right, TF-IDF, the same three dots far apart in three corners, caption shared words weigh about zero, three words decide the position. Bottom, the shared sentence we regret to inform you that your order was cancelled is in all three, TF-IDF makes it vanish.">
+      <!-- D15: where the three emails land — bag of words piles them up, TF-IDF pulls them apart. After ia-advocacia slide 9. Positions illustrative. -->
+<svg viewBox="0 0 820 380" xmlns="http://www.w3.org/2000/svg">
+  <rect class="dg-forma" x="30" y="50" width="360" height="270" rx="8" stroke-width="1.2"/>
+  <text class="dg-titulo" x="210" y="82" font-size="17" text-anchor="middle">bag of words</text>
+  <line class="dg-eixo" x1="60" y1="265" x2="360" y2="265" stroke-width="1"/>
+  <line class="dg-eixo" x1="60" y1="265" x2="60" y2="100" stroke-width="1"/>
+  <circle class="dg-ponto" cx="212" cy="196" r="8"/>
+  <circle class="dg-ponto" cx="226" cy="204" r="8"/>
+  <circle class="dg-ponto" cx="204" cy="210" r="8"/>
+  <text class="dg-menor" x="245" y="192" font-size="14">1 · flight</text>
+  <text class="dg-menor" x="245" y="212" font-size="14">2 · hotel</text>
+  <text class="dg-menor" x="245" y="232" font-size="14">3 · insurance</text>
+  <text class="dg-menor" x="210" y="298" font-size="14" text-anchor="middle">ten words in common → nearly the same point</text>
+
+  <rect class="dg-forma" x="430" y="50" width="360" height="270" rx="8" stroke-width="1.2"/>
+  <text class="dg-titulo" x="610" y="82" font-size="17" text-anchor="middle">TF-IDF</text>
+  <line class="dg-eixo" x1="460" y1="265" x2="760" y2="265" stroke-width="1"/>
+  <line class="dg-eixo" x1="460" y1="265" x2="460" y2="100" stroke-width="1"/>
+  <circle class="dg-ponto-2" cx="520" cy="130" r="8"/><text class="dg-rotulo" x="540" y="135" font-size="15">1 · flight</text>
+  <circle class="dg-ponto-2" cx="730" cy="170" r="8"/><text class="dg-rotulo" x="650" y="160" font-size="15">2 · hotel</text>
+  <circle class="dg-ponto-2" cx="600" cy="235" r="8"/><text class="dg-rotulo" x="620" y="240" font-size="15">3 · insurance</text>
+  <text class="dg-menor" x="610" y="298" font-size="14" text-anchor="middle">shared words weigh ≈ 0 → three words decide</text>
+
+  <text class="dg-menor" x="410" y="355" font-size="15" text-anchor="middle">"we regret to inform you that your order … was cancelled" is in all three — TF-IDF makes it vanish</text>
+</svg>
+    </figure>
+    <figcaption class="dg-legenda">Same three emails, two ways of counting. Positions are illustrative.</figcaption>
+    <div class="fonte">After Jurafsky &amp; Martin (2026), §11.1 · positions illustrative</div>
+    <div class="deck-footer">From Counting Words to Agents · 10/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Four things counting cannot do</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li class="fragment">
+        Synonyms — a word is an index<span class="nota"><em>car</em> and <em>automobile</em>: two unrelated positions</span>
+        
+      </li>
+      
+      <li class="fragment">
+        Order — the same bag, two sentences<span class="nota"><em>all of a sudden I notice three guys standing on the sidewalk</em> — or shuffled</span>
+        
+      </li>
+      
+      <li class="fragment">
+        Sparsity — counting memorises<span class="nota">Shakespeare: 884,647 words · 29,066 vocabulary · 844,000,000 possible pairs</span>
+        
+      </li>
+      
+      <li class="fragment">
+        Never seen = probability zero<span class="nota"><em>ruby</em> and <em>slippers</em> known, <em>ruby slippers</em> never counted</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">From Counting Words to Agents · 11/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-citacao">
+    <div class="kicker">The bridge to the next rung</div>
+    <blockquote class="cit-texto">n-grams have no way to generalize from training examples to test set examples unless they use identical words. Neural language models instead project words into a continuous space in which words with similar contexts have similar representations.</blockquote>
+    <div class="cit-autor">Jurafsky &amp; Martin</div>
+    <div class="cit-fonte">(2026), p. 89</div>
+    <div class="deck-footer">From Counting Words to Agents · 12/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">02</div>
+    <h1>Meaning becomes geometry</h1>
+    <p class="sub">Embeddings, 2013</p>
+    <div class="deck-footer">From Counting Words to Agents · 13/66</div>
+  </div>
+
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Nobody here knows this word</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        <em>Ongchoi</em> is delicious sauteed with garlic.
+      </li>
+      
+      <li>
+        <em>Ongchoi</em> is superb over rice.
+      </li>
+      
+      <li>
+        …<em>ongchoi</em> leaves with salty sauces…
+      </li>
+      
+    </ul>
+    <div class="deck-footer">From Counting Words to Agents · 14/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-citacao">
+    <div class="kicker">Tell me who your friends are — linguists, 1950s</div>
+    <blockquote class="cit-texto">Words that occur in similar contexts tend to have similar meanings.</blockquote>
+    <div class="cit-autor">Jurafsky &amp; Martin</div>
+    <div class="cit-fonte">(2026), p. 127 — the distributional hypothesis, after Joos (1950), Harris (1954), Firth (1957)</div>
+    <div class="deck-footer">From Counting Words to Agents · 15/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>Sparse → dense</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="Top, a very long vector of zeros with two ones far apart, labelled sparse — one position per word in the vocabulary, ten to fifty thousand positions, almost all zero, car and automobile unrelated. Bottom, a short highlighted vector of decimal numbers labelled dense — an embedding, fifty to a thousand numbers, no label on any position, learned from the neighbours.">
+      <!-- D4: a long, mostly-zero count vector vs. a short dense embedding. -->
+<svg viewBox="0 0 820 380" xmlns="http://www.w3.org/2000/svg">
+  <text class="dg-titulo" x="30" y="45" font-size="19">sparse — one position per word in the vocabulary</text>
+  <g stroke-width="1.2">
+    <rect class="dg-forma" x="30" y="70" width="760" height="40" rx="5"/>
+  </g>
+  <g font-size="14" font-family="monospace" class="dg-menor">
+    <text x="45" y="96">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</text>
+  </g>
+  <g font-size="16" font-family="monospace" font-weight="700">
+    <text class="dg-ponto" x="196" y="97">1</text>
+    <text class="dg-ponto" x="566" y="97">1</text>
+  </g>
+  <text class="dg-menor" x="30" y="140" font-size="15">10,000 – 50,000 positions · almost all zero · <tspan font-style="italic">car</tspan> and <tspan font-style="italic">automobile</tspan> are unrelated positions</text>
+  <line class="dg-traco" x1="30" y1="170" x2="790" y2="170" stroke-width="1"/>
+  <text class="dg-titulo" x="30" y="210" font-size="19">dense — an embedding</text>
+  <rect class="dg-linha-2" x="30" y="235" width="420" height="40" rx="5" stroke-width="2.4"/>
+  <text class="dg-rotulo" x="240" y="262" font-size="16" text-anchor="middle" font-family="monospace">0.23 −0.41 0.87 0.12 −0.05 0.66 … −0.33</text>
+  <text class="dg-menor" x="30" y="305" font-size="15">50 – 1,000 numbers · no label on any position · learned from the neighbours</text>
+  <text class="dg-menor" x="30" y="345" font-size="15">"dense vectors work better in every NLP task than sparse vectors" — J&amp;M</text>
+</svg>
+    </figure>
+    <figcaption class="dg-legenda">2013 — each word gets 50 to 1,000 numbers, no label on any of them, learned from its neighbours.</figcaption>
+    <div class="fonte">Mikolov et al. (2013) · Jurafsky &amp; Martin (2026), §5.5</div>
+    <div class="deck-footer">From Counting Words to Agents · 16/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>How it learns — without anyone labelling</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li class="fragment">
+        Train a guesser — "is this word likely near that word?"
+        
+      </li>
+      
+      <li class="fragment">
+        Throw the guesser away, keep its weights<span class="nota">the weights are the vectors</span>
+        
+      </li>
+      
+      <li class="fragment">
+        The text is its own answer key<span class="nota">self-supervision — under a day on 1.6 billion words</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">From Counting Words to Agents · 17/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>Training the guesser — one step</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="Top, one sentence in monospace — lemon, a, then in brackets tablespoon of apricot jam a, then pinch — with apricot highlighted as the target and the brackets marking a window of two words either side. Below, two boxes. Left, from the text, real neighbours, labelled near, four pairs, apricot with tablespoon, of, jam, a. Right, drawn at random, noise, labelled not near, four pairs, apricot with aardvark, seven, my, forever. Bottom, three dots on a line, aardvark, apricot, jam, an arrow pulling jam closer to apricot and an arrow pushing aardvark away, and a caption, start with random vectors, repeat for every word of the corpus, throw the guesser away, keep the vectors.">
+      <!-- D13: one training step of the guesser (skip-gram with negative sampling), after J&M §5.5 and Fig. 5.7. -->
+<svg viewBox="0 0 820 400" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="seta-treino" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="dg-seta-cabeca" d="M 0 0 L 10 5 L 0 10 z"/></marker></defs>
+
+  <!-- 1 · one piece of training data -->
+  <text class="dg-menor" x="30" y="34" font-size="14">one piece of text · window of ±2 around the target</text>
+  <text class="dg-titulo" x="30" y="66" font-size="19" font-family="monospace">… lemon, a [tablespoon of <tspan class="dg-ponto" font-weight="700">apricot</tspan> jam, a] pinch …</text>
+
+  <!-- 2 · the two piles -->
+  <rect class="dg-forma" x="30" y="92" width="360" height="132" rx="6" stroke-width="1.2"/>
+  <text class="dg-rotulo" x="48" y="118" font-size="15">from the text — real neighbours · <tspan font-weight="700">near</tspan></text>
+  <g class="dg-menor" font-size="15" font-family="monospace">
+    <text x="48" y="146">apricot · tablespoon</text>
+    <text x="48" y="168">apricot · of</text>
+    <text x="48" y="190">apricot · jam</text>
+    <text x="48" y="212">apricot · a</text>
+  </g>
+
+  <rect class="dg-forma" x="430" y="92" width="360" height="132" rx="6" stroke-width="1.2"/>
+  <text class="dg-rotulo" x="448" y="118" font-size="15">drawn at random — noise · <tspan font-weight="700">not near</tspan></text>
+  <g class="dg-menor" font-size="15" font-family="monospace">
+    <text x="448" y="146">apricot · aardvark</text>
+    <text x="448" y="168">apricot · seven</text>
+    <text x="448" y="190">apricot · my</text>
+    <text x="448" y="212">apricot · forever</text>
+  </g>
+
+  <!-- 3 · one step: the vectors move -->
+  <text class="dg-menor" x="30" y="262" font-size="14">the guesser answers "near?" by how similar the two vectors are — then the vectors move</text>
+  <line class="dg-traco" x1="60" y1="318" x2="760" y2="318" stroke-width="1"/>
+
+  <circle class="dg-ponto-2" cx="150" cy="318" r="7"/>
+  <text class="dg-rotulo" x="150" y="350" font-size="15" text-anchor="middle" font-style="italic">aardvark</text>
+  <path class="dg-linha-2" d="M 136 318 L 82 318" stroke-width="2.4" marker-end="url(#seta-treino)"/>
+  <text class="dg-menor" x="110" y="296" font-size="14" text-anchor="middle">push apart</text>
+
+  <circle class="dg-ponto" cx="430" cy="318" r="9"/>
+  <text class="dg-rotulo" x="430" y="350" font-size="15" text-anchor="middle" font-weight="700" font-style="italic">apricot</text>
+
+  <circle class="dg-ponto" cx="640" cy="318" r="7"/>
+  <text class="dg-rotulo" x="640" y="350" font-size="15" text-anchor="middle" font-style="italic">jam</text>
+  <path class="dg-linha" d="M 626 318 L 460 318" stroke-width="2.4" marker-end="url(#seta-treino)"/>
+  <text class="dg-menor" x="543" y="296" font-size="14" text-anchor="middle">pull closer</text>
+
+  <text class="dg-menor" x="30" y="388" font-size="14">start with random vectors · repeat this step for every word of every sentence in the corpus · throw the guesser away, keep the vectors</text>
+</svg>
+    </figure>
+    <figcaption class="dg-legenda">Real neighbours pull the two vectors together; random words push them apart. Repeat for every word in the corpus.</figcaption>
+    <div class="fonte">After Jurafsky &amp; Martin (2026), §5.5 and Fig. 5.7</div>
+    <div class="deck-footer">From Counting Words to Agents · 18/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>The famous arithmetic</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="Four points on a plane — man, woman, king, queen. An arrow from man to woman and a parallel arrow of the same length from king to queen, labelled same offset. Text, king minus man plus woman is approximately queen; Paris minus France plus Italy is approximately Rome; Microsoft is to Windows as Google is to Android.">
+      <!-- D5: the analogy as geometry — the same offset from man→woman applies to king→queen. -->
+<svg viewBox="0 0 820 380" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="seta-par" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="dg-seta-cabeca" d="M 0 0 L 10 5 L 0 10 z"/></marker></defs>
+  <line class="dg-eixo" x1="80" y1="330" x2="740" y2="330" stroke-width="1.5"/>
+  <line class="dg-eixo" x1="80" y1="330" x2="80" y2="40" stroke-width="1.5"/>
+  <circle class="dg-ponto" cx="200" cy="270" r="8"/><text class="dg-rotulo" x="200" y="300" font-size="18" text-anchor="middle">man</text>
+  <circle class="dg-ponto" cx="420" cy="180" r="8"/><text class="dg-rotulo" x="420" y="165" font-size="18" text-anchor="middle">woman</text>
+  <circle class="dg-ponto-2" cx="380" cy="290" r="8"/><text class="dg-rotulo" x="380" y="320" font-size="18" text-anchor="middle">king</text>
+  <circle class="dg-ponto-2" cx="600" cy="200" r="8"/><text class="dg-rotulo" x="600" y="185" font-size="18" text-anchor="middle">queen</text>
+  <path class="dg-linha" d="M 210 266 L 408 185" stroke-width="2.4" marker-end="url(#seta-par)"/>
+  <path class="dg-linha-2" d="M 390 286 L 588 205" stroke-width="2.4" marker-end="url(#seta-par)"/>
+  <line class="dg-traco" x1="200" y1="270" x2="380" y2="290" stroke-width="1.2" stroke-dasharray="6 5"/>
+  <line class="dg-traco" x1="420" y1="180" x2="600" y2="200" stroke-width="1.2" stroke-dasharray="6 5"/>
+  <text class="dg-menor" x="280" y="210" font-size="15" text-anchor="middle">same offset</text>
+  <text class="dg-titulo" x="640" y="70" font-size="20" text-anchor="end">king − man + woman ≈ queen</text>
+  <text class="dg-menor" x="640" y="100" font-size="15" text-anchor="end">Paris − France + Italy ≈ Rome</text>
+  <text class="dg-menor" x="640" y="124" font-size="15" text-anchor="end">Microsoft : Windows :: Google : Android</text>
+</svg>
+    </figure>
+    <figcaption class="dg-legenda">Exact-match accuracy in the paper's own test: 65.6 %. A tendency in the geometry — not a calculator.</figcaption>
+    <div class="fonte">Mikolov et al. (2013), pp. 2, 9–10 and Tables 6, 8 · Jurafsky &amp; Martin (2026), p. 144 and Fig. 5.8</div>
+    <div class="deck-footer">From Counting Words to Agents · 19/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>'Bank' in a loan, 'bank' by the river — how many vectors?</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="A plane with three dashed neighbourhoods. Top left, finance — loan, credit, interest, mortgage, rate. Top right, supply chain — shipment, freight, warehouse, supplier. Bottom right, landscape — river, shore, valley, coast. In the middle, a single highlighted dot labelled bank, with dashed lines towards finance and towards landscape, and the caption, one dot, loan or river. Bottom, 2013, one vector per word type, wherever the word appears, the model cannot tell the two banks apart.">
+      <!-- D16: the space of word vectors, 2013 — three neighbourhoods and one dot for "bank". After ia-advocacia slide 13. Positions illustrative. -->
+<svg viewBox="0 0 820 400" xmlns="http://www.w3.org/2000/svg">
+  <rect class="dg-forma" x="40" y="50" width="250" height="150" rx="10" stroke-width="1.2" stroke-dasharray="6 5"/>
+  <text class="dg-menor" x="60" y="76" font-size="13">FINANCE</text>
+  <g class="dg-rotulo" font-size="16">
+    <text x="70" y="115">loan</text><text x="150" y="105">credit</text><text x="90" y="155">interest</text><text x="185" y="165">mortgage</text><text x="220" y="130">rate</text>
+  </g>
+  <rect class="dg-forma" x="530" y="40" width="250" height="140" rx="10" stroke-width="1.2" stroke-dasharray="6 5"/>
+  <text class="dg-menor" x="550" y="66" font-size="13">SUPPLY CHAIN</text>
+  <g class="dg-rotulo" font-size="16">
+    <text x="560" y="105">shipment</text><text x="680" y="95">freight</text><text x="590" y="150">warehouse</text><text x="700" y="155">supplier</text>
+  </g>
+  <rect class="dg-forma" x="530" y="230" width="250" height="140" rx="10" stroke-width="1.2" stroke-dasharray="6 5"/>
+  <text class="dg-menor" x="550" y="256" font-size="13">LANDSCAPE</text>
+  <g class="dg-rotulo" font-size="16">
+    <text x="560" y="295">river</text><text x="650" y="285">shore</text><text x="590" y="340">valley</text><text x="690" y="345">coast</text>
+  </g>
+  <circle class="dg-ponto-2" cx="400" cy="235" r="11"/>
+  <text class="dg-titulo" x="400" y="270" font-size="19" text-anchor="middle" font-style="italic">bank</text>
+  <path class="dg-eixo" d="M 388 228 L 296 170" stroke-width="1" stroke-dasharray="4 4"/>
+  <path class="dg-eixo" d="M 412 240 L 526 290" stroke-width="1" stroke-dasharray="4 4"/>
+  <text class="dg-menor" x="400" y="300" font-size="14" text-anchor="middle">one dot — loan or river?</text>
+  <text class="dg-menor" x="30" y="385" font-size="15">2013: one vector per word type, wherever the word appears · the model cannot tell the two "banks" apart</text>
+</svg>
+    </figure>
+    <figcaption class="dg-legenda">2013: one vector per word <em>type</em> — never per <em>instance</em>. Positions are illustrative.</figcaption>
+    <div class="fonte">After Jurafsky &amp; Martin (2026), p. 244 · positions illustrative</div>
+    <div class="deck-footer">From Counting Words to Agents · 20/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">03</div>
+    <h1>Context</h1>
+    <p class="sub">Attention, 2017</p>
+    <div class="deck-footer">From Counting Words to Agents · 21/66</div>
+  </div>
+
+</section>
+      
+      
+<section>
+  <div class="slide l-linha-tempo">
+    <h2>The papers we hold</h2>
+    <div class="rule"></div>
+    <ol class="tl">
+      
+      <li class="tl-marco fragment">
+        <div class="tl-marca"></div>
+        <div class="tl-corpo">
+          <div class="tl-data">2013</div>
+          <div class="tl-texto">word2vec</div>
+          <div class="tl-nota">Mikolov et al. — a vector per word</div>
+        </div>
+      </li>
+      
+      <li class="tl-marco fragment">
+        <div class="tl-marca"></div>
+        <div class="tl-corpo">
+          <div class="tl-data">2017</div>
+          <div class="tl-texto">Attention Is All You Need</div>
+          <div class="tl-nota">Vaswani et al. — a vector per word, per sentence</div>
+        </div>
+      </li>
+      
+      <li class="tl-marco fragment">
+        <div class="tl-marca"></div>
+        <div class="tl-corpo">
+          <div class="tl-data">2020</div>
+          <div class="tl-texto">GPT-3</div>
+          <div class="tl-nota">Brown et al. — 175 billion parameters, tasks given as text</div>
+        </div>
+      </li>
+      
+      <li class="tl-marco fragment">
+        <div class="tl-marca"></div>
+        <div class="tl-corpo">
+          <div class="tl-data">Nov 2022</div>
+          <div class="tl-texto">ChatGPT public</div>
+          <div class="tl-nota">the interface, not the mechanism — 30 Nov 2022</div>
+        </div>
+      </li>
+      
+    </ol>
+    
+    <div class="deck-footer">From Counting Words to Agents · 22/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-citacao">
+    <div class="kicker">2017</div>
+    <blockquote class="cit-texto">We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely.</blockquote>
+    <div class="cit-autor">Vaswani et al.</div>
+    <div class="cit-fonte">(2017), Attention Is All You Need, abstract</div>
+    <div class="deck-footer">From Counting Words to Agents · 23/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>The same word, two sentences, two vectors</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="Two sentences. In the bank approved the loan, curved lines from bank to approved and a thicker one to loan, ending in a dot labelled bank one. In we sat on the bank of the river, a thick line from bank to river, ending in a dot labelled bank two. On the right, a box called the space of meanings with the two dots in different regions, near loan and credit and near river and shore. Caption, 2013 one vector per word; 2017 one vector per word, per sentence.">
+      <!-- D6: the same word, two sentences, two vectors — attention weighs the neighbours. -->
+<svg viewBox="0 0 820 400" xmlns="http://www.w3.org/2000/svg">
+  <g font-size="19" text-anchor="middle">
+    <text class="dg-menor" x="70" y="80">The</text>
+    <text class="dg-titulo" x="150" y="80">bank</text>
+    <text class="dg-rotulo" x="250" y="80">approved</text>
+    <text class="dg-menor" x="340" y="80">the</text>
+    <text class="dg-rotulo" x="410" y="80">loan</text>
+  </g>
+  <path class="dg-linha" d="M 150 88 Q 200 130 250 88" stroke-width="3.5"/>
+  <path class="dg-linha" d="M 150 88 Q 280 160 410 88" stroke-width="5"/>
+  <path class="dg-eixo" d="M 150 88 Q 245 120 340 88" stroke-width="1"/>
+  <path class="dg-eixo" d="M 150 88 Q 110 110 70 88" stroke-width="1"/>
+  <circle class="dg-ponto" cx="150" cy="185" r="9"/>
+  <text class="dg-menor" x="150" y="215" font-size="14" text-anchor="middle">bank₁</text>
+  <line class="dg-traco" x1="30" y1="235" x2="790" y2="235" stroke-width="1"/>
+  <g font-size="19" text-anchor="middle">
+    <text class="dg-menor" x="70" y="290">We</text>
+    <text class="dg-menor" x="140" y="290">sat</text>
+    <text class="dg-menor" x="205" y="290">on the</text>
+    <text class="dg-titulo" x="290" y="290">bank</text>
+    <text class="dg-menor" x="365" y="290">of the</text>
+    <text class="dg-rotulo" x="450" y="290">river</text>
+  </g>
+  <path class="dg-linha-2" d="M 290 298 Q 370 350 450 298" stroke-width="5"/>
+  <path class="dg-eixo" d="M 290 298 Q 215 330 140 298" stroke-width="1"/>
+  <circle class="dg-ponto-2" cx="290" cy="352" r="9"/>
+  <text class="dg-menor" x="290" y="380" font-size="14" text-anchor="middle">bank₂</text>
+  <g>
+    <rect class="dg-forma" x="560" y="60" width="230" height="150" rx="8" stroke-width="1.5"/>
+    <text class="dg-menor" x="675" y="90" font-size="14" text-anchor="middle">the space of meanings</text>
+    <circle class="dg-ponto" cx="620" cy="150" r="7"/><text class="dg-menor" x="620" y="178" font-size="13" text-anchor="middle">loan · credit</text>
+    <circle class="dg-ponto" cx="640" cy="130" r="7"/>
+    <circle class="dg-ponto-2" cx="740" cy="160" r="7"/><text class="dg-menor" x="740" y="188" font-size="13" text-anchor="middle">river · shore</text>
+    <circle class="dg-ponto-2" cx="720" cy="140" r="7"/>
+  </g>
+  <text class="dg-menor" x="675" y="330" font-size="15" text-anchor="middle">2013: one vector per word</text>
+  <text class="dg-rotulo" x="675" y="356" font-size="15" text-anchor="middle">2017: one vector per word, per sentence</text>
+</svg>
+    </figure>
+    <figcaption class="dg-legenda">Attention weighs the neighbours and builds the word's vector from them — layer by layer.</figcaption>
+    <div class="fonte">After Jurafsky &amp; Martin (2026), Fig. 7.3</div>
+    <div class="deck-footer">From Counting Words to Agents · 24/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>Where "bank" looks</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="The sentence the bank denied the loan to the customer, with bank highlighted. Left, a bar chart of where bank looks — loan 0.35, customer 0.20, denied 0.18, bank itself 0.12, the and to about 0.04 each — and the line, this bank is built mostly from loan, customer, denied. Right, a five by five grid of dots, one row and one column per word, bigger dot meaning more attention, with the row for bank outlined. Bottom, weights illustrative.">
+      <!-- D17: where "bank" looks — attention weights as bars and as a map. After ia-advocacia slide 15. Numbers illustrative. -->
+<svg viewBox="0 0 820 400" xmlns="http://www.w3.org/2000/svg">
+  <g font-size="19" text-anchor="middle">
+    <text class="dg-menor" x="120" y="48">The</text>
+    <text class="dg-titulo" x="190" y="48" font-weight="700">bank</text>
+    <text class="dg-rotulo" x="280" y="48">denied</text>
+    <text class="dg-menor" x="355" y="48">the</text>
+    <text class="dg-rotulo" x="420" y="48">loan</text>
+    <text class="dg-menor" x="475" y="48">to the</text>
+    <text class="dg-rotulo" x="570" y="48">customer</text>
+  </g>
+  <line class="dg-traco" x1="30" y1="70" x2="790" y2="70" stroke-width="1"/>
+
+  <text class="dg-menor" x="30" y="100" font-size="14">where "bank" looks</text>
+  <g font-size="15">
+    <text class="dg-rotulo" x="30" y="136">loan</text><rect class="dg-ponto" x="130" y="122" width="245" height="18" rx="3"/><text class="dg-menor" x="385" y="136">0.35</text>
+    <text class="dg-rotulo" x="30" y="172">customer</text><rect class="dg-ponto" x="130" y="158" width="140" height="18" rx="3"/><text class="dg-menor" x="280" y="172">0.20</text>
+    <text class="dg-rotulo" x="30" y="208">denied</text><rect class="dg-ponto" x="130" y="194" width="126" height="18" rx="3"/><text class="dg-menor" x="266" y="208">0.18</text>
+    <text class="dg-rotulo" x="30" y="244">bank</text><rect class="dg-ponto" x="130" y="230" width="84" height="18" rx="3"/><text class="dg-menor" x="224" y="244">0.12</text>
+    <text class="dg-rotulo" x="30" y="280">the · to</text><rect class="dg-ponto" x="130" y="266" width="28" height="18" rx="3"/><text class="dg-menor" x="168" y="280">≈ 0.04 each</text>
+  </g>
+  <text class="dg-menor" x="30" y="320" font-size="14">→ this "bank" is built mostly from <tspan font-style="italic">loan</tspan>, <tspan font-style="italic">customer</tspan>, <tspan font-style="italic">denied</tspan></text>
+
+  <text class="dg-menor" x="480" y="100" font-size="14">every word does it to every other word</text>
+  <g class="dg-menor" font-size="12" text-anchor="middle">
+    <text x="536" y="126">the</text><text x="588" y="126">bank</text><text x="640" y="126">denied</text><text x="692" y="126">loan</text><text x="744" y="126">customer</text>
+  </g>
+  <g class="dg-menor" font-size="12" text-anchor="end">
+    <text x="508" y="160">the</text><text x="508" y="212">bank</text><text x="508" y="264">denied</text><text x="508" y="316">loan</text><text x="508" y="368">customer</text>
+  </g>
+  <g class="dg-ponto">
+    <circle cx="536" cy="156" r="5"/><circle cx="588" cy="156" r="9"/><circle cx="640" cy="156" r="4"/><circle cx="692" cy="156" r="4"/><circle cx="744" cy="156" r="3"/>
+    <circle cx="536" cy="208" r="3"/><circle cx="588" cy="208" r="7"/><circle cx="640" cy="208" r="9"/><circle cx="692" cy="208" r="14"/><circle cx="744" cy="208" r="10"/>
+    <circle cx="536" cy="260" r="3"/><circle cx="588" cy="260" r="10"/><circle cx="640" cy="260" r="6"/><circle cx="692" cy="260" r="11"/><circle cx="744" cy="260" r="7"/>
+    <circle cx="536" cy="312" r="3"/><circle cx="588" cy="312" r="13"/><circle cx="640" cy="312" r="9"/><circle cx="692" cy="312" r="6"/><circle cx="744" cy="312" r="6"/>
+    <circle cx="536" cy="364" r="3"/><circle cx="588" cy="364" r="8"/><circle cx="640" cy="364" r="7"/><circle cx="692" cy="364" r="10"/><circle cx="744" cy="364" r="6"/>
+  </g>
+  <rect class="dg-linha-2" x="512" y="186" width="258" height="44" rx="4" stroke-width="1.6"/>
+  <text class="dg-menor" x="30" y="352" font-size="13">weights illustrative · the outlined row is the bar chart</text>
+</svg>
+    </figure>
+    <figcaption class="dg-legenda">One row of the map is the bar chart. Every word has a row. Weights are illustrative.</figcaption>
+    <div class="fonte">Weights illustrative · mechanism after Vaswani et al. (2017), §3.2</div>
+    <div class="deck-footer">From Counting Words to Agents · 25/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>What 2017 bought</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li class="fragment">
+        Any word can look at any other — "global dependencies" (Vaswani et al.)
+        
+      </li>
+      
+      <li class="fragment">
+        It runs in parallel — "significantly more parallelization"
+        
+      </li>
+      
+      <li class="fragment">
+        So training on the whole web became affordable<span class="nota">not a new idea about language — a new cost of training</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">From Counting Words to Agents · 26/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">04</div>
+    <h1>Opening the box</h1>
+    <p class="sub">Three machines, one sentence</p>
+    <div class="deck-footer">From Counting Words to Agents · 27/66</div>
+  </div>
+
+</section>
+      
+      
+<section>
+  <div class="slide l-demo">
+    <h2>Session 2's toy, with the machinery showing</h2><div class="rule"></div>
+    <div class="demo-wrap">
+      <iframe class="demo-frame" data-src="../what-is-ai/assets/gera.html" data-preload
+              title="Text generator from Session 2. Left, an editable corpus of corporate boilerplate. Right, the text it produced from it, and a panel listing, for each step, the candidate next words and how often each followed in the corpus."
+              loading="lazy"></iframe>
+    </div>
+    <div class="demo-legenda">'Show the machinery' on · 'looks back at' 1 word. It was a table of which word followed which.</div>
+    <div class="fonte">Session 2 · runs locally, no network</div>
+    <div class="deck-footer">From Counting Words to Agents · 28/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>Predict, pick, append, repeat</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="The context so far, so long and thanks for, enters the model, a box labelled billions of weights; out comes a bar chart of probabilities for the next token — all, everything, the, of, wasn&#39;t — one is chosen by a weighted dice roll and an arrow feeds it back into the context. Caption, the chosen token is appended to the context, repeat until end.">
+      <!-- D7: context → distribution over next tokens → one is picked (a dice roll) → appended → again. After J&M Fig. 1.3. -->
+<svg viewBox="0 0 820 380" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="seta-loop" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="dg-seta-cabeca" d="M 0 0 L 10 5 L 0 10 z"/></marker></defs>
+  <rect class="dg-forma" x="30" y="140" width="250" height="60" rx="8" stroke-width="1.8"/>
+  <text class="dg-rotulo" x="155" y="177" font-size="17" text-anchor="middle">so long and thanks for</text>
+  <text class="dg-menor" x="155" y="125" font-size="14" text-anchor="middle">the context so far</text>
+  <path class="dg-seta" d="M 282 170 L 340 170" stroke-width="1.8" marker-end="url(#seta-loop)"/>
+  <rect class="dg-linha-2" x="346" y="120" width="130" height="100" rx="10" stroke-width="2.4"/>
+  <text class="dg-rotulo" x="411" y="165" font-size="17" text-anchor="middle">the model</text>
+  <text class="dg-menor" x="411" y="190" font-size="13" text-anchor="middle">billions of weights</text>
+  <path class="dg-seta" d="M 478 170 L 536 170" stroke-width="1.8" marker-end="url(#seta-loop)"/>
+  <g>
+    <text class="dg-menor" x="640" y="70" font-size="14" text-anchor="middle">probability of each next token</text>
+    <rect class="dg-ponto" x="550" y="90" width="130" height="18"/><text class="dg-rotulo" x="690" y="104" font-size="15">all</text>
+    <rect class="dg-ponto" x="550" y="115" width="80" height="18"/><text class="dg-rotulo" x="690" y="129" font-size="15">everything</text>
+    <rect class="dg-ponto" x="550" y="140" width="40" height="18"/><text class="dg-rotulo" x="690" y="154" font-size="15">the</text>
+    <rect class="dg-ponto" x="550" y="165" width="14" height="18"/><text class="dg-menor" x="690" y="179" font-size="15">of</text>
+    <rect class="dg-ponto" x="550" y="190" width="5" height="18"/><text class="dg-menor" x="690" y="204" font-size="15">wasn't</text>
+    <text class="dg-menor" x="640" y="240" font-size="14" text-anchor="middle">one is chosen — a dice roll, weighted</text>
+  </g>
+  <path class="dg-seta" d="M 640 250 L 640 300 Q 640 312 628 312 L 167 312 Q 155 312 155 300 L 155 204" stroke-width="1.8" marker-end="url(#seta-loop)"/>
+  <text class="dg-rotulo" x="400" y="340" font-size="16" text-anchor="middle">the chosen token is appended to the context · repeat until "end"</text>
+</svg>
+    </figure>
+    <figcaption class="dg-legenda">The model conditions on the prompt — and on its own previous outputs.</figcaption>
+    <div class="fonte">After Jurafsky &amp; Martin (2026), Fig. 1.3</div>
+    <div class="deck-footer">From Counting Words to Agents · 29/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-citacao">
+    <div class="kicker">The thesis of the session</div>
+    <blockquote class="cit-texto">Notice that the model is just predicting tokens, the same thing that we did in training. Answering a question, following an instruction, training, it's all just predicting tokens.</blockquote>
+    <div class="cit-autor">Jurafsky &amp; Martin</div>
+    <div class="cit-fonte">(2026), p. 23</div>
+    <div class="deck-footer">From Counting Words to Agents · 30/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Three machines · one sentence: <em>Our strategy this year is to</em></h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Qwen3 0.6 B — 522 MB, this laptop, no network
+        
+      </li>
+      
+      <li>
+        Qwen3 1.7 B — 1.4 GB, this laptop, no network
+        
+      </li>
+      
+      <li>
+        Claude — remote
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">From Counting Words to Agents · 31/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-destaque">
+    <div class="frase">Same file. Same words in. <span class="accent">Why a different answer?</span></div>
+    
+    <div class="deck-footer">From Counting Words to Agents · 32/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>A dice roll at every token</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li class="fragment">
+        Sampling — the next token is drawn according to its probability
+        
+      </li>
+      
+      <li class="fragment">
+        Always take the most likely → deterministic, and repetitive<span class="nota">"generic and often quite repetitive" — J&amp;M</span>
+        
+      </li>
+      
+      <li class="fragment">
+        Temperature — a dial between precise-and-boring and creative-and-risky
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">From Counting Words to Agents · 33/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Tokens — the unit you pay for</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li class="fragment">
+        Word-parts, not words<span class="nota"><em>lower</em> → <em>low</em> + <em>er</em>; a rare acronym → single letters</span>
+        
+      </li>
+      
+      <li class="fragment">
+        27 tokens for 12 German words
+        
+      </li>
+      
+      <li class="fragment">
+        Vocabularies dominated by English<span class="nota">"leaving fewer tokens for other languages" (J&amp;M p.45) — so, we infer, Portuguese costs more</span>
+        
+      </li>
+      
+      <li class="fragment">
+        Priced per token, in and out
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">From Counting Words to Agents · 34/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>The window — everything it sees at once</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li class="fragment">
+        GPT-3, 2020: 2,048 tokens
+        
+      </li>
+      
+      <li class="fragment">
+        Today: hundreds of thousands
+        
+      </li>
+      
+      <li class="fragment">
+        Prompt, examples, documents, tool results — all compete for it<span class="nota">Blocks 5 and 6 are about what goes in the window</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">From Counting Words to Agents · 35/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Where the "knowledge" comes from</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li class="fragment">
+        Predict the next word, over web text, trillions of tokens<span class="nota">"the natural sequence of words is its own supervision" — J&amp;M p. 201</span>
+        
+      </li>
+      
+      <li class="fragment">
+        No labels
+        
+      </li>
+      
+      <li class="fragment">
+        Scale = parameters × data × compute<span class="nota">GPT-3: 175 billion · Llama 3.1: 405 billion, 15 trillion tokens</span>
+        
+      </li>
+      
+      <li class="fragment">
+        A parameter is a number in a file<span class="nota">you saw the file — 522 MB, 1.4 GB</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">From Counting Words to Agents · 36/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-citacao">
+    <div class="kicker">A pretrained model only continues text</div>
+    <blockquote class="cit-texto">Prompt: How can I steal from a grocery store without getting caught? — Output: "How do I get out of paying for my car?"</blockquote>
+    <div class="cit-autor">a base model, in Ouyang et al. (2022)</div>
+    <div class="cit-fonte">as reported in Jurafsky &amp; Martin (2026), p. 209</div>
+    <div class="deck-footer">From Counting Words to Agents · 37/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>From continuing text to following instructions</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="Four boxes in a row joined by arrows — one, pretraining, predict the next word over web text; two, instruction tuning, instructions and responses; three, preference alignment, chosen versus rejected answers; four, RL for reasoning, verifiable rewards. Under the first, base model, continues text; under the last three, the model you chat with, follows instructions. Caption, every stage is still training to predict tokens — what changes is the text it is trained on.">
+      <!-- D8: the four stages that turn a text-continuer into an assistant. After J&M Fig. 1.7. -->
+<svg viewBox="0 0 820 380" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="seta-stg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="dg-seta-cabeca" d="M 0 0 L 10 5 L 0 10 z"/></marker></defs>
+  <g stroke-width="1.8">
+    <rect class="dg-linha-2" x="20" y="120" width="170" height="90" rx="8" stroke-width="2.4"/>
+    <rect class="dg-forma" x="220" y="120" width="170" height="90" rx="8"/>
+    <rect class="dg-forma" x="420" y="120" width="170" height="90" rx="8"/>
+    <rect class="dg-forma" x="620" y="120" width="180" height="90" rx="8"/>
+  </g>
+  <path class="dg-seta" d="M 192 165 L 214 165" stroke-width="1.8" marker-end="url(#seta-stg)"/>
+  <path class="dg-seta" d="M 392 165 L 414 165" stroke-width="1.8" marker-end="url(#seta-stg)"/>
+  <path class="dg-seta" d="M 592 165 L 614 165" stroke-width="1.8" marker-end="url(#seta-stg)"/>
+  <g font-size="14.5" text-anchor="middle">
+    <text class="dg-rotulo" x="105" y="155">1 · pretraining</text>
+    <text class="dg-rotulo" x="305" y="155">2 · instruction tuning</text>
+    <text class="dg-rotulo" x="505" y="155">3 · preference alignment</text>
+    <text class="dg-rotulo" x="710" y="155">4 · RL for reasoning</text>
+  </g>
+  <g font-size="13" text-anchor="middle" class="dg-menor">
+    <text x="105" y="185">predict the next word</text><text x="105" y="200">over web text</text>
+    <text x="305" y="185">instructions + responses</text><text x="305" y="200">(SFT)</text>
+    <text x="505" y="185">chosen vs. rejected</text><text x="505" y="200">answers (RLHF / DPO)</text>
+    <text x="710" y="185">verifiable rewards</text><text x="710" y="200">(the "thinking")</text>
+  </g>
+  <text class="dg-menor" x="105" y="250" font-size="15" text-anchor="middle">base model</text>
+  <text class="dg-menor" x="105" y="270" font-size="14" text-anchor="middle">continues text</text>
+  <text class="dg-menor" x="510" y="250" font-size="15" text-anchor="middle">the model you chat with</text>
+  <text class="dg-menor" x="510" y="270" font-size="14" text-anchor="middle">follows instructions</text>
+  <line class="dg-traco" x1="220" y1="235" x2="800" y2="235" stroke-width="1"/>
+  <text class="dg-rotulo" x="410" y="330" font-size="16" text-anchor="middle">every stage is still training to predict tokens — what changes is the text it is trained on</text>
+</svg>
+    </figure>
+    <figcaption class="dg-legenda">What you use in a chat is stages 2–4. Every stage is still token prediction.</figcaption>
+    <div class="fonte">After Jurafsky &amp; Martin (2026), Fig. 1.7</div>
+    <div class="deck-footer">From Counting Words to Agents · 38/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-citacao">
+    <div class="kicker">One sentence to kill a myth</div>
+    <blockquote class="cit-texto">no model weights were changed as a result of the prompt. What changes is just the context and the activations in the network. When the conversation ends, whatever was learned has vanished</blockquote>
+    <div class="cit-autor">Jurafsky &amp; Martin</div>
+    <div class="cit-fonte">(2026), p. 24</div>
+    <div class="deck-footer">From Counting Words to Agents · 39/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    
+    <h1>Five minutes</h1>
+    <p class="sub">Back at the clock</p>
+    <div class="deck-footer">From Counting Words to Agents · 40/66</div>
+  </div>
+
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">05</div>
+    <h1>From the model to the product</h1>
+    <p class="sub">What the bare model lacks — and the layers written around it</p>
+    <div class="deck-footer">From Counting Words to Agents · 41/66</div>
+  </div>
+
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Three court cases, please</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        <em>List three US court cases about airline liability for passenger injuries, with citations.</em>
+      </li>
+      
+      <li>
+        Qwen3 0.6 B · local
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">From Counting Words to Agents · 42/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-destaque">
+    <div class="frase">It just did exactly what it did with "our strategy this year". <span class="accent">What is different?</span></div>
+    
+    <div class="deck-footer">From Counting Words to Agents · 43/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Hallucination — a consequence, not a bug</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li class="fragment">
+        "make up answers that sound reasonable" — J&amp;M
+        
+      </li>
+      
+      <li class="fragment">
+        Legal questions — hallucinated 69 to 88 % of the time<span class="nota">Dahl et al. (2024), as reported by J&amp;M</span>
+        
+      </li>
+      
+      <li class="fragment">
+        Not calibrated — "a very wrong answer with complete certainty"
+        
+      </li>
+      
+      <li class="fragment">
+        Tone carries no information
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">From Counting Words to Agents · 44/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-citacao">
+    <div class="kicker">Fluency is not understanding</div>
+    <blockquote class="cit-texto">an LM is a system for haphazardly stitching together sequences of linguistic forms it has observed in its vast training data, according to probabilistic information about how they combine, but without any reference to meaning: a stochastic parrot.</blockquote>
+    <div class="cit-autor">Bender, Gebru, McMillan-Major &amp; Shmitchell</div>
+    <div class="cit-fonte">(2021), On the Dangers of Stochastic Parrots, p. 617</div>
+    <div class="deck-footer">From Counting Words to Agents · 45/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-citacao">
+    <div class="kicker">Where the coherence comes from</div>
+    <blockquote class="cit-texto">We say seemingly coherent because coherence is in fact in the eye of the beholder.</blockquote>
+    <div class="cit-autor">Bender et al.</div>
+    <div class="cit-fonte">(2021), p. 616</div>
+    <div class="deck-footer">From Counting Words to Agents · 46/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Same question — search off, then search on</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        <em>List three US court cases about airline liability for passenger injuries, with citations.</em>
+      </li>
+      
+      <li>
+        Claude · remote · web search off
+        
+      </li>
+      
+      <li>
+        Claude · remote · web search on
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">From Counting Words to Agents · 47/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-citacao">
+    <div class="kicker">Retrieval-augmented generation, in three steps</div>
+    <blockquote class="cit-texto"><ol>
+<li>Call a retriever to return the top-k relevant passages · 2. Create a prompt that includes the question and the retrieved passages · 3. Call an LLM with the prompt</li>
+</ol></blockquote>
+    <div class="cit-autor">Jurafsky &amp; Martin</div>
+    <div class="cit-fonte">(2026), p. 268 — the method is Lewis et al. (2020), cited separately</div>
+    <div class="deck-footer">From Counting Words to Agents · 48/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>What a product is</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="The model at the centre of three concentric rings — system prompt, role task format; examples and show the steps, few-shot and chain of thought; retrieved documents, search first then paste. The rings sit inside the window, everything the model sees at once. One arrow leaves the model to a box labelled tools, a program not a prompt, next block. Note, the three rings are the same thing — more text in the window.">
+      <!-- D9: the product = the model + three rings of text in the window + one arrow out (tools). -->
+<svg viewBox="0 0 820 400" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="seta-ring" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="dg-seta-cabeca" d="M 0 0 L 10 5 L 0 10 z"/></marker></defs>
+  <circle class="dg-forma" cx="300" cy="200" r="186" stroke-width="1.5" stroke-dasharray="7 6"/>
+  <circle class="dg-forma" cx="300" cy="200" r="135" stroke-width="1.5"/>
+  <circle class="dg-forma" cx="300" cy="200" r="85" stroke-width="1.5"/>
+  <circle class="dg-linha-2" cx="300" cy="200" r="38" stroke-width="2.6"/>
+  <text class="dg-rotulo" x="300" y="206" font-size="16" text-anchor="middle">model</text>
+  <text class="dg-rotulo" x="300" y="137" font-size="15" text-anchor="middle">system prompt</text>
+  <text class="dg-menor" x="300" y="154" font-size="12" text-anchor="middle">role · task · format</text>
+  <text class="dg-rotulo" x="300" y="88" font-size="15" text-anchor="middle">examples · "show the steps"</text>
+  <text class="dg-menor" x="300" y="105" font-size="12" text-anchor="middle">few-shot · chain of thought</text>
+  <text class="dg-rotulo" x="300" y="49" font-size="14" text-anchor="middle">retrieved documents</text>
+  <text class="dg-menor" x="300" y="61" font-size="11" text-anchor="middle">search first, then paste</text>
+  <text class="dg-menor" x="300" y="399" font-size="13" text-anchor="middle">the window — everything the model sees at once</text>
+  <path class="dg-seta" d="M 345 200 L 560 200" stroke-width="2.2" marker-end="url(#seta-ring)"/>
+  <rect class="dg-forma" x="566" y="170" width="210" height="60" rx="8" stroke-width="1.8"/>
+  <text class="dg-rotulo" x="671" y="196" font-size="16" text-anchor="middle">tools</text>
+  <text class="dg-menor" x="671" y="216" font-size="13" text-anchor="middle">a program, not a prompt → next block</text>
+  <text class="dg-menor" x="671" y="290" font-size="14" text-anchor="middle">the three rings are the same thing:</text>
+  <text class="dg-menor" x="671" y="310" font-size="14" text-anchor="middle">more text in the window</text>
+</svg>
+    </figure>
+    <figcaption class="dg-legenda">The model plus text placed around it in the window — and one thing a prompt cannot do.</figcaption>
+    
+    <div class="deck-footer">From Counting Words to Agents · 49/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-tabela">
+    <h2>Defect → layer → what it physically is</h2><div class="rule"></div>
+    <div class="tabela-wrap">
+      <table>
+        
+        <thead><tr><th>Defect of the bare model</th><th>Layer</th><th>What it is</th></tr></thead>
+        
+        <tbody>
+          
+          <tr>
+            
+            <th scope="row">Doesn't know what you want</th>
+            
+            
+            <td>System prompt — role, task, format</td>
+            
+            <td>Text before yours</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">Fails multi-step problems</th>
+            
+            
+            <td>Examples · "show the steps"</td>
+            
+            <td>Text in the prompt</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">Frozen · no provenance · invents</th>
+            
+            
+            <td>Retrieval (RAG)</td>
+            
+            <td>A search, then text in the prompt</td>
+            
+          </tr>
+          
+          <tr class="destaque">
+            
+            <th scope="row">Cannot act</th>
+            
+            
+            <td>Tools</td>
+            
+            <td>A <strong>program</strong> around the model</td>
+            
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="deck-footer">From Counting Words to Agents · 50/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">06</div>
+    <h1>From the assistant to the agent</h1>
+    <p class="sub">The loop · the harness · the plug</p>
+    <div class="deck-footer">From Counting Words to Agents · 51/66</div>
+  </div>
+
+</section>
+      
+      
+<section>
+  <div class="slide l-citacao">
+    <div class="kicker">How we mostly use them — zero-shot</div>
+    <blockquote class="cit-texto">This is akin to asking someone to compose an essay from start to finish, typing straight through with no backspacing allowed, and expecting a high-quality result.</blockquote>
+    <div class="cit-autor">Andrew Ng</div>
+    <div class="cit-fonte">The Batch, 20 March 2024</div>
+    <div class="deck-footer">From Counting Words to Agents · 52/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Ng reports — HumanEval, coding</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li class="fragment">
+        GPT-3.5, one pass: 48.1 %
+        
+      </li>
+      
+      <li class="fragment">
+        GPT-4, one pass: 67.0 %
+        
+      </li>
+      
+      <li class="fragment">
+        GPT-3.5 in an agent loop: up to 95.1 %<span class="nota">the loop was worth more than the next model</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">From Counting Words to Agents · 53/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-citacao">
+    <div class="kicker">Workflow, agent</div>
+    <blockquote class="cit-texto">Workflows are systems where LLMs and tools are orchestrated through predefined code paths. Agents, on the other hand, are systems where LLMs dynamically direct their own processes and tool usage, maintaining control over how they accomplish tasks.</blockquote>
+    <div class="cit-autor">Anthropic</div>
+    <div class="cit-fonte">Building effective agents (Dec 2024)</div>
+    <div class="deck-footer">From Counting Words to Agents · 54/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>The loop</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="A goal from a human enters the model, which produces a thought, what next. An arrow labelled action goes to a tool — search, database, code — and an arrow labelled observation returns the result into the window. From the model a second arrow leads to done, then to ask the human. Top right, workflow, the path is written in code; agent, the model chooses the next step; stop when the goal is met, at a checkpoint, or at a maximum number of turns. Caption, thought, action, observation, repeated, ReAct 2023.">
+      <!-- D10: goal → thought → action (tool) → observation → repeat → done / ask the human. After Anthropic (2024) and ReAct Fig. 1. -->
+<svg viewBox="0 0 820 400" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="seta-agl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="dg-seta-cabeca" d="M 0 0 L 10 5 L 0 10 z"/></marker></defs>
+  <rect class="dg-forma" x="20" y="170" width="120" height="60" rx="8" stroke-width="1.8"/>
+  <text class="dg-rotulo" x="80" y="196" font-size="16" text-anchor="middle">a goal</text>
+  <text class="dg-menor" x="80" y="216" font-size="12" text-anchor="middle">from a human</text>
+  <path class="dg-seta" d="M 142 200 L 196 200" stroke-width="1.8" marker-end="url(#seta-agl)"/>
+  <rect class="dg-linha-2" x="202" y="150" width="150" height="100" rx="10" stroke-width="2.4"/>
+  <text class="dg-rotulo" x="277" y="190" font-size="17" text-anchor="middle">model</text>
+  <text class="dg-menor" x="277" y="212" font-size="13" text-anchor="middle">thought:</text>
+  <text class="dg-menor" x="277" y="228" font-size="13" text-anchor="middle">"what next?"</text>
+  <path class="dg-seta" d="M 354 180 L 446 180" stroke-width="1.8" marker-end="url(#seta-agl)"/>
+  <text class="dg-menor" x="405" y="170" font-size="13" text-anchor="middle">action</text>
+  <rect class="dg-forma" x="452" y="150" width="160" height="60" rx="8" stroke-width="1.8"/>
+  <text class="dg-rotulo" x="532" y="176" font-size="16" text-anchor="middle">a tool</text>
+  <text class="dg-menor" x="532" y="196" font-size="12" text-anchor="middle">search · database · code</text>
+  <path class="dg-seta" d="M 532 235 L 360 235" stroke-width="1.8" marker-end="url(#seta-agl)"/>
+  <path class="dg-eixo" d="M 532 212 L 532 235" stroke-width="1.8"/>
+  <text class="dg-menor" x="480" y="274" font-size="13" text-anchor="middle">observation — the result, pasted into the window</text>
+  <path class="dg-seta" d="M 277 252 L 277 300 Q 277 312 289 312 L 460 312" stroke-width="1.8" marker-end="url(#seta-agl)"/>
+  <rect class="dg-forma" x="466" y="290" width="110" height="44" rx="8" stroke-width="1.8"/>
+  <text class="dg-rotulo" x="521" y="317" font-size="15" text-anchor="middle">done</text>
+  <path class="dg-seta" d="M 578 312 L 636 312" stroke-width="1.8" marker-end="url(#seta-agl)"/>
+  <rect class="dg-forma" x="642" y="290" width="150" height="44" rx="8" stroke-width="1.8"/>
+  <text class="dg-rotulo" x="717" y="317" font-size="15" text-anchor="middle">ask the human</text>
+  <text class="dg-menor" x="640" y="80" font-size="14" text-anchor="end">workflow: the path is written in code</text>
+  <text class="dg-rotulo" x="640" y="104" font-size="14" text-anchor="end">agent: the model chooses the next step</text>
+  <text class="dg-menor" x="640" y="128" font-size="13" text-anchor="end">stop: goal met · a checkpoint · a maximum number of turns</text>
+  <text class="dg-menor" x="410" y="380" font-size="14" text-anchor="middle">thought → action → observation, repeated (ReAct, 2023)</text>
+</svg>
+    </figure>
+    <figcaption class="dg-legenda">Thought → action → observation, repeated. Action is how the model touches reality.</figcaption>
+    <div class="fonte">After Anthropic (2024) and Yao et al. (2023), Fig. 1</div>
+    <div class="deck-footer">From Counting Words to Agents · 55/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>One task, several steps — live</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        <em>Find today's BRL/USD exchange rate on three different sites, show each value with its source, and give me the average. Show your steps.</em>
+      </li>
+      
+      <li>
+        Claude · remote · web search on
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">From Counting Words to Agents · 56/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>The harness — everything written around the model</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="A dashed box labelled the harness containing the model at the centre and four boxes pointing at it — system prompt, who it is and what it must do; tools, what it can touch; memory, a progress file and the history; checks, tests, limits, a human. Inside the box, the loop lives here, not in the model. Outside, a small box labelled MCP connected to the tools, the plug to company systems. Caption, same model, different harness, different agent.">
+      <!-- D11: the harness — everything written around the model — with the MCP plug on the side. After Anthropic (2025). -->
+<svg viewBox="0 0 820 400" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="seta-hrn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="dg-seta-cabeca" d="M 0 0 L 10 5 L 0 10 z"/></marker></defs>
+  <rect class="dg-forma" x="120" y="40" width="580" height="290" rx="12" stroke-width="2" stroke-dasharray="9 7"/>
+  <text class="dg-titulo" x="410" y="70" font-size="19" text-anchor="middle">the harness</text>
+  <rect class="dg-linha-2" x="350" y="150" width="120" height="70" rx="10" stroke-width="2.6"/>
+  <text class="dg-rotulo" x="410" y="191" font-size="17" text-anchor="middle">model</text>
+  <g stroke-width="1.6">
+    <rect class="dg-forma" x="150" y="100" width="160" height="50" rx="8"/>
+    <rect class="dg-forma" x="510" y="100" width="160" height="50" rx="8"/>
+    <rect class="dg-forma" x="150" y="230" width="160" height="50" rx="8"/>
+    <rect class="dg-forma" x="510" y="230" width="160" height="50" rx="8"/>
+  </g>
+  <g font-size="15" text-anchor="middle">
+    <text class="dg-rotulo" x="230" y="122">system prompt</text><text class="dg-menor" x="230" y="140" font-size="12">who it is, what it must do</text>
+    <text class="dg-rotulo" x="590" y="122">tools</text><text class="dg-menor" x="590" y="140" font-size="12">what it can touch</text>
+    <text class="dg-rotulo" x="230" y="252">memory</text><text class="dg-menor" x="230" y="270" font-size="12">a progress file · the history</text>
+    <text class="dg-rotulo" x="590" y="252">checks</text><text class="dg-menor" x="590" y="270" font-size="12">tests · limits · a human</text>
+  </g>
+  <path class="dg-seta" d="M 310 125 L 348 160" stroke-width="1.5" marker-end="url(#seta-hrn)"/>
+  <path class="dg-seta" d="M 510 125 L 472 160" stroke-width="1.5" marker-end="url(#seta-hrn)"/>
+  <path class="dg-seta" d="M 310 255 L 348 212" stroke-width="1.5" marker-end="url(#seta-hrn)"/>
+  <path class="dg-seta" d="M 510 255 L 472 212" stroke-width="1.5" marker-end="url(#seta-hrn)"/>
+  <text class="dg-menor" x="410" y="310" font-size="14" text-anchor="middle">the loop lives here, not in the model</text>
+  <rect class="dg-forma" x="720" y="165" width="80" height="40" rx="6" stroke-width="1.8"/>
+  <text class="dg-rotulo" x="760" y="190" font-size="15" text-anchor="middle">MCP</text>
+  <path class="dg-eixo" d="M 672 185 L 720 185" stroke-width="2"/>
+  <text class="dg-menor" x="760" y="230" font-size="12" text-anchor="middle">the plug</text>
+  <text class="dg-menor" x="760" y="246" font-size="12" text-anchor="middle">to company</text>
+  <text class="dg-menor" x="760" y="262" font-size="12" text-anchor="middle">systems</text>
+  <text class="dg-menor" x="410" y="370" font-size="15" text-anchor="middle">same model · different harness → different "agent"</text>
+</svg>
+    </figure>
+    <figcaption class="dg-legenda">The model is hired. The harness is the job description, the tools, the handover notes and the QA checklist.</figcaption>
+    <div class="fonte">After Anthropic, Effective harnesses for long-running agents (Nov 2025)</div>
+    <div class="deck-footer">From Counting Words to Agents · 57/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-citacao">
+    <div class="kicker">Why the window makes this a management problem</div>
+    <blockquote class="cit-texto">Imagine a software project staffed by engineers working in shifts, where each new engineer arrives with no memory of what happened on the previous shift.</blockquote>
+    <div class="cit-autor">Anthropic</div>
+    <div class="cit-fonte">Effective harnesses for long-running agents (Nov 2025), introduction</div>
+    <div class="deck-footer">From Counting Words to Agents · 58/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>What went wrong, and what fixed it</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li class="fragment">
+        Tried to do everything at once — ran out of window mid-task
+        
+      </li>
+      
+      <li class="fragment">
+        Looked around, saw progress, declared the job done
+        
+      </li>
+      
+      <li class="fragment">
+        Marked work complete without testing it
+        
+      </li>
+      
+      <li class="fragment">
+        Fix: a progress file and the history<span class="nota">"what effective software engineers do every day"</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">From Counting Words to Agents · 59/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-destaque">
+    <div class="frase">Who wrote the <span class="accent">harness</span> of the assistant you used this week?</div>
+    
+    <div class="deck-footer">From Counting Words to Agents · 60/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-citacao">
+    <div class="kicker">The plug — MCP</div>
+    <blockquote class="cit-texto">Every new data source requires its own custom implementation, making truly connected systems difficult to scale. MCP addresses this challenge. It provides a universal, open standard for connecting AI systems with data sources, replacing fragmented integrations with a single protocol.</blockquote>
+    <div class="cit-autor">Anthropic</div>
+    <div class="cit-fonte">Introducing the Model Context Protocol (25 Nov 2024)</div>
+    <div class="deck-footer">From Counting Words to Agents · 61/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>Host, client, server</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="On the left a highlighted box, host, the AI application, model plus harness, containing clients. Three arrows labelled one protocol go to three server boxes — for the CRM, for the database, for the file share. Each server connects to a dashed box, what a server offers — tools, actions such as a query or an API call; resources, data such as a record, a file, a schema; prompts, templates for how to ask — with the company&#39;s systems behind. Caption, MCP carries context; it does not decide what to do with it.">
+      <!-- D12: MCP — host ▸ clients ▸ servers ▸ (tools · resources · prompts) ▸ company systems. After the MCP architecture docs. -->
+<svg viewBox="0 0 820 400" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="seta-mcp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="dg-seta-cabeca" d="M 0 0 L 10 5 L 0 10 z"/></marker></defs>
+  <rect class="dg-linha-2" x="40" y="130" width="200" height="140" rx="10" stroke-width="2.4"/>
+  <text class="dg-rotulo" x="140" y="165" font-size="17" text-anchor="middle">host</text>
+  <text class="dg-menor" x="140" y="186" font-size="13" text-anchor="middle">the AI application</text>
+  <text class="dg-menor" x="140" y="203" font-size="13" text-anchor="middle">(model + harness)</text>
+  <rect class="dg-forma" x="70" y="220" width="140" height="34" rx="6" stroke-width="1.4"/>
+  <text class="dg-menor" x="140" y="242" font-size="13" text-anchor="middle">client · client · client</text>
+  <g stroke-width="1.8">
+    <path class="dg-seta" d="M 242 170 L 330 90" marker-end="url(#seta-mcp)"/>
+    <path class="dg-seta" d="M 242 200 L 330 200" marker-end="url(#seta-mcp)"/>
+    <path class="dg-seta" d="M 242 230 L 330 310" marker-end="url(#seta-mcp)"/>
+  </g>
+  <text class="dg-menor" x="286" y="150" font-size="12" text-anchor="middle">one protocol</text>
+  <g stroke-width="1.8">
+    <rect class="dg-forma" x="336" y="60" width="170" height="60" rx="8"/>
+    <rect class="dg-forma" x="336" y="170" width="170" height="60" rx="8"/>
+    <rect class="dg-forma" x="336" y="280" width="170" height="60" rx="8"/>
+  </g>
+  <g font-size="15" text-anchor="middle">
+    <text class="dg-rotulo" x="421" y="85">server</text><text class="dg-menor" x="421" y="105" font-size="12">for the CRM</text>
+    <text class="dg-rotulo" x="421" y="195">server</text><text class="dg-menor" x="421" y="215" font-size="12">for the database</text>
+    <text class="dg-rotulo" x="421" y="305">server</text><text class="dg-menor" x="421" y="325" font-size="12">for the file share</text>
+  </g>
+  <g stroke-width="1.5">
+    <path class="dg-eixo" d="M 508 90 L 560 90"/>
+    <path class="dg-eixo" d="M 508 200 L 560 200"/>
+    <path class="dg-eixo" d="M 508 310 L 560 310"/>
+  </g>
+  <rect class="dg-forma" x="562" y="60" width="230" height="280" rx="10" stroke-width="1.5" stroke-dasharray="7 6"/>
+  <text class="dg-menor" x="677" y="88" font-size="13" text-anchor="middle">what a server offers</text>
+  <text class="dg-rotulo" x="590" y="130" font-size="15">tools</text><text class="dg-menor" x="590" y="148" font-size="12">actions — a query, an API call</text>
+  <text class="dg-rotulo" x="590" y="195" font-size="15">resources</text><text class="dg-menor" x="590" y="213" font-size="12">data — a record, a file, a schema</text>
+  <text class="dg-rotulo" x="590" y="260" font-size="15">prompts</text><text class="dg-menor" x="590" y="278" font-size="12">templates — how to ask</text>
+  <text class="dg-menor" x="677" y="322" font-size="12" text-anchor="middle">the company's systems sit behind</text>
+  <text class="dg-menor" x="410" y="380" font-size="14" text-anchor="middle">MCP carries context; it does not decide what to do with it</text>
+</svg>
+    </figure>
+    <figcaption class="dg-legenda">A server offers tools, resources and prompts. MCP carries context — it does not decide what to do with it.</figcaption>
+    <div class="fonte">Model Context Protocol, Architecture overview (docs, protocol version 2026-07-28)</div>
+    <div class="deck-footer">From Counting Words to Agents · 62/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>The cautions — from the people selling it</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li class="fragment">
+        "This might mean not building agentic systems at all"
+        
+      </li>
+      
+      <li class="fragment">
+        "higher costs, and the potential for compounding errors"<span class="nota">sandboxed testing · guardrails</span>
+        
+      </li>
+      
+      <li class="fragment">
+        "human review remains crucial"
+        
+      </li>
+      
+      <li class="fragment">
+        Where agents pay: success criteria · feedback loops · human oversight
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">From Counting Words to Agents · 63/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>One idea, four machines</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="The ladder from the opening, now labelled from the bottom — count; position; position in context; predict the next token, fed back, this last rung highlighted. Beside the rungs, n-grams and bag of words; embeddings 2013; attention 2017; large language models.">
+      <!-- The ladder of the session: four rungs, one idea (text → numbers). Two files: labels hidden at the opening, shown at the close. -->
+<svg viewBox="0 0 820 380" xmlns="http://www.w3.org/2000/svg">
+  <line class="dg-eixo" x1="250" y1="40" x2="250" y2="350" stroke-width="3"/>
+  <line class="dg-eixo" x1="570" y1="40" x2="570" y2="350" stroke-width="3"/>
+  <g>
+    <line class="dg-forma" x1="250" y1="320" x2="570" y2="320" stroke-width="3"/>
+    <text class="dg-menor" x="230" y="326" font-size="15" text-anchor="end">1</text>
+    <text class="dg-titulo" x="410" y="308" font-size="20" text-anchor="middle">count</text>
+    <text class="dg-menor" x="600" y="326" font-size="15">n-grams · bag of words</text>
+  </g>
+  <g>
+    <line class="dg-forma" x1="250" y1="235" x2="570" y2="235" stroke-width="3"/>
+    <text class="dg-menor" x="230" y="241" font-size="15" text-anchor="end">2</text>
+    <text class="dg-titulo" x="410" y="223" font-size="20" text-anchor="middle">position</text>
+    <text class="dg-menor" x="600" y="241" font-size="15">embeddings · 2013</text>
+  </g>
+  <g>
+    <line class="dg-forma" x1="250" y1="150" x2="570" y2="150" stroke-width="3"/>
+    <text class="dg-menor" x="230" y="156" font-size="15" text-anchor="end">3</text>
+    <text class="dg-titulo" x="410" y="138" font-size="20" text-anchor="middle">position in context</text>
+    <text class="dg-menor" x="600" y="156" font-size="15">attention · 2017</text>
+  </g>
+  <g>
+    <line class="dg-linha-2" x1="250" y1="65" x2="570" y2="65" stroke-width="4"/>
+    <text class="dg-menor" x="230" y="71" font-size="15" text-anchor="end">4</text>
+    <text class="dg-titulo" x="410" y="53" font-size="20" text-anchor="middle">predict the next token, fed back</text>
+    <text class="dg-menor" x="600" y="71" font-size="15">large language models</text>
+  </g>
+  <text class="dg-menor" x="410" y="365" font-size="15" text-anchor="middle">every rung: a different way of turning text into numbers</text>
+</svg>
+    </figure>
+    <figcaption class="dg-legenda">Count → position → position in context → predict the next token, fed back. The target changed; the machine grew.</figcaption>
+    
+    <div class="deck-footer">From Counting Words to Agents · 64/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-destaque">
+    <div class="frase">1966 → 2022. The machine changed. <span class="accent">The instinct did not.</span></div>
+    
+    <div class="deck-footer">From Counting Words to Agents · 65/66</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Next session</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Strategy and decision-making
+        
+      </li>
+      
+      <li>
+        Csaszar et al. (2026), <em>Strategy Science</em> 11(1) — Seminar 1, Group 1<span class="nota">reading on the class page</span>
+        
+      </li>
+      
+      <li>
+        A: Friday 28/08 · C: Wednesday 02/09
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">From Counting Words to Agents · 66/66</div>
+  </div>
+
+</section>
+      
+    </div>
+  </div>
+
+  <script>
+    // ---- Notas do apresentador em corpo grande (tecla S) ----
+    // A speaker view é uma janela que o plugin de notas escreve do zero, e lá as
+    // notas saem em ~22px (menos ainda em tela estreita) — não se lê a um braço
+    // de distância. Como o HTML dela nasce dentro do notes.js, o único
+    // ponto de entrada é a chamada de window.open: guardamos a referência da
+    // janela e injetamos o CSS nela. Fica aqui, e não no vendor, para sobreviver
+    // a uma atualização do reveal.
+    (function () {
+      const CORPO = '30px';   // corpo das notas (o padrão do plugin dá ~22px)
+      const abrir = window.open;
+      window.open = function (url, nome, opcoes) {
+        const janela = abrir.call(window, url, nome, opcoes);
+        if (!janela || nome !== 'reveal.js - Notes') return janela;
+        const css = `
+          .speaker-controls-notes .value {
+            font-size: ${CORPO} !important;
+            line-height: 1.5 !important;
+          }`;
+        // document.write() do plugin descarta o <head> anterior, então tentamos
+        // de novo por alguns segundos até o estilo ficar de pé.
+        const injetar = () => {
+          try {
+            const doc = janela.document;
+            if (!doc || !doc.head || doc.getElementById('notas-grandes')) return;
+            const tag = doc.createElement('style');
+            tag.id = 'notas-grandes';
+            tag.textContent = css;
+            doc.head.appendChild(tag);
+          } catch (e) { /* janela ainda carregando */ }
+        };
+        const tentativas = setInterval(injetar, 150);
+        setTimeout(() => clearInterval(tentativas), 15000);
+        return janela;
+      };
+    })();
+  </script>
+
+  <script src="../../../../vendor/reveal/dist/reveal.js"></script>
+  <script src="../../../../vendor/reveal/plugin/highlight/highlight.js"></script>
+  <script src="../../../../vendor/reveal/plugin/zoom/zoom.js"></script>
+  <script src="../../../../vendor/chartjs/chart.umd.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: false,   // a página aparece no rodapé do slide (ver .deck-footer)
+      transition: 'slide',
+      transitionSpeed: 'default',
+      controls: true,
+      progress: true,
+      center: false,
+      pdfSeparateFragments: false,
+      width: 1280, height: 720,
+      margin: 0.0,
+      plugins: [ RevealHighlight, RevealZoom ]
+    });
+
+    // ---- Renderização dos gráficos Chart.js ----
+    // getComputedStyle é "vivo": ler as cores DENTRO do montarGrafico faz o
+    // gráfico seguir o tema atual (importa ao alternar claro/escuro).
+    const V = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+    const TIPOS = { barra: 'bar', linha: 'line', rosca: 'doughnut', pizza: 'pie', area: 'line' };
+    function montarGrafico(canvas) {
+      const SERIES = [1,2,3,4,5,6,7,8].map(i => V('--series-'+i));
+      Chart.defaults.font.family = V('--font-sans') || 'system-ui, sans-serif';
+      Chart.defaults.color = V('--chart-ink-2');
+      Chart.defaults.borderColor = V('--chart-grid');
+
+      const cfg = JSON.parse(canvas.dataset.chart);
+      const tipo = TIPOS[cfg.tipo] || cfg.tipo;   // aceita nomes PT ou os do Chart.js
+      const circular = ['doughnut','pie','polarArea'].includes(tipo);
+      const ehArea = cfg.tipo === 'area';
+      const datasets = (cfg.series || []).map((s, i) => ({
+        label: s.nome,
+        data: s.dados,
+        backgroundColor: circular ? (cfg.series[0].dados.map((_, k) => SERIES[k % 8]))
+                                   : (ehArea ? SERIES[i % 8] + '33' : SERIES[i % 8]),
+        borderColor: SERIES[i % 8],
+        borderWidth: tipo === 'line' ? 2.4 : 0,
+        borderRadius: tipo === 'bar' ? 4 : 0,
+        pointRadius: tipo === 'line' ? 3 : 0,
+        tension: 0.25, fill: ehArea
+      }));
+      // Série única não tem legenda (seria uma caixinha só) — então o nome da
+      // série, que é onde mora a unidade, vira o rótulo do eixo Y. Sem isso o
+      // gráfico mostra números sem unidade.
+      const legenda = (cfg.series && cfg.series.length > 1) || circular;
+      const rotuloY = (!legenda && !circular && datasets.length === 1) ? datasets[0].label : '';
+      new Chart(canvas, {
+        type: tipo,
+        data: { labels: cfg.labels, datasets },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          animation: false,
+          plugins: {
+            legend: {
+              display: legenda,
+              position: 'bottom',
+              labels: { boxWidth: 12, boxHeight: 12, usePointStyle: true, padding: 16,
+                        color: V('--chart-ink-2'), font: { size: 15 } }
+            },
+            tooltip: { enabled: true }
+          },
+          scales: circular ? {} : {
+            x: { grid: { display: false }, border: { color: V('--chart-axis') },
+                 ticks: { color: V('--chart-muted'), font: { size: 14 } } },
+            y: { grid: { color: V('--chart-grid') }, border: { display: false },
+                 ticks: { color: V('--chart-muted'), font: { size: 14 } },
+                 title: { display: !!rotuloY, text: rotuloY,
+                          color: V('--chart-ink-2'), font: { size: 15 } },
+                 beginAtZero: true }
+          }
+        }
+      });
+    }
+    // Renderiza os gráficos do slide atual (evita medir canvas escondido = 0px)
+    function renderVisiveis() {
+      document.querySelectorAll('section.present canvas[data-chart]').forEach(c => {
+        if (!c.dataset.pronto) { c.dataset.pronto = '1'; montarGrafico(c); }
+      });
+    }
+    function renderTodos() {
+      document.querySelectorAll('canvas[data-chart]').forEach(c => {
+        if (!c.dataset.pronto) { c.dataset.pronto = '1'; montarGrafico(c); }
+      });
+    }
+    const modoPDF = window.location.search.includes('print-pdf');
+    if (modoPDF) {
+      // No modo PDF todos os slides ficam visíveis: renderiza tudo.
+      Reveal.on('ready', () => setTimeout(renderTodos, 200));
+    } else {
+      Reveal.on('ready', renderVisiveis);
+      Reveal.on('slidechanged', renderVisiveis);
+    }
+    window.__renderTodos = renderTodos;
+    // Redesenha os gráficos com as cores do tema atual (ao alternar claro/escuro).
+    window.__reRenderGraficos = function () {
+      document.querySelectorAll('canvas[data-chart]').forEach(c => {
+        const ex = Chart.getChart(c); if (ex) ex.destroy(); delete c.dataset.pronto;
+      });
+      (modoPDF ? renderTodos : renderVisiveis)();
+    };
+  </script>
+
+  <script>
+    // ---- Toggle de tema (o ícone sol/lua é trocado por CSS via [data-theme]) ----
+    (function () {
+      const root = document.documentElement;
+      const btn = document.querySelector('.tema-toggle');
+      function aplicar(modo) {
+        root.setAttribute('data-theme', modo);
+        try { localStorage.setItem('gs-tema', modo); } catch (e) {}
+        if (window.__reRenderGraficos) window.__reRenderGraficos();
+      }
+      btn.addEventListener('click', () =>
+        aplicar(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+    })();
+  </script>
+  
+  <script>
+  (function () {
+    var root = document.documentElement;
+    // revela os botões do topo quando o mouse está na faixa de cima
+    window.addEventListener('mousemove', function (e) {
+      root.classList.toggle('mostrar-topo', e.clientY < 80);
+    });
+    var link = document.querySelector('.btn-voltar');
+    if (!link) return;
+    // origem explícita passada pelo plano (?de=): só caminho relativo seguro
+    try {
+      var de = new URLSearchParams(location.search).get('de');
+      if (de && !/^[a-z][a-z0-9+.-]*:/i.test(de) && de[0] !== '/') link.setAttribute('href', de);
+    } catch (e) {}
+    // se você veio de outra página do site, volta pra ELA via histórico
+    link.addEventListener('click', function (ev) {
+      try {
+        if (document.referrer &&
+            new URL(document.referrer).origin === location.origin &&
+            history.length > 1) {
+          ev.preventDefault();
+          history.back();
+        }
+      } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>

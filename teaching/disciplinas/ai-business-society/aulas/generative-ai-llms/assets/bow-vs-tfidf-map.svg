@@ -1,0 +1,25 @@
+<!-- D15: where the three emails land — bag of words piles them up, TF-IDF pulls them apart. After ia-advocacia slide 9. Positions illustrative. -->
+<svg viewBox="0 0 820 380" xmlns="http://www.w3.org/2000/svg">
+  <rect class="dg-forma" x="30" y="50" width="360" height="270" rx="8" stroke-width="1.2"/>
+  <text class="dg-titulo" x="210" y="82" font-size="17" text-anchor="middle">bag of words</text>
+  <line class="dg-eixo" x1="60" y1="265" x2="360" y2="265" stroke-width="1"/>
+  <line class="dg-eixo" x1="60" y1="265" x2="60" y2="100" stroke-width="1"/>
+  <circle class="dg-ponto" cx="212" cy="196" r="8"/>
+  <circle class="dg-ponto" cx="226" cy="204" r="8"/>
+  <circle class="dg-ponto" cx="204" cy="210" r="8"/>
+  <text class="dg-menor" x="245" y="192" font-size="14">1 · flight</text>
+  <text class="dg-menor" x="245" y="212" font-size="14">2 · hotel</text>
+  <text class="dg-menor" x="245" y="232" font-size="14">3 · insurance</text>
+  <text class="dg-menor" x="210" y="298" font-size="14" text-anchor="middle">ten words in common → nearly the same point</text>
+
+  <rect class="dg-forma" x="430" y="50" width="360" height="270" rx="8" stroke-width="1.2"/>
+  <text class="dg-titulo" x="610" y="82" font-size="17" text-anchor="middle">TF-IDF</text>
+  <line class="dg-eixo" x1="460" y1="265" x2="760" y2="265" stroke-width="1"/>
+  <line class="dg-eixo" x1="460" y1="265" x2="460" y2="100" stroke-width="1"/>
+  <circle class="dg-ponto-2" cx="520" cy="130" r="8"/><text class="dg-rotulo" x="540" y="135" font-size="15">1 · flight</text>
+  <circle class="dg-ponto-2" cx="730" cy="170" r="8"/><text class="dg-rotulo" x="650" y="160" font-size="15">2 · hotel</text>
+  <circle class="dg-ponto-2" cx="600" cy="235" r="8"/><text class="dg-rotulo" x="620" y="240" font-size="15">3 · insurance</text>
+  <text class="dg-menor" x="610" y="298" font-size="14" text-anchor="middle">shared words weigh ≈ 0 → three words decide</text>
+
+  <text class="dg-menor" x="410" y="355" font-size="15" text-anchor="middle">"we regret to inform you that your order … was cancelled" is in all three — TF-IDF makes it vanish</text>
+</svg>

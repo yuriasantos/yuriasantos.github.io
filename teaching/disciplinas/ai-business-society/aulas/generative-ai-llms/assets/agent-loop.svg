@@ -1,0 +1,30 @@
+<!-- D10: goal → thought → action (tool) → observation → repeat → done / ask the human. After Anthropic (2024) and ReAct Fig. 1. -->
+<svg viewBox="0 0 820 400" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="seta-agl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="dg-seta-cabeca" d="M 0 0 L 10 5 L 0 10 z"/></marker></defs>
+  <rect class="dg-forma" x="20" y="170" width="120" height="60" rx="8" stroke-width="1.8"/>
+  <text class="dg-rotulo" x="80" y="196" font-size="16" text-anchor="middle">a goal</text>
+  <text class="dg-menor" x="80" y="216" font-size="12" text-anchor="middle">from a human</text>
+  <path class="dg-seta" d="M 142 200 L 196 200" stroke-width="1.8" marker-end="url(#seta-agl)"/>
+  <rect class="dg-linha-2" x="202" y="150" width="150" height="100" rx="10" stroke-width="2.4"/>
+  <text class="dg-rotulo" x="277" y="190" font-size="17" text-anchor="middle">model</text>
+  <text class="dg-menor" x="277" y="212" font-size="13" text-anchor="middle">thought:</text>
+  <text class="dg-menor" x="277" y="228" font-size="13" text-anchor="middle">"what next?"</text>
+  <path class="dg-seta" d="M 354 180 L 446 180" stroke-width="1.8" marker-end="url(#seta-agl)"/>
+  <text class="dg-menor" x="405" y="170" font-size="13" text-anchor="middle">action</text>
+  <rect class="dg-forma" x="452" y="150" width="160" height="60" rx="8" stroke-width="1.8"/>
+  <text class="dg-rotulo" x="532" y="176" font-size="16" text-anchor="middle">a tool</text>
+  <text class="dg-menor" x="532" y="196" font-size="12" text-anchor="middle">search · database · code</text>
+  <path class="dg-seta" d="M 532 235 L 360 235" stroke-width="1.8" marker-end="url(#seta-agl)"/>
+  <path class="dg-eixo" d="M 532 212 L 532 235" stroke-width="1.8"/>
+  <text class="dg-menor" x="480" y="274" font-size="13" text-anchor="middle">observation — the result, pasted into the window</text>
+  <path class="dg-seta" d="M 277 252 L 277 300 Q 277 312 289 312 L 460 312" stroke-width="1.8" marker-end="url(#seta-agl)"/>
+  <rect class="dg-forma" x="466" y="290" width="110" height="44" rx="8" stroke-width="1.8"/>
+  <text class="dg-rotulo" x="521" y="317" font-size="15" text-anchor="middle">done</text>
+  <path class="dg-seta" d="M 578 312 L 636 312" stroke-width="1.8" marker-end="url(#seta-agl)"/>
+  <rect class="dg-forma" x="642" y="290" width="150" height="44" rx="8" stroke-width="1.8"/>
+  <text class="dg-rotulo" x="717" y="317" font-size="15" text-anchor="middle">ask the human</text>
+  <text class="dg-menor" x="640" y="80" font-size="14" text-anchor="end">workflow: the path is written in code</text>
+  <text class="dg-rotulo" x="640" y="104" font-size="14" text-anchor="end">agent: the model chooses the next step</text>
+  <text class="dg-menor" x="640" y="128" font-size="13" text-anchor="end">stop: goal met · a checkpoint · a maximum number of turns</text>
+  <text class="dg-menor" x="410" y="380" font-size="14" text-anchor="middle">thought → action → observation, repeated (ReAct, 2023)</text>
+</svg>

@@ -1,0 +1,32 @@
+<!-- D11: the harness — everything written around the model — with the MCP plug on the side. After Anthropic (2025). -->
+<svg viewBox="0 0 820 400" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="seta-hrn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="dg-seta-cabeca" d="M 0 0 L 10 5 L 0 10 z"/></marker></defs>
+  <rect class="dg-forma" x="120" y="40" width="580" height="290" rx="12" stroke-width="2" stroke-dasharray="9 7"/>
+  <text class="dg-titulo" x="410" y="70" font-size="19" text-anchor="middle">the harness</text>
+  <rect class="dg-linha-2" x="350" y="150" width="120" height="70" rx="10" stroke-width="2.6"/>
+  <text class="dg-rotulo" x="410" y="191" font-size="17" text-anchor="middle">model</text>
+  <g stroke-width="1.6">
+    <rect class="dg-forma" x="150" y="100" width="160" height="50" rx="8"/>
+    <rect class="dg-forma" x="510" y="100" width="160" height="50" rx="8"/>
+    <rect class="dg-forma" x="150" y="230" width="160" height="50" rx="8"/>
+    <rect class="dg-forma" x="510" y="230" width="160" height="50" rx="8"/>
+  </g>
+  <g font-size="15" text-anchor="middle">
+    <text class="dg-rotulo" x="230" y="122">system prompt</text><text class="dg-menor" x="230" y="140" font-size="12">who it is, what it must do</text>
+    <text class="dg-rotulo" x="590" y="122">tools</text><text class="dg-menor" x="590" y="140" font-size="12">what it can touch</text>
+    <text class="dg-rotulo" x="230" y="252">memory</text><text class="dg-menor" x="230" y="270" font-size="12">a progress file · the history</text>
+    <text class="dg-rotulo" x="590" y="252">checks</text><text class="dg-menor" x="590" y="270" font-size="12">tests · limits · a human</text>
+  </g>
+  <path class="dg-seta" d="M 310 125 L 348 160" stroke-width="1.5" marker-end="url(#seta-hrn)"/>
+  <path class="dg-seta" d="M 510 125 L 472 160" stroke-width="1.5" marker-end="url(#seta-hrn)"/>
+  <path class="dg-seta" d="M 310 255 L 348 212" stroke-width="1.5" marker-end="url(#seta-hrn)"/>
+  <path class="dg-seta" d="M 510 255 L 472 212" stroke-width="1.5" marker-end="url(#seta-hrn)"/>
+  <text class="dg-menor" x="410" y="310" font-size="14" text-anchor="middle">the loop lives here, not in the model</text>
+  <rect class="dg-forma" x="720" y="165" width="80" height="40" rx="6" stroke-width="1.8"/>
+  <text class="dg-rotulo" x="760" y="190" font-size="15" text-anchor="middle">MCP</text>
+  <path class="dg-eixo" d="M 672 185 L 720 185" stroke-width="2"/>
+  <text class="dg-menor" x="760" y="230" font-size="12" text-anchor="middle">the plug</text>
+  <text class="dg-menor" x="760" y="246" font-size="12" text-anchor="middle">to company</text>
+  <text class="dg-menor" x="760" y="262" font-size="12" text-anchor="middle">systems</text>
+  <text class="dg-menor" x="410" y="370" font-size="15" text-anchor="middle">same model · different harness → different "agent"</text>
+</svg>

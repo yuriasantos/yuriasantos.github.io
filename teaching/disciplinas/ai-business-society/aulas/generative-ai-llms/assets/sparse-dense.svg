@@ -1,0 +1,21 @@
+<!-- D4: a long, mostly-zero count vector vs. a short dense embedding. -->
+<svg viewBox="0 0 820 380" xmlns="http://www.w3.org/2000/svg">
+  <text class="dg-titulo" x="30" y="45" font-size="19">sparse — one position per word in the vocabulary</text>
+  <g stroke-width="1.2">
+    <rect class="dg-forma" x="30" y="70" width="760" height="40" rx="5"/>
+  </g>
+  <g font-size="14" font-family="monospace" class="dg-menor">
+    <text x="45" y="96">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</text>
+  </g>
+  <g font-size="16" font-family="monospace" font-weight="700">
+    <text class="dg-ponto" x="196" y="97">1</text>
+    <text class="dg-ponto" x="566" y="97">1</text>
+  </g>
+  <text class="dg-menor" x="30" y="140" font-size="15">10,000 – 50,000 positions · almost all zero · <tspan font-style="italic">car</tspan> and <tspan font-style="italic">automobile</tspan> are unrelated positions</text>
+  <line class="dg-traco" x1="30" y1="170" x2="790" y2="170" stroke-width="1"/>
+  <text class="dg-titulo" x="30" y="210" font-size="19">dense — an embedding</text>
+  <rect class="dg-linha-2" x="30" y="235" width="420" height="40" rx="5" stroke-width="2.4"/>
+  <text class="dg-rotulo" x="240" y="262" font-size="16" text-anchor="middle" font-family="monospace">0.23 −0.41 0.87 0.12 −0.05 0.66 … −0.33</text>
+  <text class="dg-menor" x="30" y="305" font-size="15">50 – 1,000 numbers · no label on any position · learned from the neighbours</text>
+  <text class="dg-menor" x="30" y="345" font-size="15">"dense vectors work better in every NLP task than sparse vectors" — J&amp;M</text>
+</svg>

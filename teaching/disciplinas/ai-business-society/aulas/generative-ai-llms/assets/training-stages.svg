@@ -1,0 +1,31 @@
+<!-- D8: the four stages that turn a text-continuer into an assistant. After J&M Fig. 1.7. -->
+<svg viewBox="0 0 820 380" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="seta-stg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="dg-seta-cabeca" d="M 0 0 L 10 5 L 0 10 z"/></marker></defs>
+  <g stroke-width="1.8">
+    <rect class="dg-linha-2" x="20" y="120" width="170" height="90" rx="8" stroke-width="2.4"/>
+    <rect class="dg-forma" x="220" y="120" width="170" height="90" rx="8"/>
+    <rect class="dg-forma" x="420" y="120" width="170" height="90" rx="8"/>
+    <rect class="dg-forma" x="620" y="120" width="180" height="90" rx="8"/>
+  </g>
+  <path class="dg-seta" d="M 192 165 L 214 165" stroke-width="1.8" marker-end="url(#seta-stg)"/>
+  <path class="dg-seta" d="M 392 165 L 414 165" stroke-width="1.8" marker-end="url(#seta-stg)"/>
+  <path class="dg-seta" d="M 592 165 L 614 165" stroke-width="1.8" marker-end="url(#seta-stg)"/>
+  <g font-size="14.5" text-anchor="middle">
+    <text class="dg-rotulo" x="105" y="155">1 · pretraining</text>
+    <text class="dg-rotulo" x="305" y="155">2 · instruction tuning</text>
+    <text class="dg-rotulo" x="505" y="155">3 · preference alignment</text>
+    <text class="dg-rotulo" x="710" y="155">4 · RL for reasoning</text>
+  </g>
+  <g font-size="13" text-anchor="middle" class="dg-menor">
+    <text x="105" y="185">predict the next word</text><text x="105" y="200">over web text</text>
+    <text x="305" y="185">instructions + responses</text><text x="305" y="200">(SFT)</text>
+    <text x="505" y="185">chosen vs. rejected</text><text x="505" y="200">answers (RLHF / DPO)</text>
+    <text x="710" y="185">verifiable rewards</text><text x="710" y="200">(the "thinking")</text>
+  </g>
+  <text class="dg-menor" x="105" y="250" font-size="15" text-anchor="middle">base model</text>
+  <text class="dg-menor" x="105" y="270" font-size="14" text-anchor="middle">continues text</text>
+  <text class="dg-menor" x="510" y="250" font-size="15" text-anchor="middle">the model you chat with</text>
+  <text class="dg-menor" x="510" y="270" font-size="14" text-anchor="middle">follows instructions</text>
+  <line class="dg-traco" x1="220" y1="235" x2="800" y2="235" stroke-width="1"/>
+  <text class="dg-rotulo" x="410" y="330" font-size="16" text-anchor="middle">every stage is still training to predict tokens — what changes is the text it is trained on</text>
+</svg>

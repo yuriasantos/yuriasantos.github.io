@@ -1,0 +1,22 @@
+<!-- D9: the product = the model + three rings of text in the window + one arrow out (tools). -->
+<svg viewBox="0 0 820 400" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="seta-ring" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="dg-seta-cabeca" d="M 0 0 L 10 5 L 0 10 z"/></marker></defs>
+  <circle class="dg-forma" cx="300" cy="200" r="186" stroke-width="1.5" stroke-dasharray="7 6"/>
+  <circle class="dg-forma" cx="300" cy="200" r="135" stroke-width="1.5"/>
+  <circle class="dg-forma" cx="300" cy="200" r="85" stroke-width="1.5"/>
+  <circle class="dg-linha-2" cx="300" cy="200" r="38" stroke-width="2.6"/>
+  <text class="dg-rotulo" x="300" y="206" font-size="16" text-anchor="middle">model</text>
+  <text class="dg-rotulo" x="300" y="137" font-size="15" text-anchor="middle">system prompt</text>
+  <text class="dg-menor" x="300" y="154" font-size="12" text-anchor="middle">role · task · format</text>
+  <text class="dg-rotulo" x="300" y="88" font-size="15" text-anchor="middle">examples · "show the steps"</text>
+  <text class="dg-menor" x="300" y="105" font-size="12" text-anchor="middle">few-shot · chain of thought</text>
+  <text class="dg-rotulo" x="300" y="49" font-size="14" text-anchor="middle">retrieved documents</text>
+  <text class="dg-menor" x="300" y="61" font-size="11" text-anchor="middle">search first, then paste</text>
+  <text class="dg-menor" x="300" y="399" font-size="13" text-anchor="middle">the window — everything the model sees at once</text>
+  <path class="dg-seta" d="M 345 200 L 560 200" stroke-width="2.2" marker-end="url(#seta-ring)"/>
+  <rect class="dg-forma" x="566" y="170" width="210" height="60" rx="8" stroke-width="1.8"/>
+  <text class="dg-rotulo" x="671" y="196" font-size="16" text-anchor="middle">tools</text>
+  <text class="dg-menor" x="671" y="216" font-size="13" text-anchor="middle">a program, not a prompt → next block</text>
+  <text class="dg-menor" x="671" y="290" font-size="14" text-anchor="middle">the three rings are the same thing:</text>
+  <text class="dg-menor" x="671" y="310" font-size="14" text-anchor="middle">more text in the window</text>
+</svg>

@@ -1,0 +1,21 @@
+<!-- D2: two sentences, one vocabulary, two count vectors — six of seven positions agree. -->
+<svg viewBox="0 0 820 380" xmlns="http://www.w3.org/2000/svg">
+  <text class="dg-titulo" x="30" y="40" font-size="19">A · "The customer is satisfied with the service"</text>
+  <text class="dg-titulo" x="30" y="72" font-size="19">B · "The customer is <tspan class="dg-ponto-2">not</tspan> satisfied with the service"</text>
+  <line class="dg-traco" x1="30" y1="95" x2="790" y2="95" stroke-width="1"/>
+  <text class="dg-menor" x="30" y="140" font-size="15">vocabulary</text>
+  <text class="dg-menor" x="30" y="205" font-size="15">A counts</text>
+  <text class="dg-menor" x="30" y="270" font-size="15">B counts</text>
+  <g font-size="16" text-anchor="middle">
+    <text class="dg-rotulo" x="200" y="140">the</text><text class="dg-rotulo" x="290" y="140">customer</text><text class="dg-rotulo" x="380" y="140">is</text><text class="dg-rotulo" x="470" y="140">satisfied</text><text class="dg-rotulo" x="560" y="140">with</text><text class="dg-rotulo" x="650" y="140">service</text><text class="dg-ponto-2" x="740" y="140">not</text>
+  </g>
+  <g stroke-width="1.8">
+    <rect class="dg-forma" x="175" y="180" width="50" height="36" rx="5"/><rect class="dg-forma" x="265" y="180" width="50" height="36" rx="5"/><rect class="dg-forma" x="355" y="180" width="50" height="36" rx="5"/><rect class="dg-forma" x="445" y="180" width="50" height="36" rx="5"/><rect class="dg-forma" x="535" y="180" width="50" height="36" rx="5"/><rect class="dg-forma" x="625" y="180" width="50" height="36" rx="5"/><rect class="dg-forma" x="715" y="180" width="50" height="36" rx="5"/>
+    <rect class="dg-forma" x="175" y="245" width="50" height="36" rx="5"/><rect class="dg-forma" x="265" y="245" width="50" height="36" rx="5"/><rect class="dg-forma" x="355" y="245" width="50" height="36" rx="5"/><rect class="dg-forma" x="445" y="245" width="50" height="36" rx="5"/><rect class="dg-forma" x="535" y="245" width="50" height="36" rx="5"/><rect class="dg-forma" x="625" y="245" width="50" height="36" rx="5"/><rect class="dg-linha-2" x="715" y="245" width="50" height="36" rx="5" stroke-width="2.6"/>
+  </g>
+  <g font-size="19" text-anchor="middle" font-family="monospace">
+    <text class="dg-rotulo" x="200" y="205">1</text><text class="dg-rotulo" x="290" y="205">1</text><text class="dg-rotulo" x="380" y="205">1</text><text class="dg-rotulo" x="470" y="205">1</text><text class="dg-rotulo" x="560" y="205">1</text><text class="dg-rotulo" x="650" y="205">1</text><text class="dg-rotulo" x="740" y="205">0</text>
+    <text class="dg-rotulo" x="200" y="270">1</text><text class="dg-rotulo" x="290" y="270">1</text><text class="dg-rotulo" x="380" y="270">1</text><text class="dg-rotulo" x="470" y="270">1</text><text class="dg-rotulo" x="560" y="270">1</text><text class="dg-rotulo" x="650" y="270">1</text><text class="dg-ponto-2" x="740" y="270">1</text>
+  </g>
+  <text class="dg-menor" x="410" y="335" font-size="16" text-anchor="middle">order ignored · position ignored · only how many times each word occurs</text>
+</svg>

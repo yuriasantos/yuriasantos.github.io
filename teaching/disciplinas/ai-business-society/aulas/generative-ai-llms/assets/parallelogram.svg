@@ -1,0 +1,18 @@
+<!-- D5: the analogy as geometry — the same offset from man→woman applies to king→queen. -->
+<svg viewBox="0 0 820 380" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="seta-par" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="dg-seta-cabeca" d="M 0 0 L 10 5 L 0 10 z"/></marker></defs>
+  <line class="dg-eixo" x1="80" y1="330" x2="740" y2="330" stroke-width="1.5"/>
+  <line class="dg-eixo" x1="80" y1="330" x2="80" y2="40" stroke-width="1.5"/>
+  <circle class="dg-ponto" cx="200" cy="270" r="8"/><text class="dg-rotulo" x="200" y="300" font-size="18" text-anchor="middle">man</text>
+  <circle class="dg-ponto" cx="420" cy="180" r="8"/><text class="dg-rotulo" x="420" y="165" font-size="18" text-anchor="middle">woman</text>
+  <circle class="dg-ponto-2" cx="380" cy="290" r="8"/><text class="dg-rotulo" x="380" y="320" font-size="18" text-anchor="middle">king</text>
+  <circle class="dg-ponto-2" cx="600" cy="200" r="8"/><text class="dg-rotulo" x="600" y="185" font-size="18" text-anchor="middle">queen</text>
+  <path class="dg-linha" d="M 210 266 L 408 185" stroke-width="2.4" marker-end="url(#seta-par)"/>
+  <path class="dg-linha-2" d="M 390 286 L 588 205" stroke-width="2.4" marker-end="url(#seta-par)"/>
+  <line class="dg-traco" x1="200" y1="270" x2="380" y2="290" stroke-width="1.2" stroke-dasharray="6 5"/>
+  <line class="dg-traco" x1="420" y1="180" x2="600" y2="200" stroke-width="1.2" stroke-dasharray="6 5"/>
+  <text class="dg-menor" x="280" y="210" font-size="15" text-anchor="middle">same offset</text>
+  <text class="dg-titulo" x="640" y="70" font-size="20" text-anchor="end">king − man + woman ≈ queen</text>
+  <text class="dg-menor" x="640" y="100" font-size="15" text-anchor="end">Paris − France + Italy ≈ Rome</text>
+  <text class="dg-menor" x="640" y="124" font-size="15" text-anchor="end">Microsoft : Windows :: Google : Android</text>
+</svg>

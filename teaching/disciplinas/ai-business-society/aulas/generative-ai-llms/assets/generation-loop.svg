@@ -1,0 +1,23 @@
+<!-- D7: context → distribution over next tokens → one is picked (a dice roll) → appended → again. After J&M Fig. 1.3. -->
+<svg viewBox="0 0 820 380" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="seta-loop" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="dg-seta-cabeca" d="M 0 0 L 10 5 L 0 10 z"/></marker></defs>
+  <rect class="dg-forma" x="30" y="140" width="250" height="60" rx="8" stroke-width="1.8"/>
+  <text class="dg-rotulo" x="155" y="177" font-size="17" text-anchor="middle">so long and thanks for</text>
+  <text class="dg-menor" x="155" y="125" font-size="14" text-anchor="middle">the context so far</text>
+  <path class="dg-seta" d="M 282 170 L 340 170" stroke-width="1.8" marker-end="url(#seta-loop)"/>
+  <rect class="dg-linha-2" x="346" y="120" width="130" height="100" rx="10" stroke-width="2.4"/>
+  <text class="dg-rotulo" x="411" y="165" font-size="17" text-anchor="middle">the model</text>
+  <text class="dg-menor" x="411" y="190" font-size="13" text-anchor="middle">billions of weights</text>
+  <path class="dg-seta" d="M 478 170 L 536 170" stroke-width="1.8" marker-end="url(#seta-loop)"/>
+  <g>
+    <text class="dg-menor" x="640" y="70" font-size="14" text-anchor="middle">probability of each next token</text>
+    <rect class="dg-ponto" x="550" y="90" width="130" height="18"/><text class="dg-rotulo" x="690" y="104" font-size="15">all</text>
+    <rect class="dg-ponto" x="550" y="115" width="80" height="18"/><text class="dg-rotulo" x="690" y="129" font-size="15">everything</text>
+    <rect class="dg-ponto" x="550" y="140" width="40" height="18"/><text class="dg-rotulo" x="690" y="154" font-size="15">the</text>
+    <rect class="dg-ponto" x="550" y="165" width="14" height="18"/><text class="dg-menor" x="690" y="179" font-size="15">of</text>
+    <rect class="dg-ponto" x="550" y="190" width="5" height="18"/><text class="dg-menor" x="690" y="204" font-size="15">wasn't</text>
+    <text class="dg-menor" x="640" y="240" font-size="14" text-anchor="middle">one is chosen — a dice roll, weighted</text>
+  </g>
+  <path class="dg-seta" d="M 640 250 L 640 300 Q 640 312 628 312 L 167 312 Q 155 312 155 300 L 155 204" stroke-width="1.8" marker-end="url(#seta-loop)"/>
+  <text class="dg-rotulo" x="400" y="340" font-size="16" text-anchor="middle">the chosen token is appended to the context · repeat until "end"</text>
+</svg>
