@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Garantia da Qualidade de Software</title>
+
+  <link rel="stylesheet" href="../../../../vendor/reveal/dist/reset.css">
+  <link rel="stylesheet" href="../../../../vendor/reveal/dist/reveal.css">
+  <link rel="stylesheet" href="../../../../tema/base.css">
+  <!-- tema claro (base) + tema escuro embutido, ativado por [data-theme="dark"] -->
+  <link rel="stylesheet" href="../../../../tema/tema-default.css">
+  <style>/* tema-dark.css — escuro, para salas com projeção em ambiente escuro.
+   Séries = mesma paleta stepada para superfície escura (dataviz skill). */
+:root[data-theme="dark"] {
+  --bg:      #1a1a19;
+  --ink:     #ffffff;
+  --ink-2:   #c3c2b7;
+  --muted:   #898781;
+  --accent:  #3987e5;
+  --accent-2:#d95926;
+  --rule:    #2c2c2a;
+  --code-bg: #2c2c2a;
+
+  --chart-surface: #1a1a19;
+  --chart-grid:    #2c2c2a;
+  --chart-axis:    #383835;
+  --chart-ink:     #ffffff;
+  --chart-ink-2:   #c3c2b7;
+  --chart-muted:   #898781;
+
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+  --series-5: #d55181;
+  --series-6: #008300;
+  --series-7: #9085e9;
+  --series-8: #e66767;
+}
+</style>
+  <link rel="stylesheet" href="../../../../tema/controles.css">
+  <link rel="stylesheet" href="../../../../vendor/reveal/plugin/highlight/monokai.css">
+  <script>
+    // Define o modo (claro/escuro) o quanto antes, evitando "flash".
+    (function () {
+      var salvo = null;
+      try { salvo = localStorage.getItem('gs-tema'); } catch (e) {}
+      document.documentElement.setAttribute('data-theme', salvo || 'light');
+    })();
+  </script>
+</head>
+<body>
+  <a class="btn-topo btn-voltar" href="../../../../index.html"
+     title="Voltar" aria-label="Voltar"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></a>
+  <button class="btn-topo tema-toggle" aria-label="Alternar tema claro/escuro"><svg class="ico ico-lua" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="ico ico-sol" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+  <div class="reveal">
+    <div class="slides">
+      
+      
+<section>
+  <div class="slide l-titulo">
+    <div class="kicker">Sessão 3 · Fundamentos</div>
+    <h1>Conceitos de qualidade, prevenção × detecção, custo da não-qualidade</h1>
+    <div class="rule"></div>
+    <p class="subtitulo">Una · 2026.2 · quintas, 19h–21h50</p>
+    <p class="rodape">Prof. Yuri Alexandre dos Santos</p>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">01</div>
+    <h1>Apresentação do G1</h1>
+    <p class="sub">Zanin, <em>Qualidade de software</em>, p. 11–20</p>
+    <div class="deck-footer">Garantia da Qualidade de Software · 2/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>O formato, para lembrar</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Uma ideia central
+      </li>
+      
+      <li>
+        Uma aplicação ao projeto da UC
+      </li>
+      
+      <li>
+        Uma pergunta que o texto não responde
+      </li>
+      
+      <li>
+        15 minutos, perguntas ao final
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 3/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">02</div>
+    <h1>O que é qualidade?</h1>
+    <p class="sub">Duas definições, e o que uma esconde da outra.</p>
+    <div class="deck-footer">Garantia da Qualidade de Software · 4/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-citacao">
+    <div class="kicker">A definição da leitura</div>
+    <blockquote class="cit-texto">[A] qualidade do software pode ser medida de acordo com o quanto ele está em conformidade com o que o cliente solicitou. Ou seja, mensura-se se o software está em conformidade com os requisitos funcionais e não funcionais especificados explicitamente pelo cliente.</blockquote>
+    <div class="cit-autor">Zanin et al. (2018), citando Basu (2015)</div>
+    <div class="cit-fonte">em Zanin et al. (2018), <em>Qualidade de software</em>, abertura da unidade</div>
+    <div class="deck-footer">Garantia da Qualidade de Software · 5/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-citacao">
+    <div class="kicker">A outra leitura</div>
+    <blockquote class="cit-texto">A totalidade de características de um produto de software que lhe confere a capacidade de satisfazer as necessidades explícitas e implícitas.</blockquote>
+    <div class="cit-autor">ISO/IEC, apud Rodrigues et al. (2008)</div>
+    <div class="cit-fonte">em Gallotti (2016), <em>Qualidade de software</em>, Un. 1 — quadro "Saiba mais"</div>
+    <div class="deck-footer">Garantia da Qualidade de Software · 6/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-citacao">
+    <div class="kicker">A mesma definição, com a ressalva</div>
+    <blockquote class="cit-texto">The degree to which a software product meets established requirements; however, quality depends upon the degree to which those established requirements accurately represent stakeholder needs, wants, and expectations.</blockquote>
+    <div class="cit-autor">IEEE 730:2014, apud SWEBOK</div>
+    <div class="cit-fonte">SWEBOK Guide v4.0 (2024), cap. 12, p. 12-3</div>
+    <div class="deck-footer">Garantia da Qualidade de Software · 7/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>O ISTQB dá dois nomes</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        <strong>Verificação</strong> — atende ao que foi especificado?<span class="nota">ISTQB CTFL v4.0, §1.1, p. 14</span>
+        
+      </li>
+      
+      <li>
+        <strong>Validação</strong> — atende à necessidade de quem usa?<span class="nota">"em seu ambiente operacional"</span>
+        
+      </li>
+      
+      <li>
+        Falácia da ausência de defeitos<span class="nota">corrigir todos os defeitos contra a especificação ainda pode dar um sistema que não serve · princípio 7, p. 16–17</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 8/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-destaque">
+    <div class="frase">Quem garante que o requisito está <span class="accent">certo</span>?</div>
+    
+    <div class="deck-footer">Garantia da Qualidade de Software · 9/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">03</div>
+    <h1>O processo de software</h1>
+    <p class="sub">Quatro atividades · engenharia de requisitos · projeto · prototipação</p>
+    <div class="deck-footer">Garantia da Qualidade de Software · 10/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>O processo — entradas, atividades, saídas</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        <strong>Especificação</strong> — o que o sistema deve fazer<span class="nota">= engenharia de requisitos · saída: documento de requisitos validado</span>
+        
+      </li>
+      
+      <li>
+        <strong>Projeto e implementação</strong> — converter a especificação em sistema executável<span class="nota">entrada: a especificação · saída: o sistema (e o projeto)</span>
+        
+      </li>
+      
+      <li>
+        <strong>Validação</strong> — conforma à especificação <strong>e</strong> atende ao cliente<span class="nota">as duas metades, de novo · saída: evidência e defeitos</span>
+        
+      </li>
+      
+      <li>
+        <strong>Evolução</strong> — mudar com a necessidade<span class="nota">a partir de Sommerville (2016), cap. 2, sl. 3–4, 22–27 — a coluna entrada/saída é síntese da aula</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 11/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-citacao">
+    <div class="kicker">Definição</div>
+    <blockquote class="cit-texto">The process of establishing the services that a customer requires from a system and the constraints under which it operates and is developed.</blockquote>
+    <div class="cit-autor">Sommerville (2016)</div>
+    <div class="cit-fonte">slides do autor, cap. 4, sl. 3</div>
+    <div class="deck-footer">Garantia da Qualidade de Software · 12/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>O processo, em espiral</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="Quatro caixas em sequência — estudo de viabilidade (tracejada), elicitação e análise, especificação, validação — com uma seta de retorno da validação para a elicitação, indicando iteração.">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 420">
+  <defs>
+    <marker id="req-seta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" class="dg-seta-cabeca"/>
+    </marker>
+  </defs>
+  <!-- viabilidade (tracejada: 9ª ed. / Gallotti) -->
+  <rect x="20" y="150" width="170" height="90" rx="10" class="dg-forma" stroke-dasharray="8 6"/>
+  <text x="105" y="188" text-anchor="middle" font-size="19" class="dg-rotulo">estudo de</text>
+  <text x="105" y="214" text-anchor="middle" font-size="19" class="dg-rotulo">viabilidade</text>
+  <text x="105" y="270" text-anchor="middle" font-size="14" class="dg-menor">vale a pena? dá com o que se tem?</text>
+
+  <rect x="250" y="150" width="200" height="90" rx="10" class="dg-forma"/>
+  <text x="350" y="188" text-anchor="middle" font-size="19" class="dg-rotulo">elicitação</text>
+  <text x="350" y="214" text-anchor="middle" font-size="19" class="dg-rotulo">e análise</text>
+  <text x="350" y="270" text-anchor="middle" font-size="14" class="dg-menor">com os stakeholders</text>
+
+  <rect x="510" y="150" width="200" height="90" rx="10" class="dg-forma"/>
+  <text x="610" y="202" text-anchor="middle" font-size="19" class="dg-rotulo">especificação</text>
+  <text x="610" y="270" text-anchor="middle" font-size="14" class="dg-menor">o documento; pode ser contrato</text>
+
+  <rect x="770" y="150" width="200" height="90" rx="10" class="dg-forma"/>
+  <text x="870" y="202" text-anchor="middle" font-size="19" class="dg-rotulo">validação</text>
+  <text x="870" y="270" text-anchor="middle" font-size="14" class="dg-menor">é o que o cliente quer?</text>
+
+  <path d="M190,195 L250,195" class="dg-seta" marker-end="url(#req-seta)"/>
+  <path d="M450,195 L510,195" class="dg-seta" marker-end="url(#req-seta)"/>
+  <path d="M710,195 L770,195" class="dg-seta" marker-end="url(#req-seta)"/>
+
+  <!-- retorno: iterativo, em espiral -->
+  <path d="M870,150 L870,80 L350,80 L350,150" class="dg-seta" marker-end="url(#req-seta)"/>
+  <text x="610" y="66" text-anchor="middle" font-size="16" class="dg-menor">iterativo — "a espiral" · gestão de requisitos</text>
+
+</svg>
+    </figure>
+    <figcaption class="dg-legenda">Iterativo — a figura do livro é uma espiral.</figcaption>
+    <div class="fonte">Sommerville (2016), cap. 4, sl. 28–36 · caixa "viabilidade": acréscimo da aula (9ª ed.)</div>
+    <div class="deck-footer">Garantia da Qualidade de Software · 13/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Validação — cinco checagens</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        <strong>Validade</strong> — provê o que melhor atende à necessidade?
+        
+      </li>
+      
+      <li>
+        <strong>Consistência</strong> — há requisitos em conflito?
+        
+      </li>
+      
+      <li>
+        <strong>Completude</strong> — está tudo o que o cliente precisa?
+        
+      </li>
+      
+      <li>
+        <strong>Realismo</strong> — dá com o orçamento e a tecnologia?
+        
+      </li>
+      
+      <li>
+        <strong>Verificabilidade</strong> — o requisito pode ser checado?<span class="nota">Sommerville (2016), cap. 4, sl. 72–73</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 14/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>O processo de projeto — modelo genérico</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="Três colunas ligadas por setas. Entradas de projeto — informação da plataforma, especificação de requisitos, descrição dos dados. Atividades de projeto — projeto de arquitetura, de interface, de componentes, de banco de dados. Saídas de projeto — arquitetura do sistema, especificação de banco de dados, de interface, de componentes.">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 440">
+  <defs>
+    <marker id="proj-seta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" class="dg-seta-cabeca"/>
+    </marker>
+  </defs>
+  <text x="160" y="40" text-anchor="middle" font-size="22" class="dg-titulo">entradas de projeto</text>
+  <text x="500" y="40" text-anchor="middle" font-size="22" class="dg-titulo">atividades de projeto</text>
+  <text x="840" y="40" text-anchor="middle" font-size="22" class="dg-titulo">saídas de projeto</text>
+
+  <rect x="10" y="70" width="300" height="330" rx="12" class="dg-forma" stroke-dasharray="8 6"/>
+  <text x="160" y="150" text-anchor="middle" font-size="18" class="dg-rotulo">informação da plataforma</text>
+  <text x="160" y="235" text-anchor="middle" font-size="18" class="dg-rotulo">especificação de requisitos</text>
+  <text x="160" y="320" text-anchor="middle" font-size="18" class="dg-rotulo">descrição dos dados</text>
+
+  <rect x="350" y="70" width="300" height="330" rx="12" class="dg-forma"/>
+  <text x="500" y="125" text-anchor="middle" font-size="18" class="dg-rotulo">projeto de arquitetura</text>
+  <text x="500" y="200" text-anchor="middle" font-size="18" class="dg-rotulo">projeto de interface</text>
+  <text x="500" y="275" text-anchor="middle" font-size="18" class="dg-rotulo">projeto de componentes</text>
+  <text x="500" y="350" text-anchor="middle" font-size="18" class="dg-rotulo">projeto de banco de dados</text>
+
+  <rect x="690" y="70" width="300" height="330" rx="12" class="dg-forma" stroke-dasharray="8 6"/>
+  <text x="840" y="125" text-anchor="middle" font-size="18" class="dg-rotulo">arquitetura do sistema</text>
+  <text x="840" y="200" text-anchor="middle" font-size="18" class="dg-rotulo">especificação de banco</text>
+  <text x="840" y="275" text-anchor="middle" font-size="18" class="dg-rotulo">especificação de interface</text>
+  <text x="840" y="350" text-anchor="middle" font-size="18" class="dg-rotulo">especificação de componentes</text>
+
+  <path d="M310,235 L350,235" class="dg-seta" marker-end="url(#proj-seta)"/>
+  <path d="M650,235 L690,235" class="dg-seta" marker-end="url(#proj-seta)"/>
+
+</svg>
+    </figure>
+    <figcaption class="dg-legenda">Cada saída é um produto de trabalho — e é o que se revisa antes de haver código.</figcaption>
+    <div class="fonte">Sommerville (2016), cap. 2, fig. 2.5 (sl. 24–25)</div>
+    <div class="deck-footer">Garantia da Qualidade de Software · 15/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Prototipação</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Versão inicial para demonstrar conceitos e testar opções<span class="nota">Sommerville (2016), cap. 2, sl. 37</span>
+        
+      </li>
+      
+      <li>
+        Serve em três lugares: requisitos, projeto, teste<span class="nota">elicitar e validar · explorar UI · testes back-to-back</span>
+        
+      </li>
+      
+      <li>
+        Resposta ao "não sabem o que querem"<span class="nota">mostrar algo que roda e deixar o cliente reagir · sl. 36</span>
+        
+      </li>
+      
+      <li>
+        <strong>Descartável</strong><span class="nota">sem documentação, estrutura degradada, fora do padrão de qualidade · sl. 41</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 16/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>O processo de desenvolvimento de protótipos</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="Quatro etapas em sequência — estabelecer os objetivos do protótipo, definir a funcionalidade, desenvolver o protótipo, avaliar o protótipo — cada uma com uma saída abaixo, em caixa tracejada — plano de prototipação, definição em linhas gerais, protótipo executável, relatório de avaliação.">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 400">
+  <defs>
+    <marker id="prot-seta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" class="dg-seta-cabeca"/>
+    </marker>
+  </defs>
+  <rect x="20" y="90" width="210" height="100" rx="10" class="dg-forma"/>
+  <text x="125" y="132" text-anchor="middle" font-size="18" class="dg-rotulo">estabelecer os</text>
+  <text x="125" y="158" text-anchor="middle" font-size="18" class="dg-rotulo">objetivos do protótipo</text>
+
+  <rect x="270" y="90" width="210" height="100" rx="10" class="dg-forma"/>
+  <text x="375" y="132" text-anchor="middle" font-size="18" class="dg-rotulo">definir a</text>
+  <text x="375" y="158" text-anchor="middle" font-size="18" class="dg-rotulo">funcionalidade</text>
+
+  <rect x="520" y="90" width="210" height="100" rx="10" class="dg-forma"/>
+  <text x="625" y="132" text-anchor="middle" font-size="18" class="dg-rotulo">desenvolver</text>
+  <text x="625" y="158" text-anchor="middle" font-size="18" class="dg-rotulo">o protótipo</text>
+
+  <rect x="770" y="90" width="210" height="100" rx="10" class="dg-forma"/>
+  <text x="875" y="132" text-anchor="middle" font-size="18" class="dg-rotulo">avaliar</text>
+  <text x="875" y="158" text-anchor="middle" font-size="18" class="dg-rotulo">o protótipo</text>
+
+  <path d="M230,140 L270,140" class="dg-seta" marker-end="url(#prot-seta)"/>
+  <path d="M480,140 L520,140" class="dg-seta" marker-end="url(#prot-seta)"/>
+  <path d="M730,140 L770,140" class="dg-seta" marker-end="url(#prot-seta)"/>
+
+  <path d="M125,190 L125,240" class="dg-seta" marker-end="url(#prot-seta)"/>
+  <path d="M375,190 L375,240" class="dg-seta" marker-end="url(#prot-seta)"/>
+  <path d="M625,190 L625,240" class="dg-seta" marker-end="url(#prot-seta)"/>
+  <path d="M875,190 L875,240" class="dg-seta" marker-end="url(#prot-seta)"/>
+
+  <rect x="20" y="240" width="210" height="70" rx="10" class="dg-forma" stroke-dasharray="8 6"/>
+  <text x="125" y="282" text-anchor="middle" font-size="17" class="dg-menor">plano de prototipação</text>
+  <rect x="270" y="240" width="210" height="70" rx="10" class="dg-forma" stroke-dasharray="8 6"/>
+  <text x="375" y="282" text-anchor="middle" font-size="17" class="dg-menor">definição em linhas gerais</text>
+  <rect x="520" y="240" width="210" height="70" rx="10" class="dg-forma" stroke-dasharray="8 6"/>
+  <text x="625" y="282" text-anchor="middle" font-size="17" class="dg-menor">protótipo executável</text>
+  <rect x="770" y="240" width="210" height="70" rx="10" class="dg-forma" stroke-dasharray="8 6"/>
+  <text x="875" y="282" text-anchor="middle" font-size="17" class="dg-menor">relatório de avaliação</text>
+
+</svg>
+    </figure>
+    <figcaption class="dg-legenda">O mesmo processo, com escopo reduzido — não é definitivo.</figcaption>
+    <div class="fonte">Sommerville (2016), cap. 2, fig. 2.9 (sl. 39–40)</div>
+    <div class="deck-footer">Garantia da Qualidade de Software · 17/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">04</div>
+    <h1>Processo × produto</h1>
+    <p class="sub">O nome que o syllabus dá — QA × QC.</p>
+    <div class="deck-footer">Garantia da Qualidade de Software · 18/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>QA × QC</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="Duas colunas lado a lado. Esquerda, QA — garantia da qualidade — preventiva, orientada ao processo, responsabilidade de todos; equivale à qualidade de processo do Zanin. Direita, QC — controle de qualidade — corretiva, orientada ao produto; teste é uma forma entre outras (revisão, métodos formais, protótipo); equivale à qualidade de produto do Zanin.">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 440">
+  <line x1="500" y1="30" x2="500" y2="410" class="dg-traco"/>
+  <!-- QA -->
+  <text x="250" y="70" text-anchor="middle" font-size="34" class="dg-titulo">QA</text>
+  <text x="250" y="104" text-anchor="middle" font-size="18" class="dg-menor">garantia da qualidade</text>
+  <rect x="80" y="140" width="340" height="230" rx="12" class="dg-forma"/>
+  <text x="250" y="190" text-anchor="middle" font-size="22" class="dg-rotulo">preventiva</text>
+  <text x="250" y="232" text-anchor="middle" font-size="22" class="dg-rotulo">orientada ao processo</text>
+  <text x="250" y="274" text-anchor="middle" font-size="18" class="dg-menor">"bom processo gera bom produto"</text>
+  <text x="250" y="316" text-anchor="middle" font-size="18" class="dg-menor">responsabilidade de todos</text>
+  <text x="250" y="400" text-anchor="middle" font-size="18" class="dg-rotulo">Zanin: qualidade de processo</text>
+  <!-- QC -->
+  <text x="750" y="70" text-anchor="middle" font-size="34" class="dg-titulo">QC</text>
+  <text x="750" y="104" text-anchor="middle" font-size="18" class="dg-menor">controle de qualidade</text>
+  <rect x="580" y="140" width="340" height="230" rx="12" class="dg-forma"/>
+  <text x="750" y="190" text-anchor="middle" font-size="22" class="dg-rotulo">corretiva</text>
+  <text x="750" y="232" text-anchor="middle" font-size="22" class="dg-rotulo">orientada ao produto</text>
+  <text x="750" y="274" text-anchor="middle" font-size="18" class="dg-menor">teste é uma forma — há outras:</text>
+  <text x="750" y="316" text-anchor="middle" font-size="18" class="dg-menor">revisão · métodos formais · protótipo</text>
+  <text x="750" y="400" text-anchor="middle" font-size="18" class="dg-rotulo">Zanin: qualidade de produto</text>
+</svg>
+    </figure>
+    
+    <div class="fonte">ISTQB CTFL v4.0, §1.2.2, p. 15 · Zanin et al. (2018)</div>
+    <div class="deck-footer">Garantia da Qualidade de Software · 19/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Prevenção × detecção — na leitura</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        <strong>Prevenção</strong>: treinamento · planejamento · modelagem · lições aprendidas · melhoria de processo
+        
+      </li>
+      
+      <li>
+        <strong>Detecção</strong>: compilação · análise de código · testes · simulação · prototipação · auditoria · validação
+        
+      </li>
+      
+      <li>
+        "Uma complementa a outra, e ambas são indispensáveis"
+        
+      </li>
+      
+      <li>
+        Detectar um defeito "significa que ele sempre estava lá, apenas não foi notado"<span class="nota">Gallotti (2016), Un. 1, <em>Prevenção versus detecção</em> · Figura 1.8, Vasconcelos et al. (2006, p. 81)</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 20/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-citacao">
+    <div class="kicker">Princípio 1 de teste</div>
+    <blockquote class="cit-texto">O teste mostra a presença, não a ausência de defeitos.</blockquote>
+    <div class="cit-autor">ISTQB CTFL v4.0, princípio 1</div>
+    <div class="cit-fonte">§1.3, p. 16 — remete a Buxton &amp; Randell (eds., 1970), relatório da conferência NATO de 1969</div>
+    <div class="deck-footer">Garantia da Qualidade de Software · 21/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">05</div>
+    <h1>Erro, defeito, falha</h1>
+    <p class="sub">Três palavras que a leitura mistura — e um exemplo dela mesma.</p>
+    <div class="deck-footer">Garantia da Qualidade de Software · 22/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-tabela">
+    <h2>As três definições</h2><div class="rule"></div>
+    <div class="tabela-wrap">
+      <table>
+        
+        <thead><tr><th>termo</th><th>Zanin (2018)</th><th>ISTQB v4.0</th><th>SWEBOK v4</th></tr></thead>
+        
+        <tbody>
+          
+          <tr>
+            
+            <th scope="row">erro</th>
+            
+            
+            <td>o que o programador cometeu</td>
+            
+            <td>equívoco humano</td>
+            
+            <td>ação humana que produz resultado incorreto</td>
+            
+          </tr>
+          
+          <tr class="destaque">
+            
+            <th scope="row">defeito</th>
+            
+            
+            <td>"comportamento inesperado de um produto" · "refere-se a uma funcionalidade que está implementado no código de maneira incorreta"</td>
+            
+            <td>falta no artefato: requisito, código, script, build</td>
+            
+            <td>imperfeição num <strong>produto de trabalho</strong>; "fica escondido até ser descoberto"</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">falha</th>
+            
+            
+            <td>o programa defeituoso executado interfere no uso</td>
+            
+            <td>o sistema deixa de fazer o que deveria — <strong>se</strong> o defeito for executado</td>
+            
+            <td>desvio <strong>externamente visível</strong> da especificação</td>
+            
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+    <div class="fonte">Zanin et al. (2018) · ISTQB CTFL v4.0, §1.2.3, p. 16 · SWEBOK v4, p. 12-3</div>
+    <div class="deck-footer">Garantia da Qualidade de Software · 23/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Os quatro níveis num caso real</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li class="fragment">
+        <strong>Falha</strong> — perda de guiagem aos 37 s; o foguete sai da trajetória
+        
+      </li>
+      
+      <li class="fragment">
+        <strong>Defeito</strong> — uma conversão de número sem proteção contra estouro
+        
+      </li>
+      
+      <li class="fragment">
+        <strong>Erro</strong> — decidiu-se não proteger, sem analisar a faixa de valores
+        
+      </li>
+      
+      <li class="fragment">
+        <strong>Causa-raiz</strong> — uma função herdada que não servia para este foguete<span class="nota">Ariane 5, voo 501 · relatório da comissão de inquérito (1996)</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 24/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">06</div>
+    <h1>Valor e custo da qualidade</h1>
+    <p class="sub">O que as leituras dizem, o que foi medido.</p>
+    <div class="deck-footer">Garantia da Qualidade de Software · 25/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>As duas leituras, lado a lado</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        <strong>Gallotti</strong> — falhas ocorrem a qualquer momento, não só no teste<span class="nota">análise cedo "economiza tempo e dinheiro" · Un. 1, <em>Definição, desenvolvimento e manutenção</em></span>
+        
+      </li>
+      
+      <li>
+        <strong>Zanin</strong> — custo ×10 a cada etapa que o defeito avança<span class="nota">"regra 10 de Myers" · mais aplicável a cascata · p. 11–20</span>
+        
+      </li>
+      
+      <li>
+        Concordam na direção; só uma põe número<span class="nota">o Gallotti tem as quatro categorias de custo e o ponto ótimo — sem multiplicador por fase</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 26/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>O modelo — custo da qualidade</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="Árvore. No topo, custo da qualidade (CoSQ). Dois ramos — conformidade e não-conformidade. Conformidade se divide em prevenção (processo, ferramentas, treinamento) e avaliação (revisão, auditoria, teste). Não-conformidade se divide em falha interna (retrabalho antes da entrega) e falha externa (depois da entrega, mais o custo do cliente).">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 460">
+  <defs>
+    <marker id="cosq-seta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" class="dg-seta-cabeca"/>
+    </marker>
+  </defs>
+  <rect x="330" y="20" width="340" height="60" rx="10" class="dg-forma"/>
+  <text x="500" y="58" text-anchor="middle" font-size="22" class="dg-titulo">custo da qualidade (CoSQ)</text>
+
+  <path d="M500,80 L500,110 L250,110 L250,140" class="dg-seta" marker-end="url(#cosq-seta)"/>
+  <path d="M500,80 L500,110 L750,110 L750,140" class="dg-seta" marker-end="url(#cosq-seta)"/>
+
+  <rect x="90" y="140" width="320" height="60" rx="10" class="dg-forma"/>
+  <text x="250" y="178" text-anchor="middle" font-size="21" class="dg-rotulo">conformidade</text>
+  <rect x="590" y="140" width="320" height="60" rx="10" class="dg-forma"/>
+  <text x="750" y="178" text-anchor="middle" font-size="21" class="dg-rotulo">não-conformidade</text>
+
+  <path d="M250,200 L250,230 L150,230 L150,260" class="dg-seta" marker-end="url(#cosq-seta)"/>
+  <path d="M250,200 L250,230 L350,230 L350,260" class="dg-seta" marker-end="url(#cosq-seta)"/>
+  <path d="M750,200 L750,230 L650,230 L650,260" class="dg-seta" marker-end="url(#cosq-seta)"/>
+  <path d="M750,200 L750,230 L850,230 L850,260" class="dg-seta" marker-end="url(#cosq-seta)"/>
+
+  <rect x="60" y="260" width="180" height="100" rx="10" class="dg-forma"/>
+  <text x="150" y="298" text-anchor="middle" font-size="20" class="dg-rotulo">prevenção</text>
+  <text x="150" y="330" text-anchor="middle" font-size="15" class="dg-menor">processo · ferramentas</text>
+  <text x="150" y="350" text-anchor="middle" font-size="15" class="dg-menor">treinamento</text>
+
+  <rect x="260" y="260" width="180" height="100" rx="10" class="dg-forma"/>
+  <text x="350" y="298" text-anchor="middle" font-size="20" class="dg-rotulo">avaliação</text>
+  <text x="350" y="330" text-anchor="middle" font-size="15" class="dg-menor">revisão · auditoria</text>
+  <text x="350" y="350" text-anchor="middle" font-size="15" class="dg-menor">teste</text>
+
+  <rect x="560" y="260" width="180" height="100" rx="10" class="dg-forma"/>
+  <text x="650" y="298" text-anchor="middle" font-size="20" class="dg-rotulo">falha interna</text>
+  <text x="650" y="330" text-anchor="middle" font-size="15" class="dg-menor">retrabalho</text>
+  <text x="650" y="350" text-anchor="middle" font-size="15" class="dg-menor">antes da entrega</text>
+
+  <rect x="760" y="260" width="180" height="100" rx="10" class="dg-forma"/>
+  <text x="850" y="298" text-anchor="middle" font-size="20" class="dg-rotulo">falha externa</text>
+  <text x="850" y="330" text-anchor="middle" font-size="15" class="dg-menor">depois da entrega</text>
+  <text x="850" y="350" text-anchor="middle" font-size="15" class="dg-menor">+ o custo do cliente</text>
+
+  <text x="250" y="410" text-anchor="middle" font-size="16" class="dg-menor">o que se paga para evitar e achar</text>
+  <text x="750" y="410" text-anchor="middle" font-size="16" class="dg-menor">o que se paga por não ter evitado nem achado</text>
+</svg>
+    </figure>
+    
+    <div class="fonte">SWEBOK Guide v4.0 (2024), cap. 12, §1.2 <em>Value and Costs of Quality</em>, p. 12-4 · as mesmas quatro categorias em Gallotti (2016), Un. 1, <em>Custos da qualidade de software</em></div>
+    <div class="deck-footer">Garantia da Qualidade de Software · 27/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-citacao">
+    <div class="kicker">O ponto ótimo, na leitura</div>
+    <blockquote class="cit-texto">Diminuir custos de falhas (internas ou externas) significa aumentar os custos em prevenção e detecção.</blockquote>
+    <div class="cit-autor">Vasconcelos et al. (2006)</div>
+    <div class="cit-fonte">em Gallotti (2016), Un. 1, <em>Custos da qualidade de software</em> · Gráfico 1.2, Vasconcelos et al. (2006, p. 86)</div>
+    <div class="deck-footer">Garantia da Qualidade de Software · 28/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>O que foi medido</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        <strong>NIST 2002</strong> — US$ 22,2 a 59,5 bi por ano nos EUA<span class="nota">mais da metade cai no <strong>usuário</strong> · Planning Report 02-3, p. ES-3 e Tabela ES-4</span>
+        
+      </li>
+      
+      <li>
+        <strong>NIST 2002</strong> — achar e corrigir defeito é mais da metade do custo de desenvolvimento<span class="nota">§1.4.2, p. 1-12</span>
+        
+      </li>
+      
+      <li>
+        <strong>Jones 2011</strong> — remoção média de 85%; os melhores, 99%<span class="nota">~13.000 projetos, base do próprio autor · <em>Software Defect Removal Efficiency</em></span>
+        
+      </li>
+      
+      <li>
+        <strong>Jones 2011</strong> — teste sozinho não passa de ~95%<span class="nota">inspeção e análise estática são a outra metade</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 29/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-citacao">
+    <div class="kicker">O que a leitura diz</div>
+    <blockquote class="cit-texto">Essa regra estipula que o custo de encontrar um defeito no sistema aumenta 10 vezes a cada etapa do processo em que esse erro avançar, conforme aponta Myers (1979). Essa regra é mais aplicada para o contexto de projetos com ciclo de vida em cascata, em que as etapas são executadas sequencialmente, dado que, em equipes ágeis, não existe essa divisão exata de etapas.</blockquote>
+    <div class="cit-autor">Zanin et al. (2018), sobre a "regra 10 de Myers"</div>
+    <div class="cit-fonte">em Zanin et al. (2018), <em>Qualidade de software</em></div>
+    <div class="deck-footer">Garantia da Qualidade de Software · 30/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-citacao">
+    <div class="kicker">O que outro livro diz</div>
+    <blockquote class="cit-texto">Fixing a requirements error after delivery may cost up to 100 times the cost of fixing an implementation error.</blockquote>
+    <div class="cit-autor">Sommerville (2016)</div>
+    <div class="cit-fonte">slides do autor, cap. 4, sl. 72</div>
+    <div class="deck-footer">Garantia da Qualidade de Software · 31/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">07</div>
+    <h1>Ariane 501</h1>
+    <p class="sub">Reúso, pelo roteiro do Gallotti — com a etapa do meio pulada.</p>
+    <div class="deck-footer">Garantia da Qualidade de Software · 32/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Reúso, em três etapas</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        <strong>Análise de componentes</strong> — o que já existe e se parece
+        
+      </li>
+      
+      <li>
+        <strong>Modificação de requisitos</strong> — o que precisa mudar para servir aqui
+        
+      </li>
+      
+      <li>
+        <strong>Projeto do sistema com reúso</strong> — documentar o que foi reusado e como interage<span class="nota">Sommerville (2011), em Gallotti (2016), Un. 1, <em>Reúso</em></span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 33/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Ariane 5, voo 501 · 4 de junho de 1996</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li class="fragment">
+        O sistema<span class="nota">referência inercial (SRI) "essencialmente comum" ao do Ariane 4 · conclusão (m)</span>
+        
+      </li>
+      
+      <li class="fragment">
+        A falha<span class="nota">~37–40 s, ~3.700 m — sai da trajetória, quebra, explode · prefácio, §1.1, §2.1</span>
+        
+      </li>
+      
+      <li class="fragment">
+        O defeito<span class="nota">conversão de 64 bits para 16 sem proteção; as vizinhas tinham · §2.1</span>
+        
+      </li>
+      
+      <li class="fragment">
+        A etapa pulada<span class="nota">função de alinhamento mantida "por comunalidade"; ninguém analisou a faixa de valores · (m), (n), §2.2</span>
+        
+      </li>
+      
+      <li class="fragment">
+        O teste que não existiu<span class="nota">nenhum teste com a trajetória do Ariane 5 — a especificação não a continha · §2.3</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 34/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-tabela">
+    <h2>O que a comissão recomendou</h2><div class="rule"></div>
+    <div class="tabela-wrap">
+      <table>
+        
+        <thead><tr><th>rec.</th><th>o que diz</th><th>onde volta</th></tr></thead>
+        
+        <tbody>
+          
+          <tr>
+            
+            <th scope="row">R1</th>
+            
+            
+            <td>nada roda em voo sem ser necessário</td>
+            
+            <td>prevenção</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">R2</th>
+            
+            
+            <td>entradas reais, teste de sistema em malha fechada, cobertura alta</td>
+            
+            <td>detecção · sessões 8–9</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">R9</th>
+            
+            
+            <td>revisores externos; revisar a <strong>substância dos argumentos</strong>, não só se houve verificação</td>
+            
+            <td>sessão 7 · code review</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">R10</th>
+            
+            
+            <td>trajetória na especificação e nos requisitos de teste</td>
+            
+            <td>o requisito que faltava · sessão 6</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">R12</th>
+            
+            
+            <td>documentos de justificação com a mesma atenção que o código</td>
+            
+            <td>a "cultura de documentação" do Gallotti</td>
+            
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+    <div class="fonte">Lions et al. (1996), relatório da comissão de inquérito, seção 4</div>
+    <div class="deck-footer">Garantia da Qualidade de Software · 35/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-tabela">
+    <h2>Cada linha de hoje volta</h2><div class="rule"></div>
+    <div class="tabela-wrap">
+      <table>
+        
+        <thead><tr><th>hoje</th><th>sessão</th></tr></thead>
+        
+        <tbody>
+          
+          <tr>
+            
+            <th scope="row">qualidade = conformidade <strong>e</strong> requisito certo</th>
+            
+            
+            <td>4 · atributos e normas · 6 · critérios de aceitação</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">engenharia de requisitos, validação, prototipação</th>
+            
+            
+            <td>6 · plano de teste · 7 · revisão</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">QA (processo) × QC (produto)</th>
+            
+            
+            <td>5 · SQA, CMMI, MPS.BR</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">erro → defeito → falha, causa-raiz</th>
+            
+            
+            <td>8 · fundamentos de teste · 16 · gestão de defeitos</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">teste sozinho ≤ 95%</th>
+            
+            
+            <td>7 · inspeção · 13 · análise estática</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">custo cai no usuário</th>
+            
+            
+            <td>17 · ética, CDC</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">Ariane: sem requisito, sem teste</th>
+            
+            
+            <td>6 · plano de teste · 9 · técnicas</td>
+            
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="deck-footer">Garantia da Qualidade de Software · 36/37</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Para a próxima semana</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Leitura da sessão 4<span class="nota">Gallotti, Un. 1 (p. 23–32) e Un. 4 (p. 108–122) · Zanin, normas — liberada no plano</span>
+        
+      </li>
+      
+      <li>
+        Por escrito, 3 linhas: uma <strong>falha</strong> que você viveu como usuário — e onde você acha que estava o <strong>defeito</strong><span class="nota">retomada na sessão 8</span>
+        
+      </li>
+      
+      <li>
+        G2 e G3 apresentam
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 37/37</div>
+  </div>
+</section>
+      
+    </div>
+  </div>
+
+  <script>
+    // ---- Notas do apresentador em corpo grande (tecla S) ----
+    // A speaker view é uma janela que o plugin de notas escreve do zero, e lá as
+    // notas saem em ~22px (menos ainda em tela estreita) — não se lê a um braço
+    // de distância. Como o HTML dela nasce dentro do notes.js, o único
+    // ponto de entrada é a chamada de window.open: guardamos a referência da
+    // janela e injetamos o CSS nela. Fica aqui, e não no vendor, para sobreviver
+    // a uma atualização do reveal.
+    (function () {
+      const CORPO = '30px';   // corpo das notas (o padrão do plugin dá ~22px)
+      const abrir = window.open;
+      window.open = function (url, nome, opcoes) {
+        const janela = abrir.call(window, url, nome, opcoes);
+        if (!janela || nome !== 'reveal.js - Notes') return janela;
+        const css = `
+          .speaker-controls-notes .value {
+            font-size: ${CORPO} !important;
+            line-height: 1.5 !important;
+          }`;
+        // document.write() do plugin descarta o <head> anterior, então tentamos
+        // de novo por alguns segundos até o estilo ficar de pé.
+        const injetar = () => {
+          try {
+            const doc = janela.document;
+            if (!doc || !doc.head || doc.getElementById('notas-grandes')) return;
+            const tag = doc.createElement('style');
+            tag.id = 'notas-grandes';
+            tag.textContent = css;
+            doc.head.appendChild(tag);
+          } catch (e) { /* janela ainda carregando */ }
+        };
+        const tentativas = setInterval(injetar, 150);
+        setTimeout(() => clearInterval(tentativas), 15000);
+        return janela;
+      };
+    })();
+  </script>
+
+  <script src="../../../../vendor/reveal/dist/reveal.js"></script>
+  <script src="../../../../vendor/reveal/plugin/highlight/highlight.js"></script>
+  <script src="../../../../vendor/reveal/plugin/zoom/zoom.js"></script>
+  <script src="../../../../vendor/chartjs/chart.umd.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: false,   // a página aparece no rodapé do slide (ver .deck-footer)
+      transition: 'slide',
+      transitionSpeed: 'default',
+      controls: true,
+      progress: true,
+      center: false,
+      pdfSeparateFragments: false,
+      width: 1280, height: 720,
+      margin: 0.0,
+      plugins: [ RevealHighlight, RevealZoom ]
+    });
+
+    // ---- Renderização dos gráficos Chart.js ----
+    // getComputedStyle é "vivo": ler as cores DENTRO do montarGrafico faz o
+    // gráfico seguir o tema atual (importa ao alternar claro/escuro).
+    const V = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+    const TIPOS = { barra: 'bar', linha: 'line', rosca: 'doughnut', pizza: 'pie', area: 'line' };
+    function montarGrafico(canvas) {
+      const SERIES = [1,2,3,4,5,6,7,8].map(i => V('--series-'+i));
+      Chart.defaults.font.family = V('--font-sans') || 'system-ui, sans-serif';
+      Chart.defaults.color = V('--chart-ink-2');
+      Chart.defaults.borderColor = V('--chart-grid');
+
+      const cfg = JSON.parse(canvas.dataset.chart);
+      const tipo = TIPOS[cfg.tipo] || cfg.tipo;   // aceita nomes PT ou os do Chart.js
+      const circular = ['doughnut','pie','polarArea'].includes(tipo);
+      const ehArea = cfg.tipo === 'area';
+      const datasets = (cfg.series || []).map((s, i) => ({
+        label: s.nome,
+        data: s.dados,
+        backgroundColor: circular ? (cfg.series[0].dados.map((_, k) => SERIES[k % 8]))
+                                   : (ehArea ? SERIES[i % 8] + '33' : SERIES[i % 8]),
+        borderColor: SERIES[i % 8],
+        borderWidth: tipo === 'line' ? 2.4 : 0,
+        borderRadius: tipo === 'bar' ? 4 : 0,
+        pointRadius: tipo === 'line' ? 3 : 0,
+        tension: 0.25, fill: ehArea
+      }));
+      // Série única não tem legenda (seria uma caixinha só) — então o nome da
+      // série, que é onde mora a unidade, vira o rótulo do eixo Y. Sem isso o
+      // gráfico mostra números sem unidade.
+      const legenda = (cfg.series && cfg.series.length > 1) || circular;
+      const rotuloY = (!legenda && !circular && datasets.length === 1) ? datasets[0].label : '';
+      new Chart(canvas, {
+        type: tipo,
+        data: { labels: cfg.labels, datasets },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          animation: false,
+          plugins: {
+            legend: {
+              display: legenda,
+              position: 'bottom',
+              labels: { boxWidth: 12, boxHeight: 12, usePointStyle: true, padding: 16,
+                        color: V('--chart-ink-2'), font: { size: 15 } }
+            },
+            tooltip: { enabled: true }
+          },
+          scales: circular ? {} : {
+            x: { grid: { display: false }, border: { color: V('--chart-axis') },
+                 ticks: { color: V('--chart-muted'), font: { size: 14 } } },
+            y: { grid: { color: V('--chart-grid') }, border: { display: false },
+                 ticks: { color: V('--chart-muted'), font: { size: 14 } },
+                 title: { display: !!rotuloY, text: rotuloY,
+                          color: V('--chart-ink-2'), font: { size: 15 } },
+                 beginAtZero: true }
+          }
+        }
+      });
+    }
+    // Renderiza os gráficos do slide atual (evita medir canvas escondido = 0px)
+    function renderVisiveis() {
+      document.querySelectorAll('section.present canvas[data-chart]').forEach(c => {
+        if (!c.dataset.pronto) { c.dataset.pronto = '1'; montarGrafico(c); }
+      });
+    }
+    function renderTodos() {
+      document.querySelectorAll('canvas[data-chart]').forEach(c => {
+        if (!c.dataset.pronto) { c.dataset.pronto = '1'; montarGrafico(c); }
+      });
+    }
+    const modoPDF = window.location.search.includes('print-pdf');
+    if (modoPDF) {
+      // No modo PDF todos os slides ficam visíveis: renderiza tudo.
+      Reveal.on('ready', () => setTimeout(renderTodos, 200));
+    } else {
+      Reveal.on('ready', renderVisiveis);
+      Reveal.on('slidechanged', renderVisiveis);
+    }
+    window.__renderTodos = renderTodos;
+    // Redesenha os gráficos com as cores do tema atual (ao alternar claro/escuro).
+    window.__reRenderGraficos = function () {
+      document.querySelectorAll('canvas[data-chart]').forEach(c => {
+        const ex = Chart.getChart(c); if (ex) ex.destroy(); delete c.dataset.pronto;
+      });
+      (modoPDF ? renderTodos : renderVisiveis)();
+    };
+  </script>
+
+  <script>
+    // ---- Toggle de tema (o ícone sol/lua é trocado por CSS via [data-theme]) ----
+    (function () {
+      const root = document.documentElement;
+      const btn = document.querySelector('.tema-toggle');
+      function aplicar(modo) {
+        root.setAttribute('data-theme', modo);
+        try { localStorage.setItem('gs-tema', modo); } catch (e) {}
+        if (window.__reRenderGraficos) window.__reRenderGraficos();
+      }
+      btn.addEventListener('click', () =>
+        aplicar(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+    })();
+  </script>
+  
+  <script>
+  (function () {
+    var root = document.documentElement;
+    // revela os botões do topo quando o mouse está na faixa de cima
+    window.addEventListener('mousemove', function (e) {
+      root.classList.toggle('mostrar-topo', e.clientY < 80);
+    });
+    var link = document.querySelector('.btn-voltar');
+    if (!link) return;
+    // origem explícita passada pelo plano (?de=): só caminho relativo seguro
+    try {
+      var de = new URLSearchParams(location.search).get('de');
+      if (de && !/^[a-z][a-z0-9+.-]*:/i.test(de) && de[0] !== '/') link.setAttribute('href', de);
+    } catch (e) {}
+    // se você veio de outra página do site, volta pra ELA via histórico
+    link.addEventListener('click', function (ev) {
+      try {
+        if (document.referrer &&
+            new URL(document.referrer).origin === location.origin &&
+            history.length > 1) {
+          ev.preventDefault();
+          history.back();
+        }
+      } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>

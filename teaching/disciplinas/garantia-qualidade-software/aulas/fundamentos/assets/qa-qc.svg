@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 440">
+  <line x1="500" y1="30" x2="500" y2="410" class="dg-traco"/>
+  <!-- QA -->
+  <text x="250" y="70" text-anchor="middle" font-size="34" class="dg-titulo">QA</text>
+  <text x="250" y="104" text-anchor="middle" font-size="18" class="dg-menor">garantia da qualidade</text>
+  <rect x="80" y="140" width="340" height="230" rx="12" class="dg-forma"/>
+  <text x="250" y="190" text-anchor="middle" font-size="22" class="dg-rotulo">preventiva</text>
+  <text x="250" y="232" text-anchor="middle" font-size="22" class="dg-rotulo">orientada ao processo</text>
+  <text x="250" y="274" text-anchor="middle" font-size="18" class="dg-menor">"bom processo gera bom produto"</text>
+  <text x="250" y="316" text-anchor="middle" font-size="18" class="dg-menor">responsabilidade de todos</text>
+  <text x="250" y="400" text-anchor="middle" font-size="18" class="dg-rotulo">Zanin: qualidade de processo</text>
+  <!-- QC -->
+  <text x="750" y="70" text-anchor="middle" font-size="34" class="dg-titulo">QC</text>
+  <text x="750" y="104" text-anchor="middle" font-size="18" class="dg-menor">controle de qualidade</text>
+  <rect x="580" y="140" width="340" height="230" rx="12" class="dg-forma"/>
+  <text x="750" y="190" text-anchor="middle" font-size="22" class="dg-rotulo">corretiva</text>
+  <text x="750" y="232" text-anchor="middle" font-size="22" class="dg-rotulo">orientada ao produto</text>
+  <text x="750" y="274" text-anchor="middle" font-size="18" class="dg-menor">teste é uma forma — há outras:</text>
+  <text x="750" y="316" text-anchor="middle" font-size="18" class="dg-menor">revisão · métodos formais · protótipo</text>
+  <text x="750" y="400" text-anchor="middle" font-size="18" class="dg-rotulo">Zanin: qualidade de produto</text>
+</svg>

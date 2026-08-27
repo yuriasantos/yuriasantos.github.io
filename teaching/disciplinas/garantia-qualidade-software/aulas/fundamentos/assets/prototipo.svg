@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 400">
+  <defs>
+    <marker id="prot-seta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" class="dg-seta-cabeca"/>
+    </marker>
+  </defs>
+  <rect x="20" y="90" width="210" height="100" rx="10" class="dg-forma"/>
+  <text x="125" y="132" text-anchor="middle" font-size="18" class="dg-rotulo">estabelecer os</text>
+  <text x="125" y="158" text-anchor="middle" font-size="18" class="dg-rotulo">objetivos do protótipo</text>
+
+  <rect x="270" y="90" width="210" height="100" rx="10" class="dg-forma"/>
+  <text x="375" y="132" text-anchor="middle" font-size="18" class="dg-rotulo">definir a</text>
+  <text x="375" y="158" text-anchor="middle" font-size="18" class="dg-rotulo">funcionalidade</text>
+
+  <rect x="520" y="90" width="210" height="100" rx="10" class="dg-forma"/>
+  <text x="625" y="132" text-anchor="middle" font-size="18" class="dg-rotulo">desenvolver</text>
+  <text x="625" y="158" text-anchor="middle" font-size="18" class="dg-rotulo">o protótipo</text>
+
+  <rect x="770" y="90" width="210" height="100" rx="10" class="dg-forma"/>
+  <text x="875" y="132" text-anchor="middle" font-size="18" class="dg-rotulo">avaliar</text>
+  <text x="875" y="158" text-anchor="middle" font-size="18" class="dg-rotulo">o protótipo</text>
+
+  <path d="M230,140 L270,140" class="dg-seta" marker-end="url(#prot-seta)"/>
+  <path d="M480,140 L520,140" class="dg-seta" marker-end="url(#prot-seta)"/>
+  <path d="M730,140 L770,140" class="dg-seta" marker-end="url(#prot-seta)"/>
+
+  <path d="M125,190 L125,240" class="dg-seta" marker-end="url(#prot-seta)"/>
+  <path d="M375,190 L375,240" class="dg-seta" marker-end="url(#prot-seta)"/>
+  <path d="M625,190 L625,240" class="dg-seta" marker-end="url(#prot-seta)"/>
+  <path d="M875,190 L875,240" class="dg-seta" marker-end="url(#prot-seta)"/>
+
+  <rect x="20" y="240" width="210" height="70" rx="10" class="dg-forma" stroke-dasharray="8 6"/>
+  <text x="125" y="282" text-anchor="middle" font-size="17" class="dg-menor">plano de prototipação</text>
+  <rect x="270" y="240" width="210" height="70" rx="10" class="dg-forma" stroke-dasharray="8 6"/>
+  <text x="375" y="282" text-anchor="middle" font-size="17" class="dg-menor">definição em linhas gerais</text>
+  <rect x="520" y="240" width="210" height="70" rx="10" class="dg-forma" stroke-dasharray="8 6"/>
+  <text x="625" y="282" text-anchor="middle" font-size="17" class="dg-menor">protótipo executável</text>
+  <rect x="770" y="240" width="210" height="70" rx="10" class="dg-forma" stroke-dasharray="8 6"/>
+  <text x="875" y="282" text-anchor="middle" font-size="17" class="dg-menor">relatório de avaliação</text>
+
+</svg>
