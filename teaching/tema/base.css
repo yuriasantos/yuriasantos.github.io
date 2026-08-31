@@ -144,7 +144,7 @@
 /* 42em ≈ 95% da largura útil (89% de 16:9 ÷ 3.6cqh do corpo ≈ 44em).
    Era 24em, que usava 58% e empurrava bullet longo para 3–4 linhas. */
 .l-topicos li::before { content: ""; position: absolute; left: 0; top: 0.42em; width: 0.5em; height: 0.5em; border-radius: 0.2em; background: var(--accent); }
-.l-topicos li .nota { display: block; font-size: 0.78em; color: var(--muted); margin-top: 0.15em; }
+.l-topicos li .nota { display: block; font-size: 0.86em; color: var(--ink-2); margin-top: 0.25em; line-height: 1.3; }
 
 /* ---------- destaque ---------- */
 .l-destaque { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
