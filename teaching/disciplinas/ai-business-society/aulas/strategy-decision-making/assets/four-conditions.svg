@@ -1,0 +1,50 @@
+<!-- The four conditions that govern the pace of delegation (pp. 6–7), drawn as four gates a task must pass. Any task, at any causal level, can in theory reach any tier if all four are met (p. 7). dg-* classes only. -->
+<svg viewBox="0 0 960 380" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="fc-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path class="dg-seta-cabeca" d="M 0 0 L 10 5 L 0 10 z"/>
+    </marker>
+  </defs>
+
+  <!-- the task, left -->
+  <rect class="dg-forma" x="30" y="130" width="170" height="120" rx="10" stroke-width="3"/>
+  <text class="dg-rotulo" x="115" y="175" font-size="16" text-anchor="middle">a strategic task</text>
+  <text class="dg-menor" x="115" y="197" font-size="13" text-anchor="middle">at any level of the</text>
+  <text class="dg-menor" x="115" y="215" font-size="13" text-anchor="middle">causal ladder</text>
+  <line class="dg-seta" x1="200" y1="190" x2="248" y2="190" stroke-width="2.5" marker-end="url(#fc-arrow)"/>
+
+  <!-- gate i -->
+  <rect class="dg-forma" x="260" y="40" width="320" height="130" rx="10" stroke-width="3"/>
+  <circle class="dg-linha" cx="290" cy="70" r="15" stroke-width="3"/>
+  <text class="dg-rotulo" x="290" y="76" font-size="15" text-anchor="middle">i</text>
+  <text class="dg-rotulo" x="316" y="76" font-size="16">Feedback density / verifiability</text>
+  <text class="dg-menor" x="276" y="106" font-size="14" font-style="italic">can we score decisions credibly</text>
+  <text class="dg-menor" x="276" y="126" font-size="14" font-style="italic">and repeatedly?</text>
+
+  <!-- gate ii -->
+  <rect class="dg-forma" x="610" y="40" width="320" height="130" rx="10" stroke-width="3"/>
+  <circle class="dg-linha" cx="640" cy="70" r="15" stroke-width="3"/>
+  <text class="dg-rotulo" x="640" y="76" font-size="15" text-anchor="middle">ii</text>
+  <text class="dg-rotulo" x="666" y="76" font-size="16">Downside boundedness / reversibility</text>
+  <text class="dg-menor" x="626" y="106" font-size="14" font-style="italic">can errors be contained by guardrails,</text>
+  <text class="dg-menor" x="626" y="126" font-size="14" font-style="italic">budgets, or the ability to reverse course?</text>
+
+  <!-- gate iii -->
+  <rect class="dg-forma" x="260" y="210" width="320" height="130" rx="10" stroke-width="3"/>
+  <circle class="dg-linha" cx="290" cy="240" r="15" stroke-width="3"/>
+  <text class="dg-rotulo" x="290" y="246" font-size="15" text-anchor="middle">iii</text>
+  <text class="dg-rotulo" x="316" y="246" font-size="16">Objective specifiability</text>
+  <text class="dg-menor" x="276" y="276" font-size="14" font-style="italic">can we state what “good” means</text>
+  <text class="dg-menor" x="276" y="296" font-size="14" font-style="italic">without Goodharting ourselves?</text>
+
+  <!-- gate iv -->
+  <rect class="dg-forma" x="610" y="210" width="320" height="130" rx="10" stroke-width="3"/>
+  <circle class="dg-linha" cx="640" cy="240" r="15" stroke-width="3"/>
+  <text class="dg-rotulo" x="640" y="246" font-size="15" text-anchor="middle">iv</text>
+  <text class="dg-rotulo" x="666" y="246" font-size="16">Accountability / liability</text>
+  <text class="dg-menor" x="626" y="276" font-size="14" font-style="italic">can we assign responsibility and</text>
+  <text class="dg-menor" x="626" y="296" font-size="14" font-style="italic">audit the system's behaviour?</text>
+
+  <!-- bottom line -->
+  <text class="dg-menor" x="595" y="372" font-size="14" text-anchor="middle">all four met → in theory, any tier · the conditions also order the tiers</text>
+</svg>

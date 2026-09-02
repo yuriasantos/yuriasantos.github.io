@@ -1,0 +1,43 @@
+<!-- The autonomous-driving ladder the paper opens with (p. 2, prose only — the article carries no figure). Three levels in the authors' own words: blind spot and lane departure warnings at the lowest level, lane centering and cruise control at the midlevel, fully autonomous driving in all driving conditions at the top. Left of the ladder, the pivot: the levels are about who "drives". dg-* classes only, no colours. -->
+<svg viewBox="0 0 960 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="dl-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path class="dg-seta-cabeca" d="M 0 0 L 10 5 L 0 10 z"/>
+    </marker>
+  </defs>
+
+  <!-- rails -->
+  <line class="dg-forma" x1="300" y1="30" x2="300" y2="370" stroke-width="5" stroke-linecap="round"/>
+  <line class="dg-forma" x1="410" y1="30" x2="410" y2="370" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- rungs, bottom to top -->
+  <line class="dg-linha" x1="300" y1="325" x2="410" y2="325" stroke-width="7" stroke-linecap="round"/>
+  <line class="dg-linha" x1="300" y1="200" x2="410" y2="200" stroke-width="7" stroke-linecap="round"/>
+  <line class="dg-linha-2" x1="300" y1="75" x2="410" y2="75" stroke-width="7" stroke-linecap="round"/>
+
+  <!-- right: the paper's own wording for each level -->
+  <g font-size="17">
+    <text class="dg-menor" x="440" y="302" font-size="14">lowest level</text>
+    <text class="dg-rotulo" x="440" y="326">Blind spot and lane departure warnings</text>
+    <text class="dg-menor" x="440" y="348" font-size="15">the car tells you; you steer</text>
+
+    <text class="dg-menor" x="440" y="177" font-size="14">midlevel</text>
+    <text class="dg-rotulo" x="440" y="201">Lane centering and cruise control</text>
+    <text class="dg-menor" x="440" y="223" font-size="15">the car acts, inside limits you set</text>
+
+    <text class="dg-menor" x="440" y="52" font-size="14">top level</text>
+    <text class="dg-rotulo" x="440" y="76">Fully autonomous driving</text>
+    <text class="dg-menor" x="440" y="98" font-size="15">in all driving conditions</text>
+  </g>
+
+  <!-- left: the pivot — the ladder is about who drives -->
+  <path class="dg-eixo" d="M 270 345 L 252 345 L 252 55 L 270 55" stroke-width="2" fill="none"/>
+  <text class="dg-rotulo" x="232" y="172" font-size="16" text-anchor="end">these levels are about</text>
+  <text class="dg-titulo" x="232" y="198" font-size="20" text-anchor="end">delegation — who “drives”</text>
+  <text class="dg-menor" x="232" y="226" font-size="15" text-anchor="end">even though capability</text>
+  <text class="dg-menor" x="232" y="246" font-size="15" text-anchor="end">improvements enable it</text>
+
+  <!-- axis, on the right so it clears the annotation -->
+  <line class="dg-seta" x1="930" y1="360" x2="930" y2="45" stroke-width="2" marker-end="url(#dl-arrow)"/>
+  <text class="dg-menor" x="946" y="202" font-size="14" text-anchor="middle" transform="rotate(-90 946 202)">AI-enabled autonomy at each level</text>
+</svg>

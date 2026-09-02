@@ -1,0 +1,60 @@
+<!-- The causal ladder drawn as a ladder: two rails, four rungs. Right of each rung, the level's name, its characteristic question and its object of reasoning (Table 1, p. 3). Left, the three regimes from the Table 1 notes: Levels 1–2 operate within an existing model, Level 3 extends it, Level 4 builds a new one. dg-* classes only, no colours. -->
+<svg viewBox="0 0 960 460" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="cl-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path class="dg-seta-cabeca" d="M 0 0 L 10 5 L 0 10 z"/>
+    </marker>
+  </defs>
+
+  <!-- rails -->
+  <line class="dg-forma" x1="300" y1="40" x2="300" y2="440" stroke-width="5" stroke-linecap="round"/>
+  <line class="dg-forma" x1="410" y1="40" x2="410" y2="440" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- rungs, bottom to top -->
+  <line class="dg-linha" x1="300" y1="395" x2="410" y2="395" stroke-width="7" stroke-linecap="round"/>
+  <line class="dg-linha" x1="300" y1="295" x2="410" y2="295" stroke-width="7" stroke-linecap="round"/>
+  <line class="dg-linha" x1="300" y1="195" x2="410" y2="195" stroke-width="7" stroke-linecap="round"/>
+  <line class="dg-linha-2" x1="300" y1="95" x2="410" y2="95" stroke-width="7" stroke-linecap="round"/>
+
+  <!-- rung numbers, inside the ladder -->
+  <text class="dg-titulo" x="355" y="381" font-size="22" text-anchor="middle">1</text>
+  <text class="dg-titulo" x="355" y="281" font-size="22" text-anchor="middle">2</text>
+  <text class="dg-titulo" x="355" y="181" font-size="22" text-anchor="middle">3</text>
+  <text class="dg-titulo" x="355" y="81" font-size="22" text-anchor="middle">4</text>
+
+  <!-- right: name · question · object of reasoning -->
+  <g font-size="17">
+    <text class="dg-rotulo" x="440" y="378">Analytic–predictive</text>
+    <text class="dg-menor" x="440" y="400" font-size="15" font-style="italic">What will happen if X continues?</text>
+    <text class="dg-menor" x="440" y="420" font-size="14">object: associations, trends</text>
+
+    <text class="dg-rotulo" x="440" y="278">Intervention-oriented</text>
+    <text class="dg-menor" x="440" y="300" font-size="15" font-style="italic">What happens if I do X?</text>
+    <text class="dg-menor" x="440" y="320" font-size="14">object: interventions on variables</text>
+
+    <text class="dg-rotulo" x="440" y="178">Counterfactual–extrapolative</text>
+    <text class="dg-menor" x="440" y="200" font-size="15" font-style="italic">What would happen if we did Y instead?</text>
+    <text class="dg-menor" x="440" y="220" font-size="14">object: counterfactual outcomes of a model</text>
+
+    <text class="dg-rotulo" x="440" y="78">Model-generative</text>
+    <text class="dg-menor" x="440" y="100" font-size="15" font-style="italic">What model would make Z possible?</text>
+    <text class="dg-menor" x="440" y="120" font-size="14">object: causal models of a novel state</text>
+  </g>
+
+  <!-- left: the three regimes (Table 1 notes) -->
+  <path class="dg-eixo" d="M 270 420 L 258 420 L 258 270 L 270 270" stroke-width="2" fill="none"/>
+  <text class="dg-rotulo" x="246" y="338" font-size="14" text-anchor="end">operate within</text>
+  <text class="dg-rotulo" x="246" y="358" font-size="14" text-anchor="end">an existing causal model</text>
+
+  <path class="dg-eixo" d="M 270 220 L 258 220 L 258 170 L 270 170" stroke-width="2" fill="none"/>
+  <text class="dg-rotulo" x="246" y="190" font-size="14" text-anchor="end">extends the existing model</text>
+  <text class="dg-menor" x="246" y="208" font-size="14" text-anchor="end">to counterfactual extrapolations</text>
+
+  <path class="dg-eixo" d="M 270 120 L 258 120 L 258 70 L 270 70" stroke-width="2" fill="none"/>
+  <text class="dg-rotulo" x="246" y="90" font-size="14" text-anchor="end">builds an entirely new model</text>
+  <text class="dg-menor" x="246" y="108" font-size="14" text-anchor="end">of a valuable future state</text>
+
+  <!-- axis of depth -->
+  <line class="dg-seta" x1="22" y1="430" x2="22" y2="60" stroke-width="2" marker-end="url(#cl-arrow)"/>
+  <text class="dg-menor" x="10" y="245" font-size="14" text-anchor="middle" transform="rotate(-90 10 245)">depth and scope of causal reasoning</text>
+</svg>

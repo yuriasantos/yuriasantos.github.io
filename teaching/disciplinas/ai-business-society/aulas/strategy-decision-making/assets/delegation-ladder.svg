@@ -1,0 +1,59 @@
+<!-- The delegation ladder drawn as a staircase — "this ladder parallels the career development of a human strategist" (p. 7). Each step: tier, role, primary AI function and the governance regime, all from Table 3 (p. 7); the line under each step is from the tier's prose (p. 7). The vertical arrow is the ordering variable: discretion granted, not sophistication of reasoning (Table 3 notes). dg-* classes only. -->
+<svg viewBox="0 0 960 460" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="dl-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path class="dg-seta-cabeca" d="M 0 0 L 10 5 L 0 10 z"/>
+    </marker>
+  </defs>
+
+  <!-- staircase outline: floor at 420; steps 225 wide; tops at 395, 310, 225, 140 -->
+  <path class="dg-forma" stroke-width="4" stroke-linejoin="round"
+        d="M 15 420 L 15 395 L 240 395 L 240 310 L 465 310 L 465 225 L 690 225 L 690 140 L 915 140 L 915 420"/>
+  <line class="dg-linha" x1="15" y1="395" x2="240" y2="395" stroke-width="7" stroke-linecap="round"/>
+  <line class="dg-linha" x1="240" y1="310" x2="465" y2="310" stroke-width="7" stroke-linecap="round"/>
+  <line class="dg-linha" x1="465" y1="225" x2="690" y2="225" stroke-width="7" stroke-linecap="round"/>
+  <line class="dg-linha-2" x1="690" y1="140" x2="915" y2="140" stroke-width="7" stroke-linecap="round"/>
+
+  <!-- Tier 1 (text above step 1, x 15–240) -->
+  <g>
+    <text class="dg-rotulo" x="24" y="303" font-size="17">Tier 1 · Analyst</text>
+    <text class="dg-menor" x="24" y="322" font-size="12">informational support</text>
+    <text class="dg-rotulo" x="24" y="343" font-size="12">sensing, summarising, scanning,</text>
+    <text class="dg-rotulo" x="24" y="359" font-size="12">organising information</text>
+    <text class="dg-menor" x="24" y="381" font-size="11.5" font-style="italic">light — humans keep decision rights</text>
+  </g>
+  <!-- Tier 2 (x 240–465) -->
+  <g>
+    <text class="dg-rotulo" x="249" y="218" font-size="17">Tier 2 · Associate</text>
+    <text class="dg-menor" x="249" y="237" font-size="12">tactical recommender</text>
+    <text class="dg-rotulo" x="249" y="258" font-size="12">options, scenarios, structured</text>
+    <text class="dg-rotulo" x="249" y="274" font-size="12">arguments, human-defined frame</text>
+    <text class="dg-menor" x="249" y="296" font-size="11.5" font-style="italic">moderate — advises, does not decide</text>
+  </g>
+  <!-- Tier 3 (x 465–690) -->
+  <g>
+    <text class="dg-rotulo" x="474" y="133" font-size="17">Tier 3 · Unit manager</text>
+    <text class="dg-menor" x="474" y="152" font-size="12">bounded operator</text>
+    <text class="dg-rotulo" x="474" y="173" font-size="12">executes recurring strategic</text>
+    <text class="dg-rotulo" x="474" y="189" font-size="12">decisions, explicit constraints</text>
+    <text class="dg-menor" x="474" y="211" font-size="11.5" font-style="italic">formalised — oversight and audits</text>
+  </g>
+  <!-- Tier 4 (x 690–915) -->
+  <g>
+    <text class="dg-rotulo" x="699" y="48" font-size="17">Tier 4 · CEO</text>
+    <text class="dg-menor" x="699" y="67" font-size="12">strategic executive</text>
+    <text class="dg-rotulo" x="699" y="88" font-size="12">proposes or executes major</text>
+    <text class="dg-rotulo" x="699" y="104" font-size="12">commitments and reallocations</text>
+    <text class="dg-menor" x="699" y="126" font-size="11.5" font-style="italic">intensive — liability becomes binding</text>
+  </g>
+
+  <!-- under each step: what verification looks like there (p. 7 prose), staggered -->
+  <text class="dg-menor" x="127" y="440" font-size="12" text-anchor="middle">errors visible and correctable</text>
+  <text class="dg-menor" x="352" y="456" font-size="12" text-anchor="middle">humans retain decision rights</text>
+  <text class="dg-menor" x="577" y="440" font-size="12" text-anchor="middle">escalation rules · continuous verification</text>
+  <text class="dg-menor" x="802" y="456" font-size="12" text-anchor="middle">stress tests · liability · agent scorecards</text>
+
+  <!-- ordering axis -->
+  <line class="dg-seta" x1="940" y1="415" x2="940" y2="45" stroke-width="2" marker-end="url(#dl-arrow)"/>
+  <text class="dg-menor" x="955" y="230" font-size="13" text-anchor="middle" transform="rotate(-90 955 230)">discretion granted — not depth of reasoning</text>
+</svg>

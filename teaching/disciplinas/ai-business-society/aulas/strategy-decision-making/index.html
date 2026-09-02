@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Strategy and Decision Making</title>
+
+  <link rel="stylesheet" href="../../../../vendor/reveal/dist/reset.css">
+  <link rel="stylesheet" href="../../../../vendor/reveal/dist/reveal.css">
+  <link rel="stylesheet" href="../../../../tema/base.css">
+  <!-- tema claro (base) + tema escuro embutido, ativado por [data-theme="dark"] -->
+  <link rel="stylesheet" href="../../../../tema/tema-default.css">
+  <style>/* tema-dark.css — escuro, para salas com projeção em ambiente escuro.
+   Séries = mesma paleta stepada para superfície escura (dataviz skill). */
+:root[data-theme="dark"] {
+  --bg:      #1a1a19;
+  --ink:     #ffffff;
+  --ink-2:   #c3c2b7;
+  --muted:   #898781;
+  --accent:  #3987e5;
+  --accent-2:#d95926;
+  --rule:    #2c2c2a;
+  --code-bg: #2c2c2a;
+
+  --chart-surface: #1a1a19;
+  --chart-grid:    #2c2c2a;
+  --chart-axis:    #383835;
+  --chart-ink:     #ffffff;
+  --chart-ink-2:   #c3c2b7;
+  --chart-muted:   #898781;
+
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+  --series-5: #d55181;
+  --series-6: #008300;
+  --series-7: #9085e9;
+  --series-8: #e66767;
+}
+</style>
+  <link rel="stylesheet" href="../../../../tema/controles.css">
+  <link rel="stylesheet" href="../../../../vendor/reveal/plugin/highlight/monokai.css">
+  <script>
+    // Define o modo (claro/escuro) o quanto antes, evitando "flash".
+    (function () {
+      var salvo = null;
+      try { salvo = localStorage.getItem('gs-tema'); } catch (e) {}
+      document.documentElement.setAttribute('data-theme', salvo || 'light');
+    })();
+  </script>
+</head>
+<body>
+  <a class="btn-topo btn-voltar" href="../../../../index.html"
+     title="Back" aria-label="Back"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></a>
+  <button class="btn-topo tema-toggle" aria-label="Toggle light/dark theme"><svg class="ico ico-lua" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="ico ico-sol" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+  <div class="reveal">
+    <div class="slides">
+      
+      
+<section>
+  <div class="slide l-titulo">
+    <div class="kicker">AI in Business · Seminar 1 — G1</div>
+    <h1>Strategy and <strong>Decision Making</strong></h1>
+    <div class="rule"></div>
+    <p class="subtitulo">Can AI do strategy? Two ladders — and the gap between them</p>
+    <p class="rodape">Csaszar, Lee, Zemsky &amp; Zenger (2026) · *Strategy Science* 11(1)</p>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>The ladder the industry already uses — autonomous driving</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="A ladder with two rails and three rungs. Bottom rung, lowest level — blind spot and lane departure warnings; the car tells you, you steer. Middle rung, midlevel — lane centering and cruise control; the car acts, inside limits you set. Top rung — fully autonomous driving in all driving conditions. A bracket down the left side of the ladder reads, these levels are about delegation, who drives, even though capability improvements enable it. A vertical arrow marks AI-enabled autonomy at each level.">
+      <!-- The autonomous-driving ladder the paper opens with (p. 2, prose only — the article carries no figure). Three levels in the authors' own words: blind spot and lane departure warnings at the lowest level, lane centering and cruise control at the midlevel, fully autonomous driving in all driving conditions at the top. Left of the ladder, the pivot: the levels are about who "drives". dg-* classes only, no colours. -->
+<svg viewBox="0 0 960 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="dl-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path class="dg-seta-cabeca" d="M 0 0 L 10 5 L 0 10 z"/>
+    </marker>
+  </defs>
+
+  <!-- rails -->
+  <line class="dg-forma" x1="300" y1="30" x2="300" y2="370" stroke-width="5" stroke-linecap="round"/>
+  <line class="dg-forma" x1="410" y1="30" x2="410" y2="370" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- rungs, bottom to top -->
+  <line class="dg-linha" x1="300" y1="325" x2="410" y2="325" stroke-width="7" stroke-linecap="round"/>
+  <line class="dg-linha" x1="300" y1="200" x2="410" y2="200" stroke-width="7" stroke-linecap="round"/>
+  <line class="dg-linha-2" x1="300" y1="75" x2="410" y2="75" stroke-width="7" stroke-linecap="round"/>
+
+  <!-- right: the paper's own wording for each level -->
+  <g font-size="17">
+    <text class="dg-menor" x="440" y="302" font-size="14">lowest level</text>
+    <text class="dg-rotulo" x="440" y="326">Blind spot and lane departure warnings</text>
+    <text class="dg-menor" x="440" y="348" font-size="15">the car tells you; you steer</text>
+
+    <text class="dg-menor" x="440" y="177" font-size="14">midlevel</text>
+    <text class="dg-rotulo" x="440" y="201">Lane centering and cruise control</text>
+    <text class="dg-menor" x="440" y="223" font-size="15">the car acts, inside limits you set</text>
+
+    <text class="dg-menor" x="440" y="52" font-size="14">top level</text>
+    <text class="dg-rotulo" x="440" y="76">Fully autonomous driving</text>
+    <text class="dg-menor" x="440" y="98" font-size="15">in all driving conditions</text>
+  </g>
+
+  <!-- left: the pivot — the ladder is about who drives -->
+  <path class="dg-eixo" d="M 270 345 L 252 345 L 252 55 L 270 55" stroke-width="2" fill="none"/>
+  <text class="dg-rotulo" x="232" y="172" font-size="16" text-anchor="end">these levels are about</text>
+  <text class="dg-titulo" x="232" y="198" font-size="20" text-anchor="end">delegation — who “drives”</text>
+  <text class="dg-menor" x="232" y="226" font-size="15" text-anchor="end">even though capability</text>
+  <text class="dg-menor" x="232" y="246" font-size="15" text-anchor="end">improvements enable it</text>
+
+  <!-- axis, on the right so it clears the annotation -->
+  <line class="dg-seta" x1="930" y1="360" x2="930" y2="45" stroke-width="2" marker-end="url(#dl-arrow)"/>
+  <text class="dg-menor" x="946" y="202" font-size="14" text-anchor="middle" transform="rotate(-90 946 202)">AI-enabled autonomy at each level</text>
+</svg>
+    </figure>
+    <figcaption class="dg-legenda"><em>Can AI drive cars? Or assist with driving?</em> It depends — on the level, on who asks, and on their comfort with delegating.</figcaption>
+    <div class="fonte">Csaszar et al. (2026), p. 2 — described in prose; the article carries no figure</div>
+    <div class="deck-footer">Strategy and Decision Making · 2/26</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-citacao">
+    <div class="kicker">Before the hierarchy, a definition</div>
+    <blockquote class="cit-texto">Strategy is a purposive process through which decision makers select actions designed to bring about a desired future, varyingly defined as the achievement of a goal (Chandler 1962), the occupation of a valuable position (Porter 1986, 1990), or the resolution of a problem (Rumelt 2011).</blockquote>
+    <div class="cit-autor">Csaszar, Lee, Zemsky &amp; Zenger</div>
+    <div class="cit-fonte">Can AI do strategy? (2026), §2.1, p. 3</div>
+    <div class="deck-footer">Strategy and Decision Making · 3/26</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-citacao">
+    <div class="kicker">Which is why the hierarchy is a causal one</div>
+    <blockquote class="cit-texto">As humans practice and theorize about it, strategic decision making is, therefore, a causal enterprise, one that presupposes beliefs — often tacit beliefs — about how particular initiatives, investments, or policies generate desired outcomes.</blockquote>
+    <div class="cit-autor">Csaszar, Lee, Zemsky &amp; Zenger</div>
+    <div class="cit-fonte">Can AI do strategy? (2026), §2.1, p. 3</div>
+    <div class="deck-footer">Strategy and Decision Making · 4/26</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Level 1 · Analytic–predictive — <em>what will happen if X continues?</em></h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Object of reasoning: associations and trends<span class="nota">inside a model structure and action space that already exist</span>
+        
+      </li>
+      
+      <li>
+        Example: capacity, inventory or hiring against projected demand<span class="nota">"The strategist need not know the precise causal mechanism behind sales growth; simply recognizing forecast growth is sufficient" (p. 4)</span>
+        
+      </li>
+      
+      <li>
+        AI generates forecasts, detects patterns, quantifies uncertainty<span class="nota">"AI is particularly powerful at this level" — ML detects regularities, LLMs extract signal from unstructured data (p. 4)</span>
+        
+      </li>
+      
+      <li>
+        The human decides which outcomes matter, and how a forecast becomes action<span class="nota">"Decisions about relevance, risk, and action continue — at least for now — to rest with human judgment" (p. 4)</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Strategy and Decision Making · 5/26</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Level 2 · Intervention-oriented — <em>what happens if we do X?</em></h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Object of reasoning: interventions on variables<span class="nota">actions familiar to the firm or to close analogs, with observable data</span>
+        
+      </li>
+      
+      <li>
+        Example: product expansion, marketing increases, acquisitions<span class="nota">"the effort is no longer forecasting trends but forecasting causal effects" (p. 5)</span>
+        
+      </li>
+      
+      <li>
+        AI estimates treatment effects, supports experiments, compares interventions<span class="nota">experimentation platforms, causal inference techniques, ML on actions by the firm or close analogs (p. 5)</span>
+        
+      </li>
+      
+      <li>
+        The human sets objectives and candidate actions, tests assumptions, weighs trade-offs<span class="nota">"At present, humans still act as intervention judges at Level 2" (p. 5)</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Strategy and Decision Making · 6/26</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Level 3 · Counterfactual–extrapolative — <em>what would happen if we did Y instead?</em></h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Object of reasoning: counterfactual outcomes of a model<span class="nota">actions the firm has not taken, carried in from another industry, geography or regulatory regime</span>
+        
+      </li>
+      
+      <li>
+        Example: Apple — chip integration, from smartphones to laptops<span class="nota">also a shift to a platform model · a new pricing mechanism for the industry · entry under a different institutional regime (p. 5)</span>
+        
+      </li>
+      
+      <li>
+        AI surfaces analogies, synthesises external evidence, explores counterfactuals<span class="nota">organises evidence from external firms, industries, geographies; simulates transporting a causal relationship across contexts (p. 5)</span>
+        
+      </li>
+      
+      <li>
+        The human judges which analogies transfer, and sets the risk bounds<span class="nota">"arbiters of AI-generated extrapolations … whether contextual differences constrain their valid transport" (p. 5)</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Strategy and Decision Making · 7/26</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Level 4 · Model-generative — <em>what model would make Z possible?</em></h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Object of reasoning: causal models of a novel state<span class="nota">builds the model, rather than applying or extending one — redefining what actions are conceivable</span>
+        
+      </li>
+      
+      <li>
+        Example: Walton composing Walmart · Jobs designing the Macintosh<span class="nota">"architecting entirely new futures, wholly distinct from the observable present" (p. 5)</span>
+        
+      </li>
+      
+      <li>
+        AI recombines concepts, stress tests assumptions, compares alternative models<span class="nota">LLMs "may highlight critical steps to accomplish or subproblems that must be solved", surface implicit assumptions (pp. 5–6)</span>
+        
+      </li>
+      
+      <li>
+        The human frames the new problem, judges coherence and fit, <strong>authorises the commitment</strong><span class="nota">"At Level 4, humans act as strategic theorists" (p. 6)</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Strategy and Decision Making · 8/26</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Where this leaves AI on the ladder</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Level 1 is where AI is strongest — association is what it does best<span class="nota">"AI is particularly powerful at this level" (p. 4); abundant tools already exist for Levels 1–2 (p. 12)</span>
+        
+      </li>
+      
+      <li>
+        At Levels 3–4 it assists — it does not author the model<span class="nota">the paper does NOT say AI fails here: "At Level 4, AI can assist with model construction" (p. 5)</span>
+        
+      </li>
+      
+      <li>
+        The obstacle at Level 4 is data, not intelligence<span class="nota">a new model describes a future "wholly distinct from the observable present" (p. 5) — nothing has generated data about it yet</span>
+        
+      </li>
+      
+      <li>
+        Framing the problem, and governing the commitment, stay human<span class="nota">"humans retain authority over problem framing and strategic commitment" (Table 2 notes, p. 4)</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Strategy and Decision Making · 9/26</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">01</div>
+    <h1>DelivAll</h1>
+    <p class="sub">A constructed case — the company is not real</p>
+    <div class="deck-footer">Strategy and Decision Making · 10/26</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>How this runs</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Groups of 4 to 5 — you are DelivAll's strategy board
+        
+      </li>
+      
+      <li>
+        Four challenges, one rung of the causal ladder each
+        
+      </li>
+      
+      <li>
+        7 minutes per challenge, then we share before climbing<span class="nota">4 × 7 = 28 min · the closing debate takes the last 15</span>
+        
+      </li>
+      
+      <li>
+        The company is losing margin to larger competitors. That is the whole brief
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Strategy and Decision Making · 11/26</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Challenge 1 · Level 1 — <em>what will happen if X continues?</em></h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Three years of order history. The model has found a pattern
+        
+      </li>
+      
+      <li>
+        Heavy rain: demand for deliveries rises <strong>35%</strong>
+        
+      </li>
+      
+      <li>
+        Same days: active couriers fall <strong>15%</strong>
+        
+      </li>
+      
+      <li>
+        Result: severe delays, exactly when demand peaks
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Strategy and Decision Making · 12/26</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Challenge 1 · your mission — 7 minutes</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        How do you turn this forecast into an operating decision?
+        
+      </li>
+      
+      <li>
+        Which calls are yours, and cannot be the model's?
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Strategy and Decision Making · 13/26</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Challenge 2 · Level 2 — <em>what happens if we do X?</em></h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Sales are falling. Marketing wants to fire R$ 10 coupons at every user
+        
+      </li>
+      
+      <li>
+        The model reports a near-perfect correlation<span class="nota">users who receive coupons buy considerably more</span>
+        
+      </li>
+      
+      <li>
+        Nobody has yet asked whether the coupon <strong>caused</strong> the purchase
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Strategy and Decision Making · 14/26</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Challenge 2 · your mission — 7 minutes</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Do you authorise the mass send?
+        
+      </li>
+      
+      <li>
+        How would you use AI to test cause rather than correlation?
+        
+      </li>
+      
+      <li>
+        What would selection bias look like, concretely, here?
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Strategy and Decision Making · 15/26</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Challenge 3 · Level 3 — <em>what would happen if we did Y instead?</em></h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Margins on delivery are exhausted. The board wants something DelivAll has never done
+        
+      </li>
+      
+      <li>
+        Proposal A: an ecosystem subscription, Prime-style
+        
+      </li>
+      
+      <li>
+        Proposal B: robotic dark kitchens, built and rented out
+        
+      </li>
+      
+      <li>
+        No internal historical data exists for either
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Strategy and Decision Making · 16/26</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Challenge 3 · your mission — 7 minutes</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        How do you use AI to find analogies in other industries?
+        
+      </li>
+      
+      <li>
+        What are the dangers of trusting its creative suggestions here?
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Strategy and Decision Making · 17/26</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Challenge 4 · Level 4 — <em>what model would make Z possible?</em></h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        The standard delivery-app model has failed in your city<span class="nota">unbearable traffic · courier discontent</span>
+        
+      </li>
+      
+      <li>
+        Design, from zero, a model that delivers in under 15 minutes
+        
+      </li>
+      
+      <li>
+        It must pay for itself, and be socially defensible
+        
+      </li>
+      
+      <li>
+        No prior data exists — the model does not exist yet
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Strategy and Decision Making · 18/26</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Challenge 4 · your mission — 7 minutes</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        What is the new model — new variables, new rules, new problem frame?
+        
+      </li>
+      
+      <li>
+        What is AI's part here, and what is strictly yours?
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Strategy and Decision Making · 19/26</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>What governs the pace of delegation — four conditions</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li class="fragment">
+        <strong>i.</strong> Feedback density / verifiability<span class="nota">"can we score decisions credibly and repeatedly?"</span>
+        
+      </li>
+      
+      <li class="fragment">
+        <strong>ii.</strong> Downside boundedness / reversibility<span class="nota">"can errors be contained by guardrails, budgets, or the ability to reverse course?"</span>
+        
+      </li>
+      
+      <li class="fragment">
+        <strong>iii.</strong> Objective specifiability<span class="nota">"can we state what 'good' means without Goodharting ourselves?"</span>
+        
+      </li>
+      
+      <li class="fragment">
+        <strong>iv.</strong> Accountability / liability<span class="nota">"can we assign responsibility and audit the system's behavior?"</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Strategy and Decision Making · 20/26</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">02</div>
+    <h1>Phase 2 — the delegation panel</h1>
+    <p class="sub">Same company, same tasks. Now the other ladder</p>
+    <div class="deck-footer">Strategy and Decision Making · 21/26</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-destaque">
+    <div class="frase">If we automated DelivAll's operation — <span class="accent">how far should the board let the AI act on its own?</span></div>
+    
+    <div class="deck-footer">Strategy and Decision Making · 22/26</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Tier 1 · Informational support — the AI as <strong>analyst</strong></h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Back to Challenge 1. The AI is strictly a sensor
+        
+      </li>
+      
+      <li>
+        It delivers the report: demand up in rain, couriers short
+        
+      </li>
+      
+      <li>
+        It takes no action. A human reads the alert and decides<span class="nota">whether to open a financial incentive so couriers ride in the storm</span>
+        
+      </li>
+      
+      <li>
+        Governance is light — errors are visible and correctable
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Strategy and Decision Making · 23/26</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Tier 2 · Tactical recommender — the AI as <strong>associate</strong></h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Back to Challenge 2. The AI proposes three routes, not one<span class="nota">A: R$ 10 coupon for lapsed users · B: free delivery above R$ 30 · C: …</span>
+        
+      </li>
+      
+      <li>
+        It writes the premortem: why a mass send erodes margin
+        
+      </li>
+      
+      <li>
+        It advises. It does not have the send button
+        
+      </li>
+      
+      <li>
+        The board weighs the trade-offs and authorises
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Strategy and Decision Making · 24/26</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Tier 3 · Bounded operator — the AI as <strong>unit manager</strong></h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        The board writes the rule. The AI executes it without asking
+        
+      </li>
+      
+      <li>
+        Up to <strong>R$ 5</strong> more on the delivery fee when the queue passes <strong>15 minutes</strong>
+        
+      </li>
+      
+      <li>
+        Hard stop: <strong>R$ 10,000</strong> of subsidy a day
+        
+      </li>
+      
+      <li>
+        Why this is safe — specific objective · instant feedback · a cap a human set
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Strategy and Decision Making · 25/26</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Tier 4 · Strategic executive — the AI as <strong>CEO</strong></h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Back to Challenges 3 and 4. The AI concludes the model is saturated
+        
+      </li>
+      
+      <li>
+        It proposes, on its own: buy DroneFly for <strong>R$ 5m</strong>, close 40% of the kitchens
+        
+      </li>
+      
+      <li>
+        Would you let it sign?
+        
+      </li>
+      
+      <li>
+        Feedback takes years. The downside is existential
+        
+      </li>
+      
+      <li>
+        What it can do here is simulate and stress test. The signature stays human
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Strategy and Decision Making · 26/26</div>
+  </div>
+</section>
+      
+    </div>
+  </div>
+
+  <script>
+    // ---- Notas do apresentador em corpo grande (tecla S) ----
+    // A speaker view é uma janela que o plugin de notas escreve do zero, e lá as
+    // notas saem em ~22px (menos ainda em tela estreita) — não se lê a um braço
+    // de distância. Como o HTML dela nasce dentro do notes.js, o único
+    // ponto de entrada é a chamada de window.open: guardamos a referência da
+    // janela e injetamos o CSS nela. Fica aqui, e não no vendor, para sobreviver
+    // a uma atualização do reveal.
+    (function () {
+      const CORPO = '30px';   // corpo das notas (o padrão do plugin dá ~22px)
+      const abrir = window.open;
+      window.open = function (url, nome, opcoes) {
+        const janela = abrir.call(window, url, nome, opcoes);
+        if (!janela || nome !== 'reveal.js - Notes') return janela;
+        const css = `
+          .speaker-controls-notes .value {
+            font-size: ${CORPO} !important;
+            line-height: 1.5 !important;
+          }`;
+        // document.write() do plugin descarta o <head> anterior, então tentamos
+        // de novo por alguns segundos até o estilo ficar de pé.
+        const injetar = () => {
+          try {
+            const doc = janela.document;
+            if (!doc || !doc.head || doc.getElementById('notas-grandes')) return;
+            const tag = doc.createElement('style');
+            tag.id = 'notas-grandes';
+            tag.textContent = css;
+            doc.head.appendChild(tag);
+          } catch (e) { /* janela ainda carregando */ }
+        };
+        const tentativas = setInterval(injetar, 150);
+        setTimeout(() => clearInterval(tentativas), 15000);
+        return janela;
+      };
+    })();
+  </script>
+
+  <script src="../../../../vendor/reveal/dist/reveal.js"></script>
+  <script src="../../../../vendor/reveal/plugin/highlight/highlight.js"></script>
+  <script src="../../../../vendor/reveal/plugin/zoom/zoom.js"></script>
+  <script src="../../../../vendor/chartjs/chart.umd.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: false,   // a página aparece no rodapé do slide (ver .deck-footer)
+      transition: 'slide',
+      transitionSpeed: 'default',
+      controls: true,
+      progress: true,
+      center: false,
+      pdfSeparateFragments: false,
+      width: 1280, height: 720,
+      margin: 0.0,
+      plugins: [ RevealHighlight, RevealZoom ]
+    });
+
+    // ---- Renderização dos gráficos Chart.js ----
+    // getComputedStyle é "vivo": ler as cores DENTRO do montarGrafico faz o
+    // gráfico seguir o tema atual (importa ao alternar claro/escuro).
+    const V = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+    const TIPOS = { barra: 'bar', linha: 'line', rosca: 'doughnut', pizza: 'pie', area: 'line' };
+    function montarGrafico(canvas) {
+      const SERIES = [1,2,3,4,5,6,7,8].map(i => V('--series-'+i));
+      Chart.defaults.font.family = V('--font-sans') || 'system-ui, sans-serif';
+      Chart.defaults.color = V('--chart-ink-2');
+      Chart.defaults.borderColor = V('--chart-grid');
+
+      const cfg = JSON.parse(canvas.dataset.chart);
+      const tipo = TIPOS[cfg.tipo] || cfg.tipo;   // aceita nomes PT ou os do Chart.js
+      const circular = ['doughnut','pie','polarArea'].includes(tipo);
+      const ehArea = cfg.tipo === 'area';
+      const datasets = (cfg.series || []).map((s, i) => ({
+        label: s.nome,
+        data: s.dados,
+        backgroundColor: circular ? (cfg.series[0].dados.map((_, k) => SERIES[k % 8]))
+                                   : (ehArea ? SERIES[i % 8] + '33' : SERIES[i % 8]),
+        borderColor: SERIES[i % 8],
+        borderWidth: tipo === 'line' ? 2.4 : 0,
+        borderRadius: tipo === 'bar' ? 4 : 0,
+        pointRadius: tipo === 'line' ? 3 : 0,
+        tension: 0.25, fill: ehArea
+      }));
+      // Série única não tem legenda (seria uma caixinha só) — então o nome da
+      // série, que é onde mora a unidade, vira o rótulo do eixo Y. Sem isso o
+      // gráfico mostra números sem unidade.
+      const legenda = (cfg.series && cfg.series.length > 1) || circular;
+      const rotuloY = (!legenda && !circular && datasets.length === 1) ? datasets[0].label : '';
+      new Chart(canvas, {
+        type: tipo,
+        data: { labels: cfg.labels, datasets },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          animation: false,
+          plugins: {
+            legend: {
+              display: legenda,
+              position: 'bottom',
+              labels: { boxWidth: 12, boxHeight: 12, usePointStyle: true, padding: 16,
+                        color: V('--chart-ink-2'), font: { size: 15 } }
+            },
+            tooltip: { enabled: true }
+          },
+          scales: circular ? {} : {
+            x: { grid: { display: false }, border: { color: V('--chart-axis') },
+                 ticks: { color: V('--chart-muted'), font: { size: 14 } } },
+            y: { grid: { color: V('--chart-grid') }, border: { display: false },
+                 ticks: { color: V('--chart-muted'), font: { size: 14 } },
+                 title: { display: !!rotuloY, text: rotuloY,
+                          color: V('--chart-ink-2'), font: { size: 15 } },
+                 beginAtZero: true }
+          }
+        }
+      });
+    }
+    // Renderiza os gráficos do slide atual (evita medir canvas escondido = 0px)
+    function renderVisiveis() {
+      document.querySelectorAll('section.present canvas[data-chart]').forEach(c => {
+        if (!c.dataset.pronto) { c.dataset.pronto = '1'; montarGrafico(c); }
+      });
+    }
+    function renderTodos() {
+      document.querySelectorAll('canvas[data-chart]').forEach(c => {
+        if (!c.dataset.pronto) { c.dataset.pronto = '1'; montarGrafico(c); }
+      });
+    }
+    const modoPDF = window.location.search.includes('print-pdf');
+    if (modoPDF) {
+      // No modo PDF todos os slides ficam visíveis: renderiza tudo.
+      Reveal.on('ready', () => setTimeout(renderTodos, 200));
+    } else {
+      Reveal.on('ready', renderVisiveis);
+      Reveal.on('slidechanged', renderVisiveis);
+    }
+    window.__renderTodos = renderTodos;
+    // Redesenha os gráficos com as cores do tema atual (ao alternar claro/escuro).
+    window.__reRenderGraficos = function () {
+      document.querySelectorAll('canvas[data-chart]').forEach(c => {
+        const ex = Chart.getChart(c); if (ex) ex.destroy(); delete c.dataset.pronto;
+      });
+      (modoPDF ? renderTodos : renderVisiveis)();
+    };
+  </script>
+
+  <script>
+    // ---- Toggle de tema (o ícone sol/lua é trocado por CSS via [data-theme]) ----
+    (function () {
+      const root = document.documentElement;
+      const btn = document.querySelector('.tema-toggle');
+      function aplicar(modo) {
+        root.setAttribute('data-theme', modo);
+        try { localStorage.setItem('gs-tema', modo); } catch (e) {}
+        if (window.__reRenderGraficos) window.__reRenderGraficos();
+      }
+      btn.addEventListener('click', () =>
+        aplicar(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+    })();
+  </script>
+  
+  <script>
+  (function () {
+    var root = document.documentElement;
+    // revela os botões do topo quando o mouse está na faixa de cima
+    window.addEventListener('mousemove', function (e) {
+      root.classList.toggle('mostrar-topo', e.clientY < 80);
+    });
+    var link = document.querySelector('.btn-voltar');
+    if (!link) return;
+    // origem explícita passada pelo plano (?de=): só caminho relativo seguro
+    try {
+      var de = new URLSearchParams(location.search).get('de');
+      if (de && !/^[a-z][a-z0-9+.-]*:/i.test(de) && de[0] !== '/') link.setAttribute('href', de);
+    } catch (e) {}
+    // se você veio de outra página do site, volta pra ELA via histórico
+    link.addEventListener('click', function (ev) {
+      try {
+        if (document.referrer &&
+            new URL(document.referrer).origin === location.origin &&
+            history.length > 1) {
+          ev.preventDefault();
+          history.back();
+        }
+      } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>

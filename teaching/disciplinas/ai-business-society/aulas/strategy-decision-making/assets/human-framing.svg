@@ -1,0 +1,62 @@
+<!-- What "framing" means at each level (Table 2 notes, p. 4): relevance selection → intervention definition → analogical boundary setting → construction of entirely new problem frames. The constant across levels: humans retain authority over problem framing and strategic commitment. dg-* classes only. -->
+<svg viewBox="0 0 960 380" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="hf-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="dg-seta-cabeca" d="M 0 0 L 10 5 L 0 10 z"/>
+    </marker>
+  </defs>
+
+  <!-- the constant, on top -->
+  <path class="dg-eixo" d="M 40 60 L 40 48 L 920 48 L 920 60" stroke-width="2" fill="none"/>
+  <text class="dg-rotulo" x="480" y="34" font-size="16" text-anchor="middle">at every level, humans keep authority over problem framing and strategic commitment</text>
+
+  <!-- four boxes -->
+  <g>
+    <rect class="dg-forma" x="40" y="90" width="200" height="150" rx="10" stroke-width="3"/>
+    <text class="dg-menor" x="140" y="118" font-size="13" text-anchor="middle">Level 1</text>
+    <text class="dg-rotulo" x="140" y="150" font-size="17" text-anchor="middle">relevance</text>
+    <text class="dg-rotulo" x="140" y="172" font-size="17" text-anchor="middle">selection</text>
+    <text class="dg-menor" x="140" y="204" font-size="13" text-anchor="middle">which outcomes matter,</text>
+    <text class="dg-menor" x="140" y="222" font-size="13" text-anchor="middle">how forecasts inform action</text>
+  </g>
+  <line class="dg-seta" x1="240" y1="165" x2="268" y2="165" stroke-width="2.5" marker-end="url(#hf-arrow)"/>
+  <g>
+    <rect class="dg-forma" x="270" y="90" width="200" height="150" rx="10" stroke-width="3"/>
+    <text class="dg-menor" x="370" y="118" font-size="13" text-anchor="middle">Level 2</text>
+    <text class="dg-rotulo" x="370" y="150" font-size="17" text-anchor="middle">intervention</text>
+    <text class="dg-rotulo" x="370" y="172" font-size="17" text-anchor="middle">definition</text>
+    <text class="dg-menor" x="370" y="204" font-size="13" text-anchor="middle">objectives, candidate actions,</text>
+    <text class="dg-menor" x="370" y="222" font-size="13" text-anchor="middle">assumptions, trade-offs</text>
+  </g>
+  <line class="dg-seta" x1="470" y1="165" x2="498" y2="165" stroke-width="2.5" marker-end="url(#hf-arrow)"/>
+  <g>
+    <rect class="dg-forma" x="500" y="90" width="200" height="150" rx="10" stroke-width="3"/>
+    <text class="dg-menor" x="600" y="118" font-size="13" text-anchor="middle">Level 3</text>
+    <text class="dg-rotulo" x="600" y="150" font-size="17" text-anchor="middle">analogical</text>
+    <text class="dg-rotulo" x="600" y="172" font-size="17" text-anchor="middle">boundary setting</text>
+    <text class="dg-menor" x="600" y="204" font-size="13" text-anchor="middle">which analogies transfer,</text>
+    <text class="dg-menor" x="600" y="222" font-size="13" text-anchor="middle">what the risk bounds are</text>
+  </g>
+  <line class="dg-seta" x1="700" y1="165" x2="728" y2="165" stroke-width="2.5" marker-end="url(#hf-arrow)"/>
+  <g>
+    <rect class="dg-linha-2" x="730" y="90" width="200" height="150" rx="10" stroke-width="3"/>
+    <text class="dg-menor" x="830" y="118" font-size="13" text-anchor="middle">Level 4</text>
+    <text class="dg-rotulo" x="830" y="150" font-size="17" text-anchor="middle">construction of</text>
+    <text class="dg-rotulo" x="830" y="172" font-size="17" text-anchor="middle">new problem frames</text>
+    <text class="dg-menor" x="830" y="204" font-size="13" text-anchor="middle">coherence and fit;</text>
+    <text class="dg-menor" x="830" y="222" font-size="13" text-anchor="middle">authorises the commitment</text>
+  </g>
+
+  <!-- what AI does underneath, as the counterpart -->
+  <text class="dg-menor" x="140" y="285" font-size="13" text-anchor="middle">AI: forecasts, patterns,</text>
+  <text class="dg-menor" x="140" y="303" font-size="13" text-anchor="middle">uncertainty</text>
+  <text class="dg-menor" x="370" y="285" font-size="13" text-anchor="middle">AI: treatment effects,</text>
+  <text class="dg-menor" x="370" y="303" font-size="13" text-anchor="middle">experiments, comparisons</text>
+  <text class="dg-menor" x="600" y="285" font-size="13" text-anchor="middle">AI: analogies, external</text>
+  <text class="dg-menor" x="600" y="303" font-size="13" text-anchor="middle">evidence, counterfactuals</text>
+  <text class="dg-menor" x="830" y="285" font-size="13" text-anchor="middle">AI: recombines concepts,</text>
+  <text class="dg-menor" x="830" y="303" font-size="13" text-anchor="middle">stress-tests, compares models</text>
+
+  <line class="dg-eixo" x1="40" y1="258" x2="930" y2="258" stroke-width="1.5"/>
+  <text class="dg-menor" x="480" y="350" font-size="14" text-anchor="middle">"AI augments analysis … whereas humans retain authority over problem framing and strategic commitment" — Table 2 notes</text>
+</svg>
