@@ -23,9 +23,9 @@ a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
 code { font-family: var(--font-mono); font-size: 0.9em; background: var(--code-bg); padding: 0.05em 0.35em; border-radius: 0.35em; }
 
-/* A folha ocupa 2/3 da tela — sem teto fixo, para aproveitar monitores largos.
-   Abaixo de 900px vira largura cheia (2/3 de um celular não sobra nada). */
-.folha { width: 66.67%; margin: 0 auto; padding: clamp(1.5rem, 4vw, 3.5rem); }
+/* A folha ocupa 4/5 da tela — sem teto fixo, para aproveitar monitores largos.
+   Abaixo de 900px vira largura cheia (4/5 de um celular não sobra nada). */
+.folha { width: 80%; margin: 0 auto; padding: clamp(1.5rem, 4vw, 3.5rem); }
 @media (max-width: 900px) { .folha { width: 100%; } }
 /* Os botões do topo (voltar) ficam em tema/controles.css — fonte única
    compartilhada com os slides (carregada no plano.html.j2 e index.html.j2). */
@@ -59,11 +59,12 @@ code { font-family: var(--font-mono); font-size: 0.9em; background: var(--code-b
 .c-data .dsem { font-size: 0.78rem; color: var(--muted); }
 .c-tema  { font-weight: 500; }
 .c-grupo { width: 4rem; color: var(--ink-2); font-weight: 600; font-size: 0.9em; }
-/* Leitura é a coluna que mais precisa de largura (autor + revista + link);
-   Atividades costuma ser curta ou vazia, então cede espaço. */
-.c-leitura { width: 30%; color: var(--ink-2); font-size: 0.9em; }
+/* Leitura precisa de largura (autor + revista + link), e Atividades também:
+   além de seminários e entregas, ela carrega os combinados do dia — link de
+   material, "sem nota", seminário adiado. As duas dividem metade da tabela. */
+.c-leitura { width: 26%; color: var(--ink-2); font-size: 0.9em; }
 .c-leitura div + div { margin-top: 0.3rem; }
-.c-ativ  { width: 15%; color: var(--ink-2); font-size: 0.95em; }
+.c-ativ  { width: 24%; color: var(--ink-2); font-size: 0.95em; }
 .c-ativ .entrega { color: var(--accent-2); font-weight: 600; margin-top: 0.2rem; }
 .c-slides { width: 5rem; white-space: nowrap; }
 .vazio   { color: var(--muted); }

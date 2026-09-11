@@ -144,6 +144,9 @@
 /* 42em ≈ 95% da largura útil (89% de 16:9 ÷ 3.6cqh do corpo ≈ 44em).
    Era 24em, que usava 58% e empurrava bullet longo para 3–4 linhas. */
 .l-topicos li::before { content: ""; position: absolute; left: 0; top: 0.42em; width: 0.5em; height: 0.5em; border-radius: 0.2em; background: var(--accent); }
+/* 0.86em/--ink-2 e não 0.78em/--muted: a nota carrega a citação com página, e
+   em --muted ela desaparecia da projeção. Corrigido primeiro direto no repo
+   pessoal (02/09/2026) e trazido de volta para cá, que é a fonte da verdade. */
 .l-topicos li .nota { display: block; font-size: 0.86em; color: var(--ink-2); margin-top: 0.25em; line-height: 1.3; }
 
 /* ---------- destaque ---------- */
