@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 420">
+  <defs>
+    <marker id="re-seta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" class="dg-seta-cabeca"/>
+    </marker>
+  </defs>
+
+  <!-- dois blocos (Fig. 5.3): Aquisição · Especificação -->
+  <text x="270" y="50" text-anchor="middle" font-size="18" class="dg-titulo">Aquisição</text>
+  <text x="730" y="50" text-anchor="middle" font-size="18" class="dg-titulo">Especificação</text>
+  <rect x="540" y="70" width="380" height="290" rx="12" class="dg-linha-2" fill="none" stroke-dasharray="10 7"/>
+
+  <rect x="120" y="100" width="220" height="80" rx="10" class="dg-forma"/>
+  <text x="230" y="148" text-anchor="middle" font-size="19" class="dg-rotulo">Elicitação</text>
+  <text x="230" y="205" text-anchor="middle" font-size="14" class="dg-menor">entrevistar, observar, questionar</text>
+
+  <rect x="620" y="100" width="220" height="80" rx="10" class="dg-forma"/>
+  <text x="730" y="148" text-anchor="middle" font-size="19" class="dg-rotulo">Modelagem</text>
+  <text x="730" y="205" text-anchor="middle" font-size="14" class="dg-menor">BPMN · casos de uso</text>
+
+  <rect x="620" y="250" width="220" height="80" rx="10" class="dg-forma"/>
+  <text x="730" y="298" text-anchor="middle" font-size="19" class="dg-rotulo">Análise</text>
+  <text x="730" y="350" text-anchor="middle" font-size="14" class="dg-menor">consistente? completo? exceções?</text>
+
+  <rect x="120" y="250" width="220" height="80" rx="10" class="dg-forma"/>
+  <text x="230" y="298" text-anchor="middle" font-size="19" class="dg-rotulo">Validação</text>
+  <text x="230" y="350" text-anchor="middle" font-size="14" class="dg-menor">é o que o cliente quer? · teste de aceitação</text>
+
+  <path d="M340,140 L620,140" class="dg-seta" marker-end="url(#re-seta)"/>
+  <path d="M730,180 L730,250" class="dg-seta" marker-end="url(#re-seta)"/>
+  <path d="M620,290 L340,290" class="dg-seta" marker-end="url(#re-seta)"/>
+  <path d="M230,250 L230,180" class="dg-seta" marker-end="url(#re-seta)"/>
+
+  <text x="500" y="400" text-anchor="middle" font-size="14" class="dg-menor">um ciclo: "A análise é intercalada com a elicitação" (p. 59)</text>
+</svg>

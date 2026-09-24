@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Garantia da Qualidade de Software</title>
+
+  <link rel="stylesheet" href="../../../../vendor/reveal/dist/reset.css">
+  <link rel="stylesheet" href="../../../../vendor/reveal/dist/reveal.css">
+  <link rel="stylesheet" href="../../../../tema/base.css">
+  <!-- tema claro (base) + tema escuro embutido, ativado por [data-theme="dark"] -->
+  <link rel="stylesheet" href="../../../../tema/tema-default.css">
+  <style>/* tema-dark.css — escuro, para salas com projeção em ambiente escuro.
+   Séries = mesma paleta stepada para superfície escura (dataviz skill). */
+:root[data-theme="dark"] {
+  --bg:      #1a1a19;
+  --ink:     #ffffff;
+  --ink-2:   #c3c2b7;
+  --muted:   #898781;
+  --accent:  #3987e5;
+  --accent-2:#d95926;
+  --rule:    #2c2c2a;
+  --code-bg: #2c2c2a;
+
+  --chart-surface: #1a1a19;
+  --chart-grid:    #2c2c2a;
+  --chart-axis:    #383835;
+  --chart-ink:     #ffffff;
+  --chart-ink-2:   #c3c2b7;
+  --chart-muted:   #898781;
+
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+  --series-5: #d55181;
+  --series-6: #008300;
+  --series-7: #9085e9;
+  --series-8: #e66767;
+}
+</style>
+  <link rel="stylesheet" href="../../../../tema/controles.css">
+  <link rel="stylesheet" href="../../../../vendor/reveal/plugin/highlight/monokai.css">
+  <script>
+    // Define o modo (claro/escuro) o quanto antes, evitando "flash".
+    (function () {
+      var salvo = null;
+      try { salvo = localStorage.getItem('gs-tema'); } catch (e) {}
+      document.documentElement.setAttribute('data-theme', salvo || 'light');
+    })();
+  </script>
+</head>
+<body>
+  <a class="btn-topo btn-voltar" href="../../../../index.html"
+     title="Voltar" aria-label="Voltar"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></a>
+  <button class="btn-topo tema-toggle" aria-label="Alternar tema claro/escuro"><svg class="ico ico-lua" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="ico ico-sol" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+  <div class="reveal">
+    <div class="slides">
+      
+      
+<section>
+  <div class="slide l-titulo">
+    <div class="kicker">Sessão 5 · Mapeamento de requisitos</div>
+    <h1>Qualidade total, processos de negócio e o início do projeto</h1>
+    <div class="rule"></div>
+    <p class="subtitulo">Una · 2026.2 · quintas, 19h–21h50</p>
+    <p class="rodape">Prof. Yuri Alexandre dos Santos</p>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">01</div>
+    <h1>Apresentação do G2</h1>
+    <p class="sub">Atributos de qualidade de produto</p>
+    <div class="deck-footer">Garantia da Qualidade de Software · 2/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>O formato, para lembrar</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Uma ideia central
+      </li>
+      
+      <li>
+        Uma aplicação ao projeto da UC
+      </li>
+      
+      <li>
+        Uma pergunta que o texto não responde
+      </li>
+      
+      <li>
+        15 minutos, perguntas ao final
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 3/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">02</div>
+    <h1>Gestão da qualidade total</h1>
+    <p class="sub">Souza, in Vasconcelos &amp; Oliveira (2016), cap. 2 — "de onde vem a ideia"</p>
+    <div class="deck-footer">Garantia da Qualidade de Software · 4/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-linha-tempo">
+    <h2>A qualidade nasceu na fábrica</h2>
+    <div class="rule"></div>
+    <ol class="tl">
+      
+      <li class="tl-marco">
+        <div class="tl-marca"></div>
+        <div class="tl-corpo">
+          <div class="tl-data">início do séc. XX</div>
+          <div class="tl-texto">inspeção final e descarte</div>
+          <div class="tl-nota">Taylor cria o inspetor</div>
+        </div>
+      </li>
+      
+      <li class="tl-marco">
+        <div class="tl-marca"></div>
+        <div class="tl-corpo">
+          <div class="tl-data">Shewhart</div>
+          <div class="tl-texto">controle estatístico</div>
+          <div class="tl-nota">inspeção por amostragem</div>
+        </div>
+      </li>
+      
+      <li class="tl-marco">
+        <div class="tl-marca"></div>
+        <div class="tl-corpo">
+          <div class="tl-data">1950–60</div>
+          <div class="tl-texto">prevenção</div>
+          <div class="tl-nota">"a prevenção passou a ser avaliada"</div>
+        </div>
+      </li>
+      
+      <li class="tl-marco">
+        <div class="tl-marca"></div>
+        <div class="tl-corpo">
+          <div class="tl-data">anos 1960</div>
+          <div class="tl-texto">Deming e Juran</div>
+          <div class="tl-nota">"Quality of mind", administração participativa</div>
+        </div>
+      </li>
+      
+      <li class="tl-marco">
+        <div class="tl-marca"></div>
+        <div class="tl-corpo">
+          <div class="tl-data">fim dos anos 1970</div>
+          <div class="tl-texto">gestão pela qualidade total</div>
+          <div class="tl-nota">Japão do pós-guerra; crise do petróleo</div>
+        </div>
+      </li>
+      
+      <li class="tl-marco">
+        <div class="tl-marca"></div>
+        <div class="tl-corpo">
+          <div class="tl-data">anos 1980</div>
+          <div class="tl-texto">"Era do Cliente" — TQM</div>
+          <div class="tl-nota">confiabilidade, preço, entrega</div>
+        </div>
+      </li>
+      
+      <li class="tl-marco periodo">
+        <div class="tl-marca"></div>
+        <div class="tl-corpo">
+          <div class="tl-data">anos 1990</div>
+          <div class="tl-texto">Brasil importa o "modelo japonês"</div>
+          <div class="tl-nota">a maioria, só alguns procedimentos</div>
+        </div>
+      </li>
+      
+      <li class="tl-marco">
+        <div class="tl-marca"></div>
+        <div class="tl-corpo">
+          <div class="tl-data">hoje</div>
+          <div class="tl-texto">quarto estágio</div>
+          <div class="tl-nota">design, certificações, responsabilidade social</div>
+        </div>
+      </li>
+      
+    </ol>
+    <div class="fonte">Souza, in Vasconcelos &amp; Oliveira (2016), cap. 2, pp. 20–26 do PDF · Brasil — Lima (1996), apud Souza, pp. 25–26</div>
+    <div class="deck-footer">Garantia da Qualidade de Software · 5/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Gestão da qualidade total — o que é</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        O objetivo é a <strong>melhoria contínua</strong><span class="nota">p. 25 do PDF — os cinco pontos deste slide são a definição do livro, transcrita</span>
+        
+      </li>
+      
+      <li>
+        Três princípios — <strong>ênfase no cliente</strong>, <strong>melhoria dos processos</strong>, <strong>envolvimento total</strong>
+        
+      </li>
+      
+      <li>
+        "um sistema da empresa orientada pela filosofia do melhoramento contínuo dos processos e dos recursos produtivos"<span class="nota">que resulta "no aperfeiçoamento dos produtos e serviços, objetivando a satisfação de todos os envolvidos na cadeia produtiva"</span>
+        
+      </li>
+      
+      <li>
+        Constituído por princípios, valores, ferramentas, técnicas e comportamento de pessoas
+        
+      </li>
+      
+      <li>
+        "e necessita integrar à cultura organizacional"
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 6/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>A qualidade total como sistema</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="À esquerda, um círculo com quatro setas em sentido horário e as letras P planejar, D executar, C verificar e A atuar. À direita, uma caixa no topo, gestão da qualidade total, sustentada por três caixas ligadas por setas — ênfase no cliente, melhoria dos processos, envolvimento total — e, embaixo, uma base tracejada com princípios, valores, ferramentas, técnicas e comportamento de pessoas. Uma seta liga o ciclo PDCA à caixa melhoria dos processos.">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 470">
+  <defs>
+    <marker id="tqm-seta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" class="dg-seta-cabeca"/>
+    </marker>
+    <marker id="tqm-seta-ciclo" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="16" markerHeight="16" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" class="dg-seta-cabeca"/>
+    </marker>
+  </defs>
+
+  <!-- ===== esquerda: o ciclo PDCA — "a fase da melhoria contínua" (p. 22) ===== -->
+  <text x="200" y="40" text-anchor="middle" font-size="18" class="dg-titulo">melhoria contínua</text>
+  <text x="200" y="64" text-anchor="middle" font-size="14" class="dg-menor">o ciclo PDCA</text>
+
+  <!-- quatro arcos, sentido horário, centro (200,240) r=120 -->
+  <path d="M200,120 A120,120 0 0 1 320,240" class="dg-linha" stroke-width="5" marker-end="url(#tqm-seta-ciclo)"/>
+  <path d="M320,240 A120,120 0 0 1 200,360" class="dg-linha" stroke-width="5" marker-end="url(#tqm-seta-ciclo)"/>
+  <path d="M200,360 A120,120 0 0 1 80,240" class="dg-linha" stroke-width="5" marker-end="url(#tqm-seta-ciclo)"/>
+  <path d="M80,240  A120,120 0 0 1 200,120" class="dg-linha" stroke-width="5" marker-end="url(#tqm-seta-ciclo)"/>
+
+  <!-- rótulos dos quadrantes -->
+  <text x="255" y="192" text-anchor="middle" font-size="24" class="dg-rotulo" font-weight="700">P</text>
+  <text x="255" y="212" text-anchor="middle" font-size="13" class="dg-menor">planejar</text>
+  <text x="255" y="300" text-anchor="middle" font-size="24" class="dg-rotulo" font-weight="700">D</text>
+  <text x="255" y="320" text-anchor="middle" font-size="13" class="dg-menor">executar</text>
+  <text x="145" y="300" text-anchor="middle" font-size="24" class="dg-rotulo" font-weight="700">C</text>
+  <text x="145" y="320" text-anchor="middle" font-size="13" class="dg-menor">verificar</text>
+  <text x="145" y="192" text-anchor="middle" font-size="24" class="dg-rotulo" font-weight="700">A</text>
+  <text x="145" y="212" text-anchor="middle" font-size="13" class="dg-menor">atuar</text>
+
+  <text x="200" y="392" text-anchor="middle" font-size="14" class="dg-menor">"controle e melhoria contínua de processos e produtos" (p. 22)</text>
+
+  <!-- ===== direita: a qualidade total como sistema (p. 25) ===== -->
+  <line x1="410" y1="60" x2="410" y2="420" class="dg-traco"/>
+
+  <rect x="450" y="90" width="500" height="64" rx="10" class="dg-linha" stroke-width="3"/>
+  <text x="700" y="118" text-anchor="middle" font-size="19" class="dg-rotulo">gestão da qualidade total</text>
+  <text x="700" y="141" text-anchor="middle" font-size="14" class="dg-menor">"o objetivo […] é a melhoria contínua" (p. 25)</text>
+
+  <!-- três princípios, como pilares -->
+  <rect x="450" y="210" width="150" height="90" rx="10" class="dg-forma"/>
+  <text x="525" y="248" text-anchor="middle" font-size="17" class="dg-rotulo">ênfase</text>
+  <text x="525" y="272" text-anchor="middle" font-size="17" class="dg-rotulo">no cliente</text>
+
+  <rect x="625" y="210" width="150" height="90" rx="10" class="dg-forma"/>
+  <text x="700" y="248" text-anchor="middle" font-size="17" class="dg-rotulo">melhoria</text>
+  <text x="700" y="272" text-anchor="middle" font-size="17" class="dg-rotulo">dos processos</text>
+
+  <rect x="800" y="210" width="150" height="90" rx="10" class="dg-forma"/>
+  <text x="875" y="248" text-anchor="middle" font-size="17" class="dg-rotulo">envolvimento</text>
+  <text x="875" y="272" text-anchor="middle" font-size="17" class="dg-rotulo">total</text>
+
+  <path d="M525,210 L525,154" class="dg-seta" marker-end="url(#tqm-seta)"/>
+  <path d="M700,210 L700,154" class="dg-seta" marker-end="url(#tqm-seta)"/>
+  <path d="M875,210 L875,154" class="dg-seta" marker-end="url(#tqm-seta)"/>
+
+  <!-- a base: de que o sistema é feito -->
+  <rect x="450" y="340" width="500" height="50" rx="8" class="dg-eixo" stroke-dasharray="6 5"/>
+  <text x="700" y="361" text-anchor="middle" font-size="14" class="dg-menor">princípios · valores · ferramentas · técnicas · comportamento de pessoas</text>
+  <text x="700" y="381" text-anchor="middle" font-size="14" class="dg-menor">"e necessita integrar à cultura organizacional"</text>
+
+  <path d="M700,340 L700,300" class="dg-seta" marker-end="url(#tqm-seta)"/>
+
+  <!-- ligação PDCA → princípio do meio -->
+  <path d="M322,240 L390,240 L390,255 L450,255" class="dg-seta" marker-end="url(#tqm-seta)"/>
+
+  <text x="500" y="445" text-anchor="middle" font-size="14" class="dg-menor">"pequena" qualidade = o produto · "grande" qualidade = a organização inteira (Ishikawa, 1990)</text>
+</svg>
+    </figure>
+    <figcaption class="dg-legenda">o ciclo PDCA move os processos; os três princípios sustentam o sistema; a base é a cultura da empresa</figcaption>
+    <div class="fonte">Souza, in Vasconcelos &amp; Oliveira (2016), cap. 2, pp. 22 e 25 do PDF — desenho da aula</div>
+    <div class="deck-footer">Garantia da Qualidade de Software · 7/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>A pequena e a grande qualidade</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        <strong>Pequena qualidade</strong> — "se limita às características de produtos e serviços consideradas importantes para seus usuários e compradores"<span class="nota">Ishikawa (1990), apud Souza (2016), p. 26 do PDF</span>
+        
+      </li>
+      
+      <li>
+        <strong>Grande qualidade</strong> — "envolve a satisfação comum de várias pessoas, grupos e comunidades envolvidos na vida de uma organização"
+        
+      </li>
+      
+      <li>
+        "A pequena qualidade, no longo prazo, não passa de consequência da grande qualidade."
+        
+      </li>
+      
+      <li>
+        A mudança de foco — de custos e produtividade para qualidade e a visão do cliente<span class="nota">"uma mudança aguda na filosofia tradicional que se pratica em termos de produção" (p. 26)</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 8/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Os cinco pressupostos de Garvin</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Qualidade é definida do ponto de vista do cliente<span class="nota">Garvin (1992), apud Souza (2016), pp. 26–27 do PDF — transcritos</span>
+        
+      </li>
+      
+      <li>
+        Qualidade é relacionada com lucratividade — do mercado e de custos
+        
+      </li>
+      
+      <li>
+        Qualidade é visualizada como uma arma competitiva
+        
+      </li>
+      
+      <li>
+        Qualidade é construída desde o processo de planejamento estratégico
+        
+      </li>
+      
+      <li>
+        Qualidade requer um compromisso que abranja todos os membros da organização
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 9/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Por que a qualidade total falha</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Individualismo, competitividade, pensamento linear<span class="nota">Zhu e Scheurmann (1999), apud Souza (2016), p. 28 do PDF</span>
+        
+      </li>
+      
+      <li>
+        Orientação apenas para solução de problemas e para o controle
+        
+      </li>
+      
+      <li>
+        "falta de comprometimento da gestão de alto nível"<span class="nota">"o fracasso […] ocorre, primordialmente, pelo pouco comprometimento da gestão de alto nível" (p. 29)</span>
+        
+      </li>
+      
+      <li>
+        A gestão "cosmética" da qualidade<span class="nota">p. 29 — proclamar sem praticar</span>
+        
+      </li>
+      
+      <li>
+        Brasil, anos 1990 — "uma grande maioria que restringiu-se apenas a adotar alguns de seus procedimentos"<span class="nota">Lima (1996), apud Souza (2016), p. 26 do PDF</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 10/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">03</div>
+    <h1>Gestão de processos de negócio</h1>
+    <p class="sub">BPM — Souza, in Vasconcelos &amp; Oliveira (2016), cap. 2, §2.2</p>
+    <div class="deck-footer">Garantia da Qualidade de Software · 11/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-citacao">
+    <div class="kicker">BPM, segundo o CBOK</div>
+    <blockquote class="cit-texto">[…] o BPM é uma abordagem disciplinada para identificar, desenhar, executar, documentar, medir, monitorar, controlar e melhorar processos de negócio automatizados ou não para alcançar os resultados pretendidos consistentes e alinhados com as metas estratégicas de uma organização.</blockquote>
+    <div class="cit-autor">CBOK (ABPMP, 2009), apud Souza (2016)</div>
+    <div class="cit-fonte">cap. 2, pp. 21–22 do PDF — o livro não imprime numeração de página</div>
+    <div class="deck-footer">Garantia da Qualidade de Software · 12/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Processo de negócio — pontos principais</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        "Todo trabalho importante realizado nas empresas faz parte de algum processo"<span class="nota">Graham e Lebaron (1994), apud Souza (2016), p. 29 do PDF</span>
+        
+      </li>
+      
+      <li>
+        Processo: "a ordenação de atividades de trabalho através do tempo e do espaço, com um início e fim e um conjunto claramente definido de entradas e de saídas"<span class="nota">Davenport (1994), p. 29</span>
+        
+      </li>
+      
+      <li>
+        "um conjunto de atividades com uma ou mais espécies de entrada e que cria uma saída de valor para o cliente"<span class="nota">Hammer e Champy (1995), p. 32</span>
+        
+      </li>
+      
+      <li>
+        Os processos de negócio "refletem a essência do que uma empresa faz"<span class="nota">Souza, a partir de Melão e Pidd (2000), p. 33</span>
+        
+      </li>
+      
+      <li>
+        Empresas "orientadas a processos" × "baseadas em funções"<span class="nota">Sordi (2005), p. 32</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 13/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>O ciclo de vida do BPM</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="Seis caixas em ciclo, sentido horário — Planejar, Modelar, Implementar na linha de cima; Executar, Monitorar, Otimizar na linha de baixo — ligadas por setas. Modelar está destacada e, no centro, um ponto marca hoje, modelar As-Is, com a frase de que o primeiro passo em qualquer projeto BPM é entender o processo existente.">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 440">
+  <defs>
+    <marker id="bpmc-seta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" class="dg-seta-cabeca"/>
+    </marker>
+  </defs>
+
+  <!-- seis fases em ciclo, como a Figura 1 do cap. 2 (p. 35 do PDF) -->
+  <!-- linha de cima: Planejar → Modelar → Implementar -->
+  <rect x="150" y="60" width="190" height="70" rx="10" class="dg-forma"/>
+  <text x="245" y="90" text-anchor="middle" font-size="19" class="dg-rotulo">Planejar</text>
+  <text x="245" y="113" text-anchor="middle" font-size="11" class="dg-menor">quais processos sustentam o negócio</text>
+
+  <rect x="405" y="60" width="190" height="70" rx="10" class="dg-linha" stroke-width="3"/>
+  <text x="500" y="90" text-anchor="middle" font-size="19" class="dg-rotulo">Modelar</text>
+  <text x="500" y="113" text-anchor="middle" font-size="13" class="dg-menor">As-Is → To-Be</text>
+
+  <rect x="660" y="60" width="190" height="70" rx="10" class="dg-forma"/>
+  <text x="755" y="90" text-anchor="middle" font-size="19" class="dg-rotulo">Implementar</text>
+  <text x="755" y="113" text-anchor="middle" font-size="11" class="dg-menor">regras, padrões, automação</text>
+
+  <!-- linha de baixo: Otimizar ← Monitorar ← Executar -->
+  <rect x="150" y="260" width="190" height="70" rx="10" class="dg-forma"/>
+  <text x="245" y="290" text-anchor="middle" font-size="19" class="dg-rotulo">Otimizar</text>
+  <text x="245" y="313" text-anchor="middle" font-size="11" class="dg-menor">refinar; reduzir o tempo de ciclo</text>
+
+  <rect x="405" y="260" width="190" height="70" rx="10" class="dg-forma"/>
+  <text x="500" y="290" text-anchor="middle" font-size="19" class="dg-rotulo">Monitorar</text>
+  <text x="500" y="313" text-anchor="middle" font-size="11" class="dg-menor">indicadores para quem decide</text>
+
+  <rect x="660" y="260" width="190" height="70" rx="10" class="dg-forma"/>
+  <text x="755" y="290" text-anchor="middle" font-size="19" class="dg-rotulo">Executar</text>
+  <text x="755" y="313" text-anchor="middle" font-size="13" class="dg-menor">o processo gera valor?</text>
+
+  <!-- setas do ciclo (horário) -->
+  <path d="M340,95 L405,95" class="dg-seta" marker-end="url(#bpmc-seta)"/>
+  <path d="M595,95 L660,95" class="dg-seta" marker-end="url(#bpmc-seta)"/>
+  <path d="M755,130 L755,260" class="dg-seta" marker-end="url(#bpmc-seta)"/>
+  <path d="M660,295 L595,295" class="dg-seta" marker-end="url(#bpmc-seta)"/>
+  <path d="M405,295 L340,295" class="dg-seta" marker-end="url(#bpmc-seta)"/>
+  <path d="M245,260 L245,130" class="dg-seta" marker-end="url(#bpmc-seta)"/>
+
+  <!-- marcador: hoje -->
+  <circle cx="500" cy="180" r="6" class="dg-ponto-2"/>
+  <text x="500" y="205" text-anchor="middle" font-size="15" class="dg-rotulo">hoje: Modelar, As-Is</text>
+  <text x="500" y="226" text-anchor="middle" font-size="13" class="dg-menor">"o primeiro passo em qualquer projeto BPM […] é entender o processo existente" (pp. 39–40)</text>
+
+  <text x="500" y="405" text-anchor="middle" font-size="14" class="dg-menor">Figura 1 do cap. 2, "Adaptado de Baldam et al. (2007) e Houy et al. (2010)" — p. 35 do PDF, redesenhada</text>
+</svg>
+    </figure>
+    <figcaption class="dg-legenda">hoje a aula está em Modelar, no As-Is</figcaption>
+    <div class="fonte">Souza, in Vasconcelos &amp; Oliveira (2016), Figura 1, pp. 34–35 do PDF — redesenhada</div>
+    <div class="deck-footer">Garantia da Qualidade de Software · 14/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>BPM — pontos principais</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Oito verbos — identificar, desenhar, executar, documentar, medir, monitorar, controlar, melhorar<span class="nota">CBOK, pp. 21–22 — hoje fazemos os dois primeiros</span>
+        
+      </li>
+      
+      <li>
+        Modelar é "identificar as partes que compõem os processos […] e como interagem para prover as funções oferecidas a seus clientes"<span class="nota">Andrade et al. (2004), p. 22</span>
+        
+      </li>
+      
+      <li>
+        "O mapeamento do processo atual, sua análise, melhoria e proposta de mudança são de fundamental importância em todo o ciclo de BPM"<span class="nota">Baldam et al. (2007), p. 23</span>
+        
+      </li>
+      
+      <li>
+        Três aspectos críticos — processos, pessoas e tecnologia<span class="nota">Jeston e Nelis (2008), p. 36 — e um quarto, "todas as boas práticas em gestão de projetos"</span>
+        
+      </li>
+      
+      <li>
+        "para que a iniciativa […] possa ser bem sucedida, todos precisam estar dispostos a participar"<span class="nota">p. 36 — o "envolvimento total" da qualidade total, de novo</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 15/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">04</div>
+    <h1>A notação — BPMN</h1>
+    <p class="sub">Souza, in Vasconcelos &amp; Oliveira (2016), §2.3 · OMG (2010), <em>BPMN 2.0 by Example</em></p>
+    <div class="deck-footer">Garantia da Qualidade de Software · 16/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-tabela">
+    <h2>As quatro categorias de elementos</h2><div class="rule"></div>
+    <div class="tabela-wrap">
+      <table>
+        
+        <thead><tr><th>categoria</th><th>elementos</th><th>para quê</th></tr></thead>
+        
+        <tbody>
+          
+          <tr>
+            
+            <th scope="row">Objetos de fluxo</th>
+            
+            
+            <td>eventos · atividades · gateway</td>
+            
+            <td>"definem o comportamento dos processos de negócios"</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">Objetos de conexão</th>
+            
+            
+            <td>sequência · mensagem · associação</td>
+            
+            <td>"criar o esqueleto básico do processo"</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">Raias (<em>swimlanes</em>)</th>
+            
+            
+            <td>piscina (<em>pool</em>) · raias</td>
+            
+            <td>"representar responsabilidades (papéis) ou capacidades funcionais"</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">Artefatos</th>
+            
+            
+            <td>grupo · anotação · objeto de dados</td>
+            
+            <td>informação de contexto, "para fins de análise"</td>
+            
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+    <div class="fonte">Souza, in Vasconcelos &amp; Oliveira (2016), Tabela 2, pp. 37–38 do PDF — transcrita</div>
+    <div class="deck-footer">Garantia da Qualidade de Software · 17/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>Os oito símbolos que a aula usa</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="Um pool chamado Empresa com duas raias, Atendimento e Instrutor. Um evento de início leva à tarefa Confirmar, depois a um gateway exclusivo com X rotulado modalidade, que abre dois caminhos, ao vivo para a tarefa Ministrar aula na raia de baixo e gravado direto para um segundo gateway exclusivo, que junta os dois caminhos e leva à tarefa Certificar e ao evento de fim. Abaixo, a legenda dos oito símbolos.">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 470">
+  <defs>
+    <marker id="bpmn-seta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" class="dg-seta-cabeca"/>
+    </marker>
+  </defs>
+
+  <!-- pool: um participante -->
+  <rect x="20" y="30" width="960" height="300" class="dg-forma"/>
+  <line x1="60" y1="30" x2="60" y2="330" class="dg-eixo"/>
+  <text x="40" y="180" text-anchor="middle" font-size="17" class="dg-rotulo" transform="rotate(-90 40 180)">Empresa</text>
+
+  <!-- raias: quem faz -->
+  <line x1="60" y1="180" x2="980" y2="180" class="dg-eixo"/>
+  <text x="85" y="105" text-anchor="middle" font-size="14" class="dg-menor" transform="rotate(-90 85 105)">Atendimento</text>
+  <text x="85" y="255" text-anchor="middle" font-size="14" class="dg-menor" transform="rotate(-90 85 255)">Instrutor</text>
+
+  <!-- evento de início -->
+  <circle cx="150" cy="105" r="18" class="dg-forma"/>
+  <!-- tarefa -->
+  <rect x="215" y="72" width="140" height="66" rx="10" class="dg-forma"/>
+  <text x="285" y="111" text-anchor="middle" font-size="16" class="dg-rotulo">Confirmar</text>
+  <!-- gateway exclusivo (X) -->
+  <path d="M440,80 L465,105 L440,130 L415,105 z" class="dg-forma"/>
+  <path d="M431,96 L449,114 M449,96 L431,114" class="dg-linha"/>
+  <text x="440" y="66" text-anchor="middle" font-size="13" class="dg-menor">modalidade?</text>
+  <!-- tarefa na raia de baixo -->
+  <rect x="510" y="222" width="140" height="66" rx="10" class="dg-forma"/>
+  <text x="580" y="261" text-anchor="middle" font-size="16" class="dg-rotulo">Ministrar aula</text>
+  <!-- gateway exclusivo (X) de junção: caminhos alternativos se juntam com X, não com + (OMG 2010, p. 37) -->
+  <path d="M735,80 L760,105 L735,130 L710,105 z" class="dg-forma"/>
+  <path d="M726,96 L744,114 M744,96 L726,114" class="dg-linha"/>
+  <!-- tarefa -->
+  <rect x="800" y="72" width="120" height="66" rx="10" class="dg-forma"/>
+  <text x="860" y="111" text-anchor="middle" font-size="16" class="dg-rotulo">Certificar</text>
+  <!-- evento de fim -->
+  <circle cx="955" cy="105" r="18" class="dg-forma" stroke-width="5"/>
+
+  <!-- fluxos de seqüência -->
+  <path d="M168,105 L215,105" class="dg-seta" marker-end="url(#bpmn-seta)"/>
+  <path d="M355,105 L415,105" class="dg-seta" marker-end="url(#bpmn-seta)"/>
+  <path d="M440,130 L440,255 L510,255" class="dg-seta" marker-end="url(#bpmn-seta)"/>
+  <text x="452" y="160" font-size="13" class="dg-menor">ao vivo</text>
+  <path d="M465,105 L710,105" class="dg-seta" marker-end="url(#bpmn-seta)"/>
+  <text x="560" y="97" text-anchor="middle" font-size="13" class="dg-menor">gravado</text>
+  <path d="M650,255 L735,255 L735,130" class="dg-seta" marker-end="url(#bpmn-seta)"/>
+  <path d="M760,105 L800,105" class="dg-seta" marker-end="url(#bpmn-seta)"/>
+  <path d="M920,105 L937,105" class="dg-seta" marker-end="url(#bpmn-seta)"/>
+
+  <!-- legenda -->
+  <circle cx="60" cy="395" r="11" class="dg-forma"/>
+  <text x="80" y="400" font-size="15" class="dg-rotulo">início</text>
+  <rect x="160" y="382" width="40" height="26" rx="6" class="dg-forma"/>
+  <text x="210" y="400" font-size="15" class="dg-rotulo">tarefa</text>
+  <path d="M310,382 L323,395 L310,408 L297,395 z" class="dg-forma"/>
+  <path d="M305,390 L315,400 M315,390 L305,400" class="dg-linha"/>
+  <text x="335" y="400" font-size="15" class="dg-rotulo">gateway exclusivo</text>
+  <path d="M495,382 L508,395 L495,408 L482,395 z" class="dg-forma"/>
+  <path d="M495,388 L495,402 M488,395 L502,395" class="dg-linha"/>
+  <text x="520" y="400" font-size="15" class="dg-rotulo">gateway paralelo</text>
+  <circle cx="680" cy="395" r="11" class="dg-forma" stroke-width="4"/>
+  <text x="700" y="400" font-size="15" class="dg-rotulo">fim</text>
+  <path d="M760,395 L810,395" class="dg-seta" marker-end="url(#bpmn-seta)"/>
+  <text x="820" y="400" font-size="15" class="dg-rotulo">fluxo de seqüência</text>
+  <text x="500" y="445" text-anchor="middle" font-size="14" class="dg-menor">pool = participante (a empresa) · raia = papel (quem faz) · gateway só roteia — quem decide é a tarefa anterior</text>
+</svg>
+    </figure>
+    <figcaption class="dg-legenda">pool · raia · início · tarefa · gateway exclusivo · gateway paralelo · fluxo de seqüência · fim</figcaption>
+    <div class="fonte">OMG (2010), <em>BPMN 2.0 by Example</em>, Figs. 5.1–5.2, pp. 3–4 · Souza, in Vasconcelos &amp; Oliveira (2016), Tabela 2</div>
+    <div class="deck-footer">Garantia da Qualidade de Software · 18/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-citacao">
+    <div class="kicker">A regra que mais importa</div>
+    <blockquote class="cit-texto">A task represents an actual unit of work, while a gateway is only routing the sequence flow.</blockquote>
+    <div class="cit-autor">OMG (2010), <em>BPMN 2.0 by Example</em></div>
+    <div class="cit-fonte">p. 3, sobre a Figura 5.1</div>
+    <div class="deck-footer">Garantia da Qualidade de Software · 19/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Três regras da OMG que valem como regra de aula</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Gateway não decide — a tarefa anterior decide<span class="nota">p. 3</span>
+        
+      </li>
+      
+      <li>
+        Um pool com raias esconde a comunicação<span class="nota">"we blank out the communication between those people" — p. 3</span>
+        
+      </li>
+      
+      <li>
+        O nível de detalhe é decisão do modelador<span class="nota">um pool com raias ou vários pools — p. 4</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 20/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Por que BPMN — segundo o livro</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        "Padrão de notação com suporte em diversas ferramentas"<span class="nota">Braconi e Oliveira (2009), apud Souza (2016), p. 39 do PDF</span>
+        
+      </li>
+      
+      <li>
+        "Notação mais facilmente compreendida e usada por todos os envolvidos nos processos de negócio"<span class="nota">o dono, o analista e o programador leem o mesmo desenho</span>
+        
+      </li>
+      
+      <li>
+        Liga o modelo de negócio à sua implementação — pode virar código executável (BPEL)<span class="nota">pp. 37 e 39</span>
+        
+      </li>
+      
+      <li>
+        Desvantagem: "por ser focado em processos, dificulta o manuseio de diferentes visões"<span class="nota">p. 39 — por isso, daqui a pouco, casos de uso</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 21/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-demo">
+    <h2>BPMN ao vivo — a notação na prática</h2><div class="rule"></div>
+    <div class="demo-wrap">
+      <iframe class="demo-frame" data-src="assets/bpmn.html" data-preload
+              title="Modelador BPMN em tela cheia. Uma paleta à esquerda com os símbolos, um canvas com um pool vazio, e botões para começar em branco, carregar um exemplo pronto, abrir e salvar arquivos .bpmn e SVG."
+              loading="lazy"></iframe>
+    </div>
+    <div class="demo-legenda">Clique no frame para desenhar. <code>Esc</code> devolve as setas aos slides.</div>
+    <div class="fonte">bpmn-js 18 (bpmn.io) · roda local, sem rede</div>
+    <div class="deck-footer">Garantia da Qualidade de Software · 22/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-destaque">
+    <div class="frase">Quais destas tarefas o software <span class="accent">faz</span>, <span class="accent">ajuda</span> ou <span class="accent">só registra</span>?</div>
+    
+    <div class="deck-footer">Garantia da Qualidade de Software · 23/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">05</div>
+    <h1>Do processo ao requisito</h1>
+    <p class="sub">engenharia de requisitos — o primeiro degrau</p>
+    <div class="deck-footer">Garantia da Qualidade de Software · 24/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-citacao">
+    <div class="kicker">O gancho</div>
+    <blockquote class="cit-texto">Nos últimos anos, percebe-se um interesse crescente, da indústria e da academia, na utilização de BPM como estratégia para elicitação, especificação e modelagem conceitual de requisitos de sistemas de informação que, por sua vez, devem apoiar os processos de negócios das organizações.</blockquote>
+    <div class="cit-autor">Vasconcellos (2012), apud Souza (2016)</div>
+    <div class="cit-fonte">cap. 2, p. 32 do PDF</div>
+    <div class="deck-footer">Garantia da Qualidade de Software · 25/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-citacao">
+    <div class="kicker">Por que engenharia de requisitos existe</div>
+    <blockquote class="cit-texto">O usuário, que determinava os requisitos do software, passou muitas vezes até mesmo a não existir, exigindo que a equipe de desenvolvimento se adaptasse e passasse a buscar o conhecimento de outras formas.</blockquote>
+    <div class="cit-autor">Vasconcelos et al. (2006)</div>
+    <div class="cit-fonte"><em>Introdução à Engenharia de Software e à Qualidade de Software</em>, apostila UFLA, p. 18</div>
+    <div class="deck-footer">Garantia da Qualidade de Software · 26/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-citacao">
+    <div class="kicker">Definição</div>
+    <blockquote class="cit-texto">[…] uma disciplina para desenvolver uma especificação completa, consistente e não ambígua que sirva como base para um acordo entre todas as partes envolvidas, descrevendo o que o produto de software irá fazer (mas não como ele será feito).</blockquote>
+    <div class="cit-autor">Vasconcelos et al. (2006), resumindo Boehm (1989)</div>
+    <div class="cit-fonte">p. 52</div>
+    <div class="deck-footer">Garantia da Qualidade de Software · 27/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Requisitos funcionais e não-funcionais</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        <strong>Funcionais</strong> — "definem as funções que o sistema ou componentes do sistema devem executar"<span class="nota">Vasconcelos et al. (2006), p. 57 — transcrito</span>
+        
+      </li>
+      
+      <li>
+        "descrevem as transformações do sistema […] que transformam entradas em saídas"<span class="nota">a mesma forma da definição de processo (Davenport, p. 29 do livro)</span>
+        
+      </li>
+      
+      <li>
+        <strong>Não-funcionais</strong>, "também referidos com requisitos de qualidades" — limitações no <strong>produto</strong><span class="nota">"performance, interface de usuários, confiabilidade, segurança, interoperabilidade"</span>
+        
+      </li>
+      
+      <li>
+        — e limitações no <strong>processo de desenvolvimento</strong><span class="nota">"custos e tempo, metodologias a serem adotadas no desenvolvimento, componentes a serem reutilizados, padrões a serem aderidos"</span>
+        
+      </li>
+      
+      <li>
+        "suas fronteiras nem sempre sejam precisas de se determinar"<span class="nota">não perder tempo classificando o duvidoso</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 28/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-tabela">
+    <h2>Na empresa de cursos — exemplos</h2><div class="rule"></div>
+    <div class="tabela-wrap">
+      <table>
+        
+        <thead><tr><th>requisito</th><th>tipo</th></tr></thead>
+        
+        <tbody>
+          
+          <tr>
+            
+            <th scope="row">Emitir o certificado quando o aluno concluir todas as aulas</th>
+            
+            
+            <td>funcional</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">Registrar a modalidade (ao vivo ou gravado) na matrícula</th>
+            
+            
+            <td>funcional</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">O link da aula chega ao aluno em até 1 minuto após a matrícula</th>
+            
+            
+            <td>não-funcional · produto (desempenho)</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">O instrutor não digita nada durante a aula</th>
+            
+            
+            <td>não-funcional · produto (usabilidade)</td>
+            
+          </tr>
+          
+          <tr class="destaque">
+            
+            <th scope="row">O projeto usa Scrum + XP, em sprints de uma sessão</th>
+            
+            
+            <td>não-funcional · processo</td>
+            
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+    <div class="fonte">exemplos da aula, sobre o esboço da demo — a lista de verdade sai da entrevista</div>
+    <div class="deck-footer">Garantia da Qualidade de Software · 29/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>O primeiro degrau</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="Uma escada de sete degraus crescentes, rotulados G, F, E, D, C, B e A, os níveis de maturidade do MR-MPS-SW, com os equivalentes do CMMI-DEV nos degraus F, C, B e A. O primeiro degrau, G, está destacado e ligado a uma caixa que diz nível G, o primeiro degrau, Gerência de Requisitos e Gerência de Projetos. À direita, a nota de que no CMMI-DEV o nível 2 já tem Gerência de Requisitos.">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 460">
+  <defs>
+    <marker id="mps-seta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" class="dg-seta-cabeca"/>
+    </marker>
+  </defs>
+
+  <!-- escada: sete níveis do MR-MPS-SW, G (embaixo) a A (em cima) — Tabela 3, pp. 55–56 do PDF -->
+  <!-- cada degrau: x cresce 110, y sobe 44 -->
+  <rect x="40"  y="360" width="110" height="44" class="dg-ponto-2"/>
+  <text x="95"  y="388" text-anchor="middle" font-size="20" class="dg-rotulo" font-weight="700">G</text>
+
+  <rect x="150" y="316" width="110" height="88" class="dg-forma"/>
+  <text x="205" y="344" text-anchor="middle" font-size="20" class="dg-rotulo" font-weight="700">F</text>
+  <rect x="260" y="272" width="110" height="132" class="dg-forma"/>
+  <text x="315" y="300" text-anchor="middle" font-size="20" class="dg-rotulo" font-weight="700">E</text>
+  <rect x="370" y="228" width="110" height="176" class="dg-forma"/>
+  <text x="425" y="256" text-anchor="middle" font-size="20" class="dg-rotulo" font-weight="700">D</text>
+  <rect x="480" y="184" width="110" height="220" class="dg-forma"/>
+  <text x="535" y="212" text-anchor="middle" font-size="20" class="dg-rotulo" font-weight="700">C</text>
+  <rect x="590" y="140" width="110" height="264" class="dg-forma"/>
+  <text x="645" y="168" text-anchor="middle" font-size="20" class="dg-rotulo" font-weight="700">B</text>
+  <rect x="700" y="96"  width="110" height="308" class="dg-forma"/>
+  <text x="755" y="124" text-anchor="middle" font-size="20" class="dg-rotulo" font-weight="700">A</text>
+
+  <!-- nomes dos níveis, abaixo da escada -->
+  <text x="95"  y="428" text-anchor="middle" font-size="12" class="dg-menor">Gerenciado</text>
+  <text x="95"  y="443" text-anchor="middle" font-size="12" class="dg-menor">Parcialmente</text>
+  <text x="205" y="428" text-anchor="middle" font-size="12" class="dg-menor">Gerenciado</text>
+  <text x="315" y="428" text-anchor="middle" font-size="12" class="dg-menor">Parcialmente</text>
+  <text x="315" y="443" text-anchor="middle" font-size="12" class="dg-menor">Definido</text>
+  <text x="425" y="428" text-anchor="middle" font-size="12" class="dg-menor">Largamente</text>
+  <text x="425" y="443" text-anchor="middle" font-size="12" class="dg-menor">Definido</text>
+  <text x="535" y="428" text-anchor="middle" font-size="12" class="dg-menor">Definido</text>
+  <text x="645" y="428" text-anchor="middle" font-size="12" class="dg-menor">Gerenciado</text>
+  <text x="645" y="443" text-anchor="middle" font-size="12" class="dg-menor">Quantitativamente</text>
+  <text x="755" y="428" text-anchor="middle" font-size="12" class="dg-menor">Em Otimização</text>
+
+  <!-- CMMI-DEV equivalente (Quadro 1, p. 66): F=2, C=3, B=4, A=5 -->
+  <text x="205" y="380" text-anchor="middle" font-size="12" class="dg-menor">CMMI 2</text>
+  <text x="535" y="380" text-anchor="middle" font-size="12" class="dg-menor">CMMI 3</text>
+  <text x="645" y="380" text-anchor="middle" font-size="12" class="dg-menor">CMMI 4</text>
+  <text x="755" y="380" text-anchor="middle" font-size="12" class="dg-menor">CMMI 5</text>
+
+  <!-- o primeiro degrau, destacado -->
+  <path d="M95,350 L95,300" class="dg-seta" marker-start="url(#mps-seta)"/>
+  <rect x="20" y="60" width="330" height="110" rx="10" class="dg-linha-2" stroke-width="3"/>
+  <text x="185" y="88" text-anchor="middle" font-size="16" class="dg-rotulo">nível G — o primeiro degrau</text>
+  <text x="185" y="116" text-anchor="middle" font-size="17" class="dg-rotulo" font-weight="700">Gerência de Requisitos (GRE)</text>
+  <text x="185" y="142" text-anchor="middle" font-size="17" class="dg-rotulo" font-weight="700">Gerência de Projetos (GPR)</text>
+  <path d="M185,170 L185,240 L95,240 L95,300" class="dg-seta" marker-end="url(#mps-seta)"/>
+
+  <!-- CMMI nível 2, à direita -->
+  <text x="900" y="200" text-anchor="middle" font-size="15" class="dg-rotulo">no CMMI-DEV, o nível 2</text>
+  <text x="900" y="222" text-anchor="middle" font-size="15" class="dg-rotulo">já tem Gerência de</text>
+  <text x="900" y="244" text-anchor="middle" font-size="15" class="dg-rotulo">Requisitos (REQM)</text>
+  <text x="900" y="268" text-anchor="middle" font-size="12" class="dg-menor">Tabela 6, p. 61 do PDF</text>
+
+  <text x="500" y="30" text-anchor="middle" font-size="14" class="dg-menor">MR-MPS-SW: "sete níveis de maturidade, sequenciais e cumulativos" — Tabela 3 e Quadro 1, pp. 55–57 e 66 do PDF</text>
+</svg>
+    </figure>
+    <figcaption class="dg-legenda">no MR-MPS-SW, o primeiro nível de maturidade é gerência de requisitos e de projetos</figcaption>
+    <div class="fonte">Moreira, in Vasconcelos &amp; Oliveira (2016), cap. 3, Tabela 3 (pp. 55–56), Tabela 6 (p. 61) e Quadro 1 (p. 66) do PDF — redesenhada</div>
+    <div class="deck-footer">Garantia da Qualidade de Software · 30/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-diagrama">
+    <h2>O processo de engenharia de requisitos</h2><div class="rule"></div>
+    <figure class="dg-fig" role="img" aria-label="Quatro caixas em ciclo. À esquerda, sob o título Aquisição, Elicitação em cima e Validação embaixo. À direita, sob o título Especificação e dentro de uma moldura tracejada, Modelagem em cima e Análise embaixo. Setas de Elicitação para Modelagem, de Modelagem para Análise, de Análise para Validação e de Validação de volta para Elicitação.">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 420">
+  <defs>
+    <marker id="re-seta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" class="dg-seta-cabeca"/>
+    </marker>
+  </defs>
+
+  <!-- dois blocos (Fig. 5.3): Aquisição · Especificação -->
+  <text x="270" y="50" text-anchor="middle" font-size="18" class="dg-titulo">Aquisição</text>
+  <text x="730" y="50" text-anchor="middle" font-size="18" class="dg-titulo">Especificação</text>
+  <rect x="540" y="70" width="380" height="290" rx="12" class="dg-linha-2" fill="none" stroke-dasharray="10 7"/>
+
+  <rect x="120" y="100" width="220" height="80" rx="10" class="dg-forma"/>
+  <text x="230" y="148" text-anchor="middle" font-size="19" class="dg-rotulo">Elicitação</text>
+  <text x="230" y="205" text-anchor="middle" font-size="14" class="dg-menor">entrevistar, observar, questionar</text>
+
+  <rect x="620" y="100" width="220" height="80" rx="10" class="dg-forma"/>
+  <text x="730" y="148" text-anchor="middle" font-size="19" class="dg-rotulo">Modelagem</text>
+  <text x="730" y="205" text-anchor="middle" font-size="14" class="dg-menor">BPMN · casos de uso</text>
+
+  <rect x="620" y="250" width="220" height="80" rx="10" class="dg-forma"/>
+  <text x="730" y="298" text-anchor="middle" font-size="19" class="dg-rotulo">Análise</text>
+  <text x="730" y="350" text-anchor="middle" font-size="14" class="dg-menor">consistente? completo? exceções?</text>
+
+  <rect x="120" y="250" width="220" height="80" rx="10" class="dg-forma"/>
+  <text x="230" y="298" text-anchor="middle" font-size="19" class="dg-rotulo">Validação</text>
+  <text x="230" y="350" text-anchor="middle" font-size="14" class="dg-menor">é o que o cliente quer? · teste de aceitação</text>
+
+  <path d="M340,140 L620,140" class="dg-seta" marker-end="url(#re-seta)"/>
+  <path d="M730,180 L730,250" class="dg-seta" marker-end="url(#re-seta)"/>
+  <path d="M620,290 L340,290" class="dg-seta" marker-end="url(#re-seta)"/>
+  <path d="M230,250 L230,180" class="dg-seta" marker-end="url(#re-seta)"/>
+
+  <text x="500" y="400" text-anchor="middle" font-size="14" class="dg-menor">um ciclo: "A análise é intercalada com a elicitação" (p. 59)</text>
+</svg>
+    </figure>
+    <figcaption class="dg-legenda">aquisição (elicitação, validação) · especificação (modelagem, análise) — um ciclo</figcaption>
+    <div class="fonte">Vasconcelos et al. (2006), Figura 5.3, p. 58 — redesenhada, com anotações da aula</div>
+    <div class="deck-footer">Garantia da Qualidade de Software · 31/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-citacao">
+    <div class="kicker">O custo do erro de requisito</div>
+    <blockquote class="cit-texto">[…] a correção de um erro de especificação é cerca de cinco vezes mais cara do que uma correção de um erro de codificação.</blockquote>
+    <div class="cit-autor">Vasconcelos et al. (2006), atribuindo a Boehm (1989)</div>
+    <div class="cit-fonte">p. 53</div>
+    <div class="deck-footer">Garantia da Qualidade de Software · 32/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Caso de uso</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Identifica os <strong>atores</strong> e descreve a interação com o sistema<span class="nota">Sommerville (2016), cap. 4, sl. 64</span>
+        
+      </li>
+      
+      <li>
+        "os requisitos funcionais são expressos através de diagramas de casos de uso"<span class="nota">Vasconcelos et al. (2006), sobre a UML, pp. 61–62</span>
+        
+      </li>
+      
+      <li>
+        Evento disparador · pré-condições · garantias · curso normal · alternativos · exceções<span class="nota">template do SWEBOK v4, Fig. 1.6, p. 1-12</span>
+        
+      </li>
+      
+      <li>
+        Raia ≠ ator<span class="nota">raia é quem faz o trabalho; ator é quem interage com o software</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 33/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-citacao">
+    <div class="kicker">História de usuário</div>
+    <blockquote class="cit-texto"><code>As a &lt;role&gt; I want &lt;capability&gt; so that &lt;benefit&gt;</code></blockquote>
+    <div class="cit-autor">SWEBOK Guide v4.0a (IEEE, 2024)</div>
+    <div class="cit-fonte">cap. 1, p. 1-12 — "the user story format"</div>
+    <div class="deck-footer">Garantia da Qualidade de Software · 34/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Quatro coisas, quatro perguntas</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        BPMN — como o trabalho acontece<span class="nota">modelo do domínio (As-Is, depois To-Be)</span>
+        
+      </li>
+      
+      <li>
+        Caso de uso — o que o software oferece a cada ator<span class="nota">modelo do sistema</span>
+        
+      </li>
+      
+      <li>
+        História — o caso de uso que cabe no backlog, com o benefício<span class="nota">"so that <benefit>"</span>
+        
+      </li>
+      
+      <li>
+        Critério de aceitação — a validação escrita antes do código<span class="nota">Given / When / Then</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 35/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-secao">
+    <div class="num">06</div>
+    <h1>O projeto</h1>
+    <p class="sub">um software do zero, para a minha empresa — começando pelos requisitos</p>
+    <div class="deck-footer">Garantia da Qualidade de Software · 36/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Scrum, em uma tela</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        O Product Owner ordena o trabalho num <strong>Product Backlog</strong><span class="nota">Scrum Guide (2020), p. 3</span>
+        
+      </li>
+      
+      <li>
+        O time transforma uma seleção em <strong>Increment</strong> durante um <strong>Sprint</strong><span class="nota">sprint = "one month or less" (p. 7) — aqui, uma sessão</span>
+        
+      </li>
+      
+      <li>
+        Time e stakeholders inspecionam e ajustam para o próximo Sprint<span class="nota">transparência · inspeção · adaptação (pp. 3–4) — o PDCA de novo</span>
+        
+      </li>
+      
+      <li>
+        Repete
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 37/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>XP — o que entra hoje</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Whole Team — o cliente senta com o time<span class="nota">"All the contributors to an XP project sit together, members of one team. This team must include a business representative – the 'Customer'" — Jeffries (2011)</span>
+        
+      </li>
+      
+      <li>
+        Planning Game — o cliente apresenta; o time estima
+        
+      </li>
+      
+      <li>
+        Customer Tests — o cliente define o teste de aceitação<span class="nota">é o critério Given/When/Then; sessão 7 (01/10)</span>
+        
+      </li>
+      
+      <li>
+        Pareamento · propriedade coletiva do código<span class="nota">todo grupo pode mexer em tudo, desde o primeiro commit</span>
+        
+      </li>
+      
+      <li>
+        TDD e integração contínua — sessões 14 e 15
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 38/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-tabela">
+    <h2>O contrato do projeto</h2><div class="rule"></div>
+    <div class="tabela-wrap">
+      <table>
+        
+        <thead><tr><th></th><th></th></tr></thead>
+        
+        <tbody>
+          
+          <tr>
+            
+            <th scope="row">Produto</th>
+            
+            
+            <td>sistema de gestão dos cursos — nome a escolher</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">Product Owner e Customer</th>
+            
+            
+            <td>o professor (o dono)</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">Developers</th>
+            
+            
+            <td>10 grupos · um backlog · um PO</td>
+            
+          </tr>
+          
+          <tr>
+            
+            <th scope="row">Sprint</th>
+            
+            
+            <td>uma sessão — sprint 1 até 01/10</td>
+            
+          </tr>
+          
+          <tr class="destaque">
+            
+            <th scope="row">Definition of Done</th>
+            
+            
+            <td>no repositório · teste passando · revisado por par · aceito pelo PO</td>
+            
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+    <div class="fonte">Scrum Guide (2020), pp. 5–7, 12 — adaptação declarada</div>
+    <div class="deck-footer">Garantia da Qualidade de Software · 39/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>A entrevista — as perguntas de Eriksson e Penker</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Como os diferentes atores interagem?<span class="nota">Eriksson e Penker (2000), apud Souza (2016), pp. 32–33 do PDF</span>
+        
+      </li>
+      
+      <li>
+        Quais atividades fazem parte do seu trabalho? Quais os objetivos?
+        
+      </li>
+      
+      <li>
+        Quem está envolvido e <strong>não</strong> aparece como ator do sistema?
+        
+      </li>
+      
+      <li>
+        Quais as regras que regem as atividades?
+        
+      </li>
+      
+      <li>
+        Existe outra maneira de executar a atividade de forma mais eficiente?
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 40/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-demo">
+    <h2>O processo da empresa — desenhado pela turma</h2><div class="rule"></div>
+    <div class="demo-wrap">
+      <iframe class="demo-frame" data-src="assets/bpmn.html" data-preload
+              title="O mesmo modelador BPMN, em branco, para a turma desenhar o processo da empresa durante a entrevista com o dono."
+              loading="lazy"></iframe>
+    </div>
+    <div class="demo-legenda">Em branco. Um aluno no teclado; cada resposta vira caixa ou seta.</div>
+    <div class="fonte">bpmn-js 18 (bpmn.io) · roda local, sem rede</div>
+    <div class="deck-footer">Garantia da Qualidade de Software · 41/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>Da raia ao ator, da tarefa ao caso de uso</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        Ator<span class="nota">quem interage com o software</span>
+        
+      </li>
+      
+      <li>
+        O que o sistema faz para ele<span class="nota">o caso de uso</span>
+        
+      </li>
+      
+      <li>
+        Que tarefa do BPMN cobre<span class="nota">faz · ajuda · só registra</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 42/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-citacao">
+    <div class="kicker">O critério de aceitação</div>
+    <blockquote class="cit-texto"><code>Given &lt;some context&gt; [and &lt;possibly more context&gt;], when &lt;stimulus&gt; then &lt;outcome&gt; [and &lt;possibly more outcomes&gt;].</code></blockquote>
+    <div class="cit-autor">SWEBOK Guide v4.0a (IEEE, 2024)</div>
+    <div class="cit-fonte">cap. 1, p. 1-13 — behavior driven development</div>
+    <div class="deck-footer">Garantia da Qualidade de Software · 43/44</div>
+  </div>
+</section>
+      
+      
+<section>
+  <div class="slide l-topicos">
+    <h2>O que ficou pronto hoje</h2>
+    <div class="rule"></div>
+    <ul>
+      
+      <li>
+        O processo da empresa, em <code>.bpmn</code>
+        
+      </li>
+      
+      <li>
+        Atores, casos de uso e a classificação funcional / não-funcional<span class="nota">a foto do quadro</span>
+        
+      </li>
+      
+      <li>
+        As primeiras histórias, no repositório
+        
+      </li>
+      
+      <li>
+        Sprint 1 — até 01/10<span class="nota">17/09 é Tech Week; 24/09, palestra</span>
+        
+      </li>
+      
+      <li>
+        01/10 — elicitação e critérios de aceitação · G3 · G4<span class="nota">08/10 — maturidade, MR-MPS-SW × CMMI-DEV · G5 · G6</span>
+        
+      </li>
+      
+    </ul>
+    <div class="deck-footer">Garantia da Qualidade de Software · 44/44</div>
+  </div>
+</section>
+      
+    </div>
+  </div>
+
+  <script>
+    // ---- Notas do apresentador em corpo grande (tecla S) ----
+    // A speaker view é uma janela que o plugin de notas escreve do zero, e lá as
+    // notas saem em ~22px (menos ainda em tela estreita) — não se lê a um braço
+    // de distância. Como o HTML dela nasce dentro do notes.js, o único
+    // ponto de entrada é a chamada de window.open: guardamos a referência da
+    // janela e injetamos o CSS nela. Fica aqui, e não no vendor, para sobreviver
+    // a uma atualização do reveal.
+    (function () {
+      const CORPO = '30px';   // corpo das notas (o padrão do plugin dá ~22px)
+      const abrir = window.open;
+      window.open = function (url, nome, opcoes) {
+        const janela = abrir.call(window, url, nome, opcoes);
+        if (!janela || nome !== 'reveal.js - Notes') return janela;
+        const css = `
+          .speaker-controls-notes .value {
+            font-size: ${CORPO} !important;
+            line-height: 1.5 !important;
+          }`;
+        // document.write() do plugin descarta o <head> anterior, então tentamos
+        // de novo por alguns segundos até o estilo ficar de pé.
+        const injetar = () => {
+          try {
+            const doc = janela.document;
+            if (!doc || !doc.head || doc.getElementById('notas-grandes')) return;
+            const tag = doc.createElement('style');
+            tag.id = 'notas-grandes';
+            tag.textContent = css;
+            doc.head.appendChild(tag);
+          } catch (e) { /* janela ainda carregando */ }
+        };
+        const tentativas = setInterval(injetar, 150);
+        setTimeout(() => clearInterval(tentativas), 15000);
+        return janela;
+      };
+    })();
+  </script>
+
+  <script src="../../../../vendor/reveal/dist/reveal.js"></script>
+  <script src="../../../../vendor/reveal/plugin/highlight/highlight.js"></script>
+  <script src="../../../../vendor/reveal/plugin/zoom/zoom.js"></script>
+  <script src="../../../../vendor/chartjs/chart.umd.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: false,   // a página aparece no rodapé do slide (ver .deck-footer)
+      transition: 'slide',
+      transitionSpeed: 'default',
+      controls: true,
+      progress: true,
+      center: false,
+      pdfSeparateFragments: false,
+      width: 1280, height: 720,
+      margin: 0.0,
+      plugins: [ RevealHighlight, RevealZoom ]
+    });
+
+    // ---- Renderização dos gráficos Chart.js ----
+    // getComputedStyle é "vivo": ler as cores DENTRO do montarGrafico faz o
+    // gráfico seguir o tema atual (importa ao alternar claro/escuro).
+    const V = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+    const TIPOS = { barra: 'bar', linha: 'line', rosca: 'doughnut', pizza: 'pie', area: 'line' };
+    function montarGrafico(canvas) {
+      const SERIES = [1,2,3,4,5,6,7,8].map(i => V('--series-'+i));
+      Chart.defaults.font.family = V('--font-sans') || 'system-ui, sans-serif';
+      Chart.defaults.color = V('--chart-ink-2');
+      Chart.defaults.borderColor = V('--chart-grid');
+
+      const cfg = JSON.parse(canvas.dataset.chart);
+      const tipo = TIPOS[cfg.tipo] || cfg.tipo;   // aceita nomes PT ou os do Chart.js
+      const circular = ['doughnut','pie','polarArea'].includes(tipo);
+      const ehArea = cfg.tipo === 'area';
+      const datasets = (cfg.series || []).map((s, i) => ({
+        label: s.nome,
+        data: s.dados,
+        backgroundColor: circular ? (cfg.series[0].dados.map((_, k) => SERIES[k % 8]))
+                                   : (ehArea ? SERIES[i % 8] + '33' : SERIES[i % 8]),
+        borderColor: SERIES[i % 8],
+        borderWidth: tipo === 'line' ? 2.4 : 0,
+        borderRadius: tipo === 'bar' ? 4 : 0,
+        pointRadius: tipo === 'line' ? 3 : 0,
+        tension: 0.25, fill: ehArea
+      }));
+      // Série única não tem legenda (seria uma caixinha só) — então o nome da
+      // série, que é onde mora a unidade, vira o rótulo do eixo Y. Sem isso o
+      // gráfico mostra números sem unidade.
+      const legenda = (cfg.series && cfg.series.length > 1) || circular;
+      const rotuloY = (!legenda && !circular && datasets.length === 1) ? datasets[0].label : '';
+      new Chart(canvas, {
+        type: tipo,
+        data: { labels: cfg.labels, datasets },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          animation: false,
+          plugins: {
+            legend: {
+              display: legenda,
+              position: 'bottom',
+              labels: { boxWidth: 12, boxHeight: 12, usePointStyle: true, padding: 16,
+                        color: V('--chart-ink-2'), font: { size: 15 } }
+            },
+            tooltip: { enabled: true }
+          },
+          scales: circular ? {} : {
+            x: { grid: { display: false }, border: { color: V('--chart-axis') },
+                 ticks: { color: V('--chart-muted'), font: { size: 14 } } },
+            y: { grid: { color: V('--chart-grid') }, border: { display: false },
+                 ticks: { color: V('--chart-muted'), font: { size: 14 } },
+                 title: { display: !!rotuloY, text: rotuloY,
+                          color: V('--chart-ink-2'), font: { size: 15 } },
+                 beginAtZero: true }
+          }
+        }
+      });
+    }
+    // Renderiza os gráficos do slide atual (evita medir canvas escondido = 0px)
+    function renderVisiveis() {
+      document.querySelectorAll('section.present canvas[data-chart]').forEach(c => {
+        if (!c.dataset.pronto) { c.dataset.pronto = '1'; montarGrafico(c); }
+      });
+    }
+    function renderTodos() {
+      document.querySelectorAll('canvas[data-chart]').forEach(c => {
+        if (!c.dataset.pronto) { c.dataset.pronto = '1'; montarGrafico(c); }
+      });
+    }
+    const modoPDF = window.location.search.includes('print-pdf');
+    if (modoPDF) {
+      // No modo PDF todos os slides ficam visíveis: renderiza tudo.
+      Reveal.on('ready', () => setTimeout(renderTodos, 200));
+    } else {
+      Reveal.on('ready', renderVisiveis);
+      Reveal.on('slidechanged', renderVisiveis);
+    }
+    window.__renderTodos = renderTodos;
+    // Redesenha os gráficos com as cores do tema atual (ao alternar claro/escuro).
+    window.__reRenderGraficos = function () {
+      document.querySelectorAll('canvas[data-chart]').forEach(c => {
+        const ex = Chart.getChart(c); if (ex) ex.destroy(); delete c.dataset.pronto;
+      });
+      (modoPDF ? renderTodos : renderVisiveis)();
+    };
+  </script>
+
+  <script>
+    // ---- Toggle de tema (o ícone sol/lua é trocado por CSS via [data-theme]) ----
+    (function () {
+      const root = document.documentElement;
+      const btn = document.querySelector('.tema-toggle');
+      function aplicar(modo) {
+        root.setAttribute('data-theme', modo);
+        try { localStorage.setItem('gs-tema', modo); } catch (e) {}
+        if (window.__reRenderGraficos) window.__reRenderGraficos();
+      }
+      btn.addEventListener('click', () =>
+        aplicar(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+    })();
+  </script>
+  
+  <script>
+  (function () {
+    var root = document.documentElement;
+    // revela os botões do topo quando o mouse está na faixa de cima
+    window.addEventListener('mousemove', function (e) {
+      root.classList.toggle('mostrar-topo', e.clientY < 80);
+    });
+    var link = document.querySelector('.btn-voltar');
+    if (!link) return;
+    // origem explícita passada pelo plano (?de=): só caminho relativo seguro
+    try {
+      var de = new URLSearchParams(location.search).get('de');
+      if (de && !/^[a-z][a-z0-9+.-]*:/i.test(de) && de[0] !== '/') link.setAttribute('href', de);
+    } catch (e) {}
+    // se você veio de outra página do site, volta pra ELA via histórico
+    link.addEventListener('click', function (ev) {
+      try {
+        if (document.referrer &&
+            new URL(document.referrer).origin === location.origin &&
+            history.length > 1) {
+          ev.preventDefault();
+          history.back();
+        }
+      } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>BPMN ao vivo — modelador</title>
+<link rel="stylesheet" href="demo.css">
+<link rel="stylesheet" href="bpmn-js/diagram-js.css">
+<link rel="stylesheet" href="bpmn-js/bpmn-js.css">
+<link rel="stylesheet" href="bpmn-js/bpmn-font/css/bpmn.css">
+<!--
+  BPMN AO VIVO — o modelador de processos que roda dentro do slide.
+
+  Ferramenta: bpmn-js 18.28.0 (bpmn.io / Camunda), licença MIT-like em
+  bpmn-js/LICENSE — a marca "bpmn.io" no canto do canvas NÃO pode ser removida
+  nem coberta (é condição da licença). Empacotado local: sem CDN, sem rede.
+  Chrome da página em demo.css (espelha os tokens do tema do deck).
+
+  COMO RODAR EM SALA:
+  1. "Em branco" — desenha o processo da empresa do zero, junto com a turma.
+     A paleta fica à esquerda: evento de início (círculo), tarefa (retângulo),
+     gateway (losango), evento de fim (círculo grosso), pool/raia. Clique num
+     elemento para o menu de contexto (seta → próxima tarefa já conectada).
+  2. "Exemplo pronto" — carrega exemplo-cursos.bpmn, um esboço genérico da
+     empresa de cursos online (matrícula → modalidade → aula → certificado),
+     para mostrar a notação ou como fallback. O processo de verdade é o que
+     a turma desenha em branco durante a entrevista com o dono.
+  3. "Salvar .bpmn" — guarda o XML (é isto que vira artefato do projeto);
+     "Salvar SVG" — a imagem para colar no documento de requisitos.
+  4. "Ajustar" — enquadra o diagrama na tela (também: Ctrl + roda do mouse).
+
+  TECLADO: dentro do frame, as setas movem o canvas em vez de trocar de slide.
+  Esc (ou clicar na margem do slide) devolve o teclado ao reveal.
+  Atalhos do modelador: Ctrl+Z desfaz · Del apaga · L = lasso · H = mão.
+
+  CAMINHO DE FALHA ENSAIADO: apagar o gateway "Modalidade?" — os dois ramos
+  ficam soltos e o processo deixa de dizer como a empresa sabe se a matrícula é
+  de turma ao vivo ou de curso gravado. Pergunta para a turma: "quem decide
+  isso, e quando?"
+-->
+<style>
+  /* ---- layout desta demo: cabeçalho fino, canvas ocupa o resto ---- */
+  main { display:flex; flex-direction:column; }
+  #canvas { flex:1 1 auto; min-height:0; position:relative; background:var(--bg); }
+  header { gap:.6em; align-items:center; padding:.6em 1.2em; }
+  header .grupo { display:inline-flex; gap:.4em; flex-wrap:wrap; }
+  header button { padding:.35em .9em; }
+  #arquivo { display:none; }
+  .status { font-size:var(--fs-caption); color:var(--muted); }
+
+  /* ---- bpmn-js segue o tema: traços na cor da tinta, texto idem ---- */
+  .djs-container { font-family: var(--font-sans); }
+  .djs-palette, .djs-context-pad .entry, .djs-popup {
+    background: var(--bg) !important; color: var(--ink) !important;
+    border-color: var(--rule) !important;
+  }
+  .djs-palette .entry, .djs-context-pad .entry { color: var(--ink) !important; }
+  .djs-palette .entry:hover, .djs-context-pad .entry:hover { color: var(--accent) !important; }
+  .djs-palette .separator { border-color: var(--rule) !important; }
+  .djs-popup .entry:hover { background: var(--code-bg) !important; }
+  .djs-direct-editing-content { background: var(--bg) !important; color: var(--ink) !important; }
+  /* a marca bpmn.io fica visível, só herda a cor de texto (condição da licença: não remover, não cobrir) */
+</style>
+</head>
+<body>
+<header>
+  <h1>BPMN ao vivo</h1>
+  <span class="sub">processo de negócio, desenhado na frente da turma</span>
+  <span class="spacer"></span>
+  <span class="grupo">
+    <button id="novo" class="sec" type="button">Em branco</button>
+    <button id="exemplo" class="sec" type="button">Exemplo pronto</button>
+    <button id="abrir" class="sec" type="button">Abrir .bpmn</button>
+    <input id="arquivo" type="file" accept=".bpmn,.xml">
+  </span>
+  <span class="grupo">
+    <button id="ajustar" class="sec" type="button">Ajustar</button>
+    <button id="salvar-bpmn" type="button">Salvar .bpmn</button>
+    <button id="salvar-svg" type="button">Salvar SVG</button>
+  </span>
+  <span id="status" class="status"></span>
+</header>
+<main>
+  <div id="canvas"></div>
+</main>
+
+<script src="bpmn-js/bpmn-modeler.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  // Cores do tema, lidas do demo.css em tempo de execução — assim o diagrama
+  // segue claro/escuro sem duplicar valor aqui.
+  var css = getComputedStyle(document.documentElement);
+  var tok = function (n) { return css.getPropertyValue(n).trim(); };
+
+  var modeler = new BpmnJS({
+    container: '#canvas',
+    bpmnRenderer: {
+      defaultFillColor: tok('--bg'),
+      defaultStrokeColor: tok('--ink'),
+      defaultLabelColor: tok('--ink')
+    }
+  });
+
+  var status = document.getElementById('status');
+  function diz(msg) { status.textContent = msg || ''; }
+
+  // Diagrama vazio: um pool sem nada dentro é mais convidativo do que o vazio
+  // absoluto — a turma já vê "onde" o processo vai ser desenhado.
+  var VAZIO = [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"',
+    ' xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"',
+    ' xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_vazio"',
+    ' targetNamespace="http://teaching.local/gqs">',
+    ' <bpmn:process id="Processo_1" isExecutable="false">',
+    '  <bpmn:startEvent id="Inicio_1" />',
+    ' </bpmn:process>',
+    ' <bpmndi:BPMNDiagram id="Diagrama_1">',
+    '  <bpmndi:BPMNPlane id="Plano_1" bpmnElement="Processo_1">',
+    '   <bpmndi:BPMNShape id="Inicio_1_di" bpmnElement="Inicio_1">',
+    '    <dc:Bounds x="180" y="160" width="36" height="36" />',
+    '   </bpmndi:BPMNShape>',
+    '  </bpmndi:BPMNPlane>',
+    ' </bpmndi:BPMNDiagram>',
+    '</bpmn:definitions>'
+  ].join('\n');
+
+  function ajustar() {
+    var canvas = modeler.get('canvas');
+    canvas.zoom('fit-viewport', 'auto');
+    // a paleta cobre os ~80 px da esquerda: empurra o desenho para a direita
+    // para o nome do pool e o rótulo do início não ficarem atrás dela
+    canvas.scroll({ dx: 70, dy: 0 });
+  }
+
+  function carregar(xml, rotulo) {
+    return modeler.importXML(xml).then(function (r) {
+      ajustar();
+      diz(rotulo + (r.warnings.length ? ' · ' + r.warnings.length + ' aviso(s) no console' : ''));
+      if (r.warnings.length) console.warn(r.warnings);
+    }).catch(function (e) {
+      diz('não abriu: ' + e.message);
+      console.error(e);
+    });
+  }
+
+  function baixar(nome, conteudo, tipo) {
+    var blob = new Blob([conteudo], { type: tipo });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = nome;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 0);
+  }
+
+  document.getElementById('novo').onclick = function () { carregar(VAZIO, 'em branco'); };
+
+  document.getElementById('exemplo').onclick = function () {
+    fetch('exemplo-cursos.bpmn').then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.text();
+    }).then(function (xml) {
+      carregar(xml, 'exemplo: cursos online');
+    }).catch(function (e) {
+      diz('exemplo não carregou (' + e.message + ') — abra o .bpmn pelo botão "Abrir"');
+    });
+  };
+
+  var arquivo = document.getElementById('arquivo');
+  document.getElementById('abrir').onclick = function () { arquivo.click(); };
+  arquivo.onchange = function () {
+    var f = arquivo.files[0];
+    if (!f) return;
+    f.text().then(function (xml) { carregar(xml, f.name); });
+    arquivo.value = '';
+  };
+
+  document.getElementById('ajustar').onclick = ajustar;
+
+  document.getElementById('salvar-bpmn').onclick = function () {
+    modeler.saveXML({ format: true }).then(function (r) {
+      baixar('processo.bpmn', r.xml, 'application/xml');
+      diz('processo.bpmn salvo');
+    });
+  };
+
+  document.getElementById('salvar-svg').onclick = function () {
+    modeler.saveSVG().then(function (r) {
+      baixar('processo.svg', r.svg, 'image/svg+xml');
+      diz('processo.svg salvo');
+    });
+  };
+
+  window.addEventListener('resize', ajustar);
+
+  // Começa em branco: a aula desenha. O exemplo é um clique de distância.
+  carregar(VAZIO, 'em branco');
+})();
+</script>
+</body>
+</html>

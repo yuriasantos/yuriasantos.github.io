@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 460">
+  <defs>
+    <marker id="mps-seta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" class="dg-seta-cabeca"/>
+    </marker>
+  </defs>
+
+  <!-- escada: sete níveis do MR-MPS-SW, G (embaixo) a A (em cima) — Tabela 3, pp. 55–56 do PDF -->
+  <!-- cada degrau: x cresce 110, y sobe 44 -->
+  <rect x="40"  y="360" width="110" height="44" class="dg-ponto-2"/>
+  <text x="95"  y="388" text-anchor="middle" font-size="20" class="dg-rotulo" font-weight="700">G</text>
+
+  <rect x="150" y="316" width="110" height="88" class="dg-forma"/>
+  <text x="205" y="344" text-anchor="middle" font-size="20" class="dg-rotulo" font-weight="700">F</text>
+  <rect x="260" y="272" width="110" height="132" class="dg-forma"/>
+  <text x="315" y="300" text-anchor="middle" font-size="20" class="dg-rotulo" font-weight="700">E</text>
+  <rect x="370" y="228" width="110" height="176" class="dg-forma"/>
+  <text x="425" y="256" text-anchor="middle" font-size="20" class="dg-rotulo" font-weight="700">D</text>
+  <rect x="480" y="184" width="110" height="220" class="dg-forma"/>
+  <text x="535" y="212" text-anchor="middle" font-size="20" class="dg-rotulo" font-weight="700">C</text>
+  <rect x="590" y="140" width="110" height="264" class="dg-forma"/>
+  <text x="645" y="168" text-anchor="middle" font-size="20" class="dg-rotulo" font-weight="700">B</text>
+  <rect x="700" y="96"  width="110" height="308" class="dg-forma"/>
+  <text x="755" y="124" text-anchor="middle" font-size="20" class="dg-rotulo" font-weight="700">A</text>
+
+  <!-- nomes dos níveis, abaixo da escada -->
+  <text x="95"  y="428" text-anchor="middle" font-size="12" class="dg-menor">Gerenciado</text>
+  <text x="95"  y="443" text-anchor="middle" font-size="12" class="dg-menor">Parcialmente</text>
+  <text x="205" y="428" text-anchor="middle" font-size="12" class="dg-menor">Gerenciado</text>
+  <text x="315" y="428" text-anchor="middle" font-size="12" class="dg-menor">Parcialmente</text>
+  <text x="315" y="443" text-anchor="middle" font-size="12" class="dg-menor">Definido</text>
+  <text x="425" y="428" text-anchor="middle" font-size="12" class="dg-menor">Largamente</text>
+  <text x="425" y="443" text-anchor="middle" font-size="12" class="dg-menor">Definido</text>
+  <text x="535" y="428" text-anchor="middle" font-size="12" class="dg-menor">Definido</text>
+  <text x="645" y="428" text-anchor="middle" font-size="12" class="dg-menor">Gerenciado</text>
+  <text x="645" y="443" text-anchor="middle" font-size="12" class="dg-menor">Quantitativamente</text>
+  <text x="755" y="428" text-anchor="middle" font-size="12" class="dg-menor">Em Otimização</text>
+
+  <!-- CMMI-DEV equivalente (Quadro 1, p. 66): F=2, C=3, B=4, A=5 -->
+  <text x="205" y="380" text-anchor="middle" font-size="12" class="dg-menor">CMMI 2</text>
+  <text x="535" y="380" text-anchor="middle" font-size="12" class="dg-menor">CMMI 3</text>
+  <text x="645" y="380" text-anchor="middle" font-size="12" class="dg-menor">CMMI 4</text>
+  <text x="755" y="380" text-anchor="middle" font-size="12" class="dg-menor">CMMI 5</text>
+
+  <!-- o primeiro degrau, destacado -->
+  <path d="M95,350 L95,300" class="dg-seta" marker-start="url(#mps-seta)"/>
+  <rect x="20" y="60" width="330" height="110" rx="10" class="dg-linha-2" stroke-width="3"/>
+  <text x="185" y="88" text-anchor="middle" font-size="16" class="dg-rotulo">nível G — o primeiro degrau</text>
+  <text x="185" y="116" text-anchor="middle" font-size="17" class="dg-rotulo" font-weight="700">Gerência de Requisitos (GRE)</text>
+  <text x="185" y="142" text-anchor="middle" font-size="17" class="dg-rotulo" font-weight="700">Gerência de Projetos (GPR)</text>
+  <path d="M185,170 L185,240 L95,240 L95,300" class="dg-seta" marker-end="url(#mps-seta)"/>
+
+  <!-- CMMI nível 2, à direita -->
+  <text x="900" y="200" text-anchor="middle" font-size="15" class="dg-rotulo">no CMMI-DEV, o nível 2</text>
+  <text x="900" y="222" text-anchor="middle" font-size="15" class="dg-rotulo">já tem Gerência de</text>
+  <text x="900" y="244" text-anchor="middle" font-size="15" class="dg-rotulo">Requisitos (REQM)</text>
+  <text x="900" y="268" text-anchor="middle" font-size="12" class="dg-menor">Tabela 6, p. 61 do PDF</text>
+
+  <text x="500" y="30" text-anchor="middle" font-size="14" class="dg-menor">MR-MPS-SW: "sete níveis de maturidade, sequenciais e cumulativos" — Tabela 3 e Quadro 1, pp. 55–57 e 66 do PDF</text>
+</svg>

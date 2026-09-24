@@ -1,0 +1,136 @@
+/* ============================================================================
+   demo.css — chrome comum das demos ao vivo desta aula.
+
+   Um <iframe> é documento à parte e NÃO herda as custom properties do deck,
+   então os valores estão copiados de:
+     gerador/tema/base.css          famílias e escala tipográfica
+     gerador/tema/tema-default.css  cores do modo claro
+     gerador/tema/tema-dark.css     cores do modo escuro
+   Mesma escala e mesmos multiplicadores do base.css; só a unidade muda —
+   lá `--u: 1cqh` mede contra a altura do slide, aqui o iframe é o próprio
+   container, então `--u: 1vh`.
+
+   ⚠️ Se os tokens do tema mudarem, ESTE arquivo é o único lugar a refazer.
+   Era esse o motivo de existir: sem ele, cada demo carregava a sua cópia.
+   ========================================================================= */
+
+:root {
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+
+  --u: 1vh;
+  --fs-scale: 1;
+  --fs-caption: calc(2.5 * var(--u) * var(--fs-scale));
+  --fs-body:    calc(3.6 * var(--u) * var(--fs-scale));
+  --radius: 1.4vh;
+
+  /* tema-default.css */
+  --bg:#fcfcfb; --ink:#0b0b0b; --ink-2:#52514e; --muted:#898781;
+  --accent:#2a78d6; --accent-2:#eb6834; --rule:#e1e0d9; --code-bg:#f0efec;
+  --ok:#1baf7a; --no:#e34948;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* tema-dark.css */
+    --bg:#1a1a19; --ink:#ffffff; --ink-2:#c3c2b7; --muted:#898781;
+    --accent:#3987e5; --accent-2:#d95926; --rule:#2c2c2a; --code-bg:#2c2c2a;
+    --ok:#199e70; --no:#e66767;
+  }
+}
+
+* { box-sizing:border-box; }
+html, body { height:100%; }
+body {
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:var(--font-sans); font-size:var(--fs-body);
+  font-weight:400; letter-spacing:-0.005em; line-height:1.35;
+  display:flex; flex-direction:column;
+}
+
+/* ---------- cabeçalho ---------- */
+header {
+  display:flex; align-items:baseline; gap:1.2em; flex-wrap:wrap;
+  padding:1.1em 1.8em; border-bottom:1px solid var(--rule); flex:0 0 auto;
+}
+h1 {
+  margin:0; font-size:var(--fs-caption); font-weight:600;
+  letter-spacing:0.14em; text-transform:uppercase; color:var(--accent);
+}
+.sub { font-size:var(--fs-caption); color:var(--muted); letter-spacing:0; text-transform:none; }
+.spacer { flex:1 1 auto; }
+
+label.toggle {
+  font-size:var(--fs-caption); color:var(--muted); cursor:pointer; user-select:none;
+  display:inline-flex; align-items:center; gap:.5em; white-space:nowrap;
+}
+label.toggle input { width:1em; height:1em; accent-color:var(--accent); cursor:pointer; }
+
+/* ---------- corpo: uma ou duas colunas ---------- */
+main { flex:1 1 auto; min-height:0; display:flex; }
+main.duas { gap:0; }
+.painel { flex:1 1 50%; min-width:0; min-height:0; display:flex; flex-direction:column;
+  padding:1.2em 1.6em; overflow-y:auto; }
+.painel + .painel { border-left:1px solid var(--rule); }
+.painel h2 {
+  margin:0 0 .7em; font-size:var(--fs-caption); font-weight:600;
+  letter-spacing:0.14em; text-transform:uppercase; color:var(--muted);
+}
+
+/* ---------- código / regras ---------- */
+/* `pre-wrap`, não `pre`: mantém a indentação das regras E quebra a linha longa.
+   Com `pre` o corpus da demo de geração (um parágrafo só) rolava na horizontal
+   e ficava ilegível na projeção. */
+.codigo {
+  font-family:var(--font-mono); font-size:var(--fs-caption); line-height:1.75;
+  background:var(--code-bg); border:1px solid var(--rule); border-radius:var(--radius);
+  padding:.9em 1em; color:var(--ink); width:100%; resize:none;
+  white-space:pre-wrap; overflow-wrap:break-word; overflow-x:hidden; overflow-y:auto;
+}
+textarea.codigo { min-height:8em; flex:1 1 auto; }
+.codigo .fired { background:var(--accent); color:var(--bg); border-radius:.3em; padding:0 .25em; }
+
+/* ---------- controles ---------- */
+.linha { display:flex; gap:.6em; align-items:center; flex-wrap:wrap; margin-bottom:.6em; }
+.linha label { font-size:var(--fs-caption); color:var(--muted); min-width:9em; }
+input[type=text], input[type=number], select {
+  flex:1 1 auto; min-width:4em; font:inherit; font-size:var(--fs-caption);
+  color:var(--ink); background:transparent;
+  border:1px solid var(--rule); border-radius:var(--radius); padding:.4em .6em;
+}
+input:focus, select:focus, textarea:focus { outline:0.3vh solid var(--accent); outline-offset:0.2vh; }
+button {
+  font:inherit; font-size:var(--fs-caption); font-weight:600; cursor:pointer;
+  color:var(--bg); background:var(--accent); border:0;
+  border-radius:var(--radius); padding:.5em 1.2em;
+}
+button.sec { background:transparent; color:var(--ink-2); border:1px solid var(--rule); }
+button:hover { background:var(--ink); color:var(--bg); }
+
+/* ---------- veredicto ---------- */
+.veredicto { font-size:var(--fs-body); font-weight:650; margin:.7em 0 .3em; }
+.veredicto.sim { color:var(--ok); }
+.veredicto.nao { color:var(--no); }
+.porque { font-size:var(--fs-caption); color:var(--ink-2); line-height:1.5; }
+
+/* ---------- trace: o painel que mostra a maquinaria ----------
+   ⚠️ REGRA DESTE PAINEL: ele mostra SÓ o que o programa fez. Nada de frase de
+   efeito, nada de nota de professor, nada de referência a outra aula. Se a
+   linha pode ser dita em voz alta pelo professor, ela pertence às `notas:` do
+   slide, não à tela do aluno. Duas ou três linhas bastam; o resto é ruído que
+   compete com a coisa que a demo quer mostrar. */
+.trace {
+  margin-top:.6em; padding:.6em .9em; border-left:0.5vh solid var(--accent);
+  background:var(--code-bg); border-radius:0 var(--radius) var(--radius) 0;
+  font-family:var(--font-mono); font-size:var(--fs-caption); line-height:1.6;
+  color:var(--muted); white-space:pre-wrap; word-break:break-word;
+}
+.trace b { color:var(--ink-2); font-weight:600; }
+
+/* ---------- tabela de casos ---------- */
+table { border-collapse:collapse; width:100%; font-size:var(--fs-caption); }
+th, td { text-align:left; padding:.35em .5em; border-bottom:1px solid var(--rule); }
+th { color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:.08em; }
+td.sim { color:var(--ok); font-weight:650; }
+td.nao { color:var(--no); font-weight:650; }
+tr.quebrou td { background:color-mix(in srgb, var(--no) 14%, transparent); }
+.nota-rodape { font-size:var(--fs-caption); color:var(--muted); margin-top:.8em; line-height:1.5; }

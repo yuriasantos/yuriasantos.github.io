@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Processo de partida da demo ao vivo (sessão 5, GQS): uma empresa que vende
+  cursos online, ao vivo ou gravados — do "aluno interessado" ao "certificado
+  emitido". Um pool só, três raias (Aluno · Atendimento · Instrutor), um
+  gateway exclusivo (modalidade) e a junção.
+
+  É um ESBOÇO GENÉRICO, escrito antes da entrevista com o dono (o professor).
+  Serve como exemplo de notação e como fallback; o processo de verdade é o que
+  a turma desenhar em branco no Bloco 2. Escrito à mão, DI calculado para 16:9.
+-->
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  id="Definitions_cursos"
+                  targetNamespace="http://teaching.local/gqs/cursos">
+
+  <bpmn:collaboration id="Collab_1">
+    <bpmn:participant id="Pool_Cursos" name="Empresa de cursos online" processRef="Proc_Cursos" />
+  </bpmn:collaboration>
+
+  <bpmn:process id="Proc_Cursos" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_1">
+      <bpmn:lane id="Lane_Aluno" name="Aluno">
+        <bpmn:flowNodeRef>Start_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_1</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Atendimento" name="Atendimento">
+        <bpmn:flowNodeRef>T3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>G1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>G2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T8</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Instrutor" name="Instrutor">
+        <bpmn:flowNodeRef>T5</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+
+    <bpmn:startEvent id="Start_1" name="Aluno interessado">
+      <bpmn:outgoing>f1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="T1" name="Escolher curso e modalidade">
+      <bpmn:incoming>f1</bpmn:incoming>
+      <bpmn:outgoing>f2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="T2" name="Efetuar pagamento">
+      <bpmn:incoming>f2</bpmn:incoming>
+      <bpmn:outgoing>f3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="T3" name="Confirmar matrícula">
+      <bpmn:incoming>f3</bpmn:incoming>
+      <bpmn:outgoing>f4</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="G1" name="Modalidade?">
+      <bpmn:incoming>f4</bpmn:incoming>
+      <bpmn:outgoing>f5</bpmn:outgoing>
+      <bpmn:outgoing>f6</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="T4" name="Agendar turma e enviar link">
+      <bpmn:incoming>f5</bpmn:incoming>
+      <bpmn:outgoing>f7</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="T5" name="Ministrar aula ao vivo">
+      <bpmn:incoming>f7</bpmn:incoming>
+      <bpmn:outgoing>f8</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="T6" name="Liberar acesso às gravações">
+      <bpmn:incoming>f6</bpmn:incoming>
+      <bpmn:outgoing>f9</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="G2">
+      <bpmn:incoming>f8</bpmn:incoming>
+      <bpmn:incoming>f9</bpmn:incoming>
+      <bpmn:outgoing>f10</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="T7" name="Assistir às aulas">
+      <bpmn:incoming>f10</bpmn:incoming>
+      <bpmn:outgoing>f11</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="T8" name="Emitir certificado">
+      <bpmn:incoming>f11</bpmn:incoming>
+      <bpmn:outgoing>f12</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="End_1" name="Certificado emitido">
+      <bpmn:incoming>f12</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <bpmn:sequenceFlow id="f1" sourceRef="Start_1" targetRef="T1" />
+    <bpmn:sequenceFlow id="f2" sourceRef="T1" targetRef="T2" />
+    <bpmn:sequenceFlow id="f3" sourceRef="T2" targetRef="T3" />
+    <bpmn:sequenceFlow id="f4" sourceRef="T3" targetRef="G1" />
+    <bpmn:sequenceFlow id="f5" name="ao vivo" sourceRef="G1" targetRef="T4" />
+    <bpmn:sequenceFlow id="f6" name="gravado" sourceRef="G1" targetRef="T6" />
+    <bpmn:sequenceFlow id="f7" sourceRef="T4" targetRef="T5" />
+    <bpmn:sequenceFlow id="f8" sourceRef="T5" targetRef="G2" />
+    <bpmn:sequenceFlow id="f9" sourceRef="T6" targetRef="G2" />
+    <bpmn:sequenceFlow id="f10" sourceRef="G2" targetRef="T7" />
+    <bpmn:sequenceFlow id="f11" sourceRef="T7" targetRef="T8" />
+    <bpmn:sequenceFlow id="f12" sourceRef="T8" targetRef="End_1" />
+  </bpmn:process>
+
+  <bpmndi:BPMNDiagram id="Diagram_1">
+    <bpmndi:BPMNPlane id="Plane_1" bpmnElement="Collab_1">
+      <bpmndi:BPMNShape id="Pool_Cursos_di" bpmnElement="Pool_Cursos" isHorizontal="true">
+        <dc:Bounds x="160" y="80" width="1560" height="600" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Aluno_di" bpmnElement="Lane_Aluno" isHorizontal="true">
+        <dc:Bounds x="190" y="80" width="1530" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Atendimento_di" bpmnElement="Lane_Atendimento" isHorizontal="true">
+        <dc:Bounds x="190" y="280" width="1530" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Instrutor_di" bpmnElement="Lane_Instrutor" isHorizontal="true">
+        <dc:Bounds x="190" y="480" width="1530" height="200" />
+      </bpmndi:BPMNShape>
+
+      <!-- Aluno: y=138 (tarefas) · centro 178 -->
+      <bpmndi:BPMNShape id="Start_1_di" bpmnElement="Start_1">
+        <dc:Bounds x="212" y="160" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="186" y="203" width="88" height="27" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T1_di" bpmnElement="T1">
+        <dc:Bounds x="290" y="138" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T2_di" bpmnElement="T2">
+        <dc:Bounds x="440" y="138" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <!-- Atendimento: y=338 · centro 378 -->
+      <bpmndi:BPMNShape id="T3_di" bpmnElement="T3">
+        <dc:Bounds x="590" y="338" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="G1_di" bpmnElement="G1" isMarkerVisible="true">
+        <dc:Bounds x="740" y="353" width="50" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="733" y="323" width="64" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T4_di" bpmnElement="T4">
+        <dc:Bounds x="840" y="338" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <!-- Instrutor: y=538 · centro 578 -->
+      <bpmndi:BPMNShape id="T5_di" bpmnElement="T5">
+        <dc:Bounds x="990" y="538" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T6_di" bpmnElement="T6">
+        <dc:Bounds x="990" y="238" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="G2_di" bpmnElement="G2" isMarkerVisible="true">
+        <dc:Bounds x="1140" y="353" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T7_di" bpmnElement="T7">
+        <dc:Bounds x="1240" y="138" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T8_di" bpmnElement="T8">
+        <dc:Bounds x="1390" y="338" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_1_di" bpmnElement="End_1">
+        <dc:Bounds x="1550" y="160" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1524" y="203" width="88" height="27" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNEdge id="f1_di" bpmnElement="f1">
+        <di:waypoint x="248" y="178" /><di:waypoint x="290" y="178" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f2_di" bpmnElement="f2">
+        <di:waypoint x="390" y="178" /><di:waypoint x="440" y="178" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f3_di" bpmnElement="f3">
+        <di:waypoint x="490" y="218" /><di:waypoint x="490" y="378" /><di:waypoint x="590" y="378" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f4_di" bpmnElement="f4">
+        <di:waypoint x="690" y="378" /><di:waypoint x="740" y="378" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f5_di" bpmnElement="f5">
+        <di:waypoint x="790" y="378" /><di:waypoint x="840" y="378" />
+        <bpmndi:BPMNLabel><dc:Bounds x="795" y="360" width="40" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f6_di" bpmnElement="f6">
+        <di:waypoint x="765" y="353" /><di:waypoint x="765" y="278" /><di:waypoint x="990" y="278" />
+        <bpmndi:BPMNLabel><dc:Bounds x="775" y="285" width="44" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f7_di" bpmnElement="f7">
+        <di:waypoint x="890" y="418" /><di:waypoint x="890" y="578" /><di:waypoint x="990" y="578" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f8_di" bpmnElement="f8">
+        <di:waypoint x="1090" y="578" /><di:waypoint x="1165" y="578" /><di:waypoint x="1165" y="403" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f9_di" bpmnElement="f9">
+        <di:waypoint x="1090" y="278" /><di:waypoint x="1165" y="278" /><di:waypoint x="1165" y="353" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f10_di" bpmnElement="f10">
+        <di:waypoint x="1190" y="378" /><di:waypoint x="1290" y="378" /><di:waypoint x="1290" y="218" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f11_di" bpmnElement="f11">
+        <di:waypoint x="1340" y="178" /><di:waypoint x="1440" y="178" /><di:waypoint x="1440" y="338" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f12_di" bpmnElement="f12">
+        <di:waypoint x="1490" y="378" /><di:waypoint x="1568" y="378" /><di:waypoint x="1568" y="196" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

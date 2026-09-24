@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 350">
+  <defs>
+    <marker id="incr-seta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" class="dg-seta-cabeca"/>
+    </marker>
+  </defs>
+
+  <!-- linha de cima: antes dos incrementos (Fig. 3.7) -->
+  <rect x="40" y="30" width="200" height="66" rx="8" class="dg-forma"/>
+  <text x="140" y="58" text-anchor="middle" font-size="16" class="dg-rotulo">Definir esboço</text>
+  <text x="140" y="79" text-anchor="middle" font-size="16" class="dg-rotulo">dos requisitos</text>
+
+  <rect x="300" y="30" width="200" height="66" rx="8" class="dg-forma"/>
+  <text x="400" y="58" text-anchor="middle" font-size="16" class="dg-rotulo">Associar requisitos</text>
+  <text x="400" y="79" text-anchor="middle" font-size="16" class="dg-rotulo">a incrementos</text>
+
+  <rect x="560" y="30" width="200" height="66" rx="8" class="dg-forma"/>
+  <text x="660" y="58" text-anchor="middle" font-size="16" class="dg-rotulo">Projetar a arquitetura</text>
+  <text x="660" y="79" text-anchor="middle" font-size="16" class="dg-rotulo">do sistema</text>
+
+  <path d="M240,63 L300,63" class="dg-seta" marker-end="url(#incr-seta)"/>
+  <path d="M500,63 L560,63" class="dg-seta" marker-end="url(#incr-seta)"/>
+  <path d="M660,96 L660,140 L140,140 L140,190" class="dg-seta" marker-end="url(#incr-seta)"/>
+
+  <!-- linha de baixo: o laço -->
+  <rect x="40" y="190" width="200" height="66" rx="8" class="dg-forma"/>
+  <text x="140" y="218" text-anchor="middle" font-size="16" class="dg-rotulo">Desenvolver</text>
+  <text x="140" y="239" text-anchor="middle" font-size="16" class="dg-rotulo">um incremento</text>
+
+  <rect x="290" y="190" width="180" height="66" rx="8" class="dg-forma"/>
+  <text x="380" y="218" text-anchor="middle" font-size="16" class="dg-rotulo">Validar</text>
+  <text x="380" y="239" text-anchor="middle" font-size="16" class="dg-rotulo">o incremento</text>
+
+  <rect x="520" y="190" width="180" height="66" rx="8" class="dg-forma"/>
+  <text x="610" y="218" text-anchor="middle" font-size="16" class="dg-rotulo">Integrar</text>
+  <text x="610" y="239" text-anchor="middle" font-size="16" class="dg-rotulo">o incremento</text>
+
+  <rect x="750" y="190" width="160" height="66" rx="8" class="dg-forma"/>
+  <text x="830" y="218" text-anchor="middle" font-size="16" class="dg-rotulo">Validar</text>
+  <text x="830" y="239" text-anchor="middle" font-size="16" class="dg-rotulo">o sistema</text>
+
+  <path d="M240,223 L290,223" class="dg-seta" marker-end="url(#incr-seta)"/>
+  <path d="M470,223 L520,223" class="dg-seta" marker-end="url(#incr-seta)"/>
+  <path d="M700,223 L750,223" class="dg-seta" marker-end="url(#incr-seta)"/>
+  <path d="M910,223 L960,223" class="dg-seta" marker-end="url(#incr-seta)"/>
+  <text x="965" y="210" text-anchor="middle" font-size="14" class="dg-menor">sistema</text>
+  <text x="965" y="250" text-anchor="middle" font-size="14" class="dg-menor">final</text>
+
+  <!-- retorno: próximo incremento -->
+  <path d="M830,256 L830,310 L140,310 L140,256" class="dg-seta" marker-end="url(#incr-seta)"/>
+  <text x="485" y="335" text-anchor="middle" font-size="15" class="dg-menor">próximo incremento — requisitos priorizados; "congelados" durante o incremento (p. 35)</text>
+</svg>
