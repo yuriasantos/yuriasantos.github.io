@@ -96,6 +96,43 @@
   font-size: var(--fs-caption); color: var(--muted); margin-top: 0.6em;
 }
 /* Legenda sob o visual — mesmo papel no diagrama e na demo, logo mesma regra. */
+/* ---------- CODIGO ---------- */
+/* Um ou dois painéis (antes/depois). O realce de sintaxe vem do plugin
+   highlight do reveal, mas as cores são as do tema: o monokai.css carregado
+   pelo deck tem cor fixa e quebraria o modo claro, então aqui ele é vencido
+   por especificidade (.reveal .l-codigo …). */
+.l-codigo { display: flex; flex-direction: column; }
+.l-codigo h2 { font-size: var(--fs-h2); }
+.l-codigo .rule { margin-bottom: 0.8em; }
+.l-codigo .cod-paineis {
+  flex: 1 1 auto; min-height: 0; display: grid; gap: 1.2em; align-items: start;
+}
+.l-codigo .cod-n2 { grid-template-columns: 1fr 1fr; }
+.l-codigo .cod-painel { margin: 0; min-width: 0; }
+.l-codigo .cod-rotulo {
+  font-size: var(--fs-kicker); letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent); font-weight: 600; margin-bottom: 0.4em;
+}
+.reveal .l-codigo pre {
+  width: 100%; margin: 0; box-shadow: none; font-size: var(--fs-caption);
+}
+.reveal .l-codigo pre code, .reveal .l-codigo .hljs {
+  display: block; max-height: none; overflow: visible;
+  font-family: var(--font-mono); font-size: 1em; line-height: 1.35;
+  background: var(--code-bg); color: var(--ink);
+  padding: 0.7em 0.9em; border-radius: 0.4em; border-left: 3px solid var(--rule);
+}
+.reveal .l-codigo .hljs-keyword, .reveal .l-codigo .hljs-built_in,
+.reveal .l-codigo .hljs-literal { color: var(--accent); }
+.reveal .l-codigo .hljs-string { color: var(--series-3); }
+.reveal .l-codigo .hljs-comment { color: var(--muted); font-style: italic; }
+.reveal .l-codigo .hljs-title, .reveal .l-codigo .hljs-title.function_,
+.reveal .l-codigo .hljs-title.class_ { color: var(--accent-2); }
+.reveal .l-codigo .hljs-number, .reveal .l-codigo .hljs-meta { color: var(--series-7); }
+.reveal .l-codigo .hljs-params, .reveal .l-codigo .hljs-subst,
+.reveal .l-codigo .hljs-attr, .reveal .l-codigo .hljs-variable { color: var(--ink); }
+.l-codigo .cod-legenda { font-size: var(--fs-caption); color: var(--ink-2); margin-top: 0.7em; }
+
 /* ---------- TABELA ---------- */
 .l-tabela { display: flex; flex-direction: column; }
 .l-tabela h2 { font-size: var(--fs-h2); }
